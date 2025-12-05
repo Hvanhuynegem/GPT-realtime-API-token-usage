@@ -1,0 +1,21 @@
+G:\My Drive\TU DELFT\year 2025-2026\Thesis\OpenAIRealltimeTest\obj\Debug\net8.0\OpenAIRealltimeTest.GeneratedMSBuildEditorConfig.editorconfig
+G:\My Drive\TU DELFT\year 2025-2026\Thesis\OpenAIRealltimeTest\obj\Debug\net8.0\OpenAIRealltimeTest.AssemblyInfoInputs.cache
+G:\My Drive\TU DELFT\year 2025-2026\Thesis\OpenAIRealltimeTest\obj\Debug\net8.0\OpenAIRealltimeTest.AssemblyInfo.cs
+G:\My Drive\TU DELFT\year 2025-2026\Thesis\OpenAIRealltimeTest\obj\Debug\net8.0\OpenAIRealltimeTest.csproj.CoreCompileInputs.cache
+G:\My Drive\TU DELFT\year 2025-2026\Thesis\OpenAIRealltimeTest\obj\Debug\net8.0\OpenAIRealltimeTest.dll
+G:\My Drive\TU DELFT\year 2025-2026\Thesis\OpenAIRealltimeTest\obj\Debug\net8.0\refint\OpenAIRealltimeTest.dll
+G:\My Drive\TU DELFT\year 2025-2026\Thesis\OpenAIRealltimeTest\obj\Debug\net8.0\OpenAIRealltimeTest.pdb
+C:\Users\henri\Desktop\OpenAIRealltimeTest\bin\Debug\net8.0\OpenAIRealltimeTest.exe
+C:\Users\henri\Desktop\OpenAIRealltimeTest\bin\Debug\net8.0\OpenAIRealltimeTest.deps.json
+C:\Users\henri\Desktop\OpenAIRealltimeTest\bin\Debug\net8.0\OpenAIRealltimeTest.runtimeconfig.json
+C:\Users\henri\Desktop\OpenAIRealltimeTest\bin\Debug\net8.0\OpenAIRealltimeTest.dll
+C:\Users\henri\Desktop\OpenAIRealltimeTest\bin\Debug\net8.0\OpenAIRealltimeTest.pdb
+C:\Users\henri\Desktop\OpenAIRealltimeTest\obj\Debug\net8.0\OpenAIRealltimeTest.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\henri\Desktop\OpenAIRealltimeTest\obj\Debug\net8.0\OpenAIRealltimeTest.AssemblyInfoInputs.cache
+C:\Users\henri\Desktop\OpenAIRealltimeTest\obj\Debug\net8.0\OpenAIRealltimeTest.AssemblyInfo.cs
+C:\Users\henri\Desktop\OpenAIRealltimeTest\obj\Debug\net8.0\OpenAIRealltimeTest.csproj.CoreCompileInputs.cache
+C:\Users\henri\Desktop\OpenAIRealltimeTest\obj\Debug\net8.0\OpenAIRealltimeTest.dll
+C:\Users\henri\Desktop\OpenAIRealltimeTest\obj\Debug\net8.0\refint\OpenAIRealltimeTest.dll
+C:\Users\henri\Desktop\OpenAIRealltimeTest\obj\Debug\net8.0\OpenAIRealltimeTest.pdb
+C:\Users\henri\Desktop\OpenAIRealltimeTest\obj\Debug\net8.0\OpenAIRealltimeTest.genruntimeconfig.cache
+C:\Users\henri\Desktop\OpenAIRealltimeTest\obj\Debug\net8.0\ref\OpenAIRealltimeTest.dll
