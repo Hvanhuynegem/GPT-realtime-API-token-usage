@@ -3,24 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\henri\\Desktop\\GPT-realtime-API-token-usage\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A37EE48C-F480-4FAB-88C2-51A90F72EDDA}|OpenAIRealltimeTest.csproj|c:\\users\\henri\\desktop\\gpt-realtime-api-token-usage\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A37EE48C-F480-4FAB-88C2-51A90F72EDDA}|OpenAIRealltimeTest.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A37EE48C-F480-4FAB-88C2-51A90F72EDDA}|OpenAIRealltimeTest.csproj|c:\\users\\henri\\desktop\\gpt-realtime-api-token-usage\\image-test\\answer.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{A37EE48C-F480-4FAB-88C2-51A90F72EDDA}|OpenAIRealltimeTest.csproj|solutionrelative:image-test\\answer.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A37EE48C-F480-4FAB-88C2-51A90F72EDDA}|OpenAIRealltimeTest.csproj|c:\\users\\henri\\desktop\\gpt-realtime-api-token-usage\\tokentestimage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A37EE48C-F480-4FAB-88C2-51A90F72EDDA}|OpenAIRealltimeTest.csproj|solutionrelative:tokentestimage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A37EE48C-F480-4FAB-88C2-51A90F72EDDA}|OpenAIRealltimeTest.csproj|c:\\users\\henri\\desktop\\gpt-realtime-api-token-usage\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A37EE48C-F480-4FAB-88C2-51A90F72EDDA}|OpenAIRealltimeTest.csproj|solutionrelative:class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A37EE48C-F480-4FAB-88C2-51A90F72EDDA}|OpenAIRealltimeTest.csproj|c:\\users\\henri\\desktop\\gpt-realtime-api-token-usage\\ouputs\\text-realtime-mini-example.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{A37EE48C-F480-4FAB-88C2-51A90F72EDDA}|OpenAIRealltimeTest.csproj|solutionrelative:ouputs\\text-realtime-mini-example.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
+      "AbsoluteMoniker": "D:0:0:{A37EE48C-F480-4FAB-88C2-51A90F72EDDA}|OpenAIRealltimeTest.csproj|c:\\users\\henri\\desktop\\gpt-realtime-api-token-usage\\datasetexperiment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A37EE48C-F480-4FAB-88C2-51A90F72EDDA}|OpenAIRealltimeTest.csproj|solutionrelative:datasetexperiment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,69 +14,20 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "answer.txt",
-              "DocumentMoniker": "C:\\Users\\henri\\Desktop\\GPT-realtime-API-token-usage\\image-test\\answer.txt",
-              "RelativeDocumentMoniker": "image-test\\answer.txt",
-              "ToolTip": "C:\\Users\\henri\\Desktop\\GPT-realtime-API-token-usage\\image-test\\answer.txt",
-              "RelativeToolTip": "image-test\\answer.txt",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2025-12-05T06:46:00.773Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "TokenTestImage.cs",
-              "DocumentMoniker": "C:\\Users\\henri\\Desktop\\GPT-realtime-API-token-usage\\TokenTestImage.cs",
-              "RelativeDocumentMoniker": "TokenTestImage.cs",
-              "ToolTip": "C:\\Users\\henri\\Desktop\\GPT-realtime-API-token-usage\\TokenTestImage.cs",
-              "RelativeToolTip": "TokenTestImage.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-05T06:45:52.021Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\henri\\Desktop\\GPT-realtime-API-token-usage\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\henri\\Desktop\\GPT-realtime-API-token-usage\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAABkAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
+              "Title": "DatasetExperiment.cs",
+              "DocumentMoniker": "C:\\Users\\henri\\Desktop\\GPT-realtime-API-token-usage\\DatasetExperiment.cs",
+              "RelativeDocumentMoniker": "DatasetExperiment.cs",
+              "ToolTip": "C:\\Users\\henri\\Desktop\\GPT-realtime-API-token-usage\\DatasetExperiment.cs",
+              "RelativeToolTip": "DatasetExperiment.cs",
+              "ViewState": "AgIAABsAAAAAAAAAAADgvykAAABXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-05T06:45:47.385Z",
+              "WhenOpened": "2025-12-08T13:41:12.919Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Class1.cs",
-              "DocumentMoniker": "C:\\Users\\henri\\Desktop\\GPT-realtime-API-token-usage\\Class1.cs",
-              "RelativeDocumentMoniker": "Class1.cs",
-              "ToolTip": "C:\\Users\\henri\\Desktop\\GPT-realtime-API-token-usage\\Class1.cs",
-              "RelativeToolTip": "Class1.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-05T06:45:41.206Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "text-realtime-mini-example.txt",
-              "DocumentMoniker": "C:\\Users\\henri\\Desktop\\GPT-realtime-API-token-usage\\Ouputs\\text-realtime-mini-example.txt",
-              "RelativeDocumentMoniker": "Ouputs\\text-realtime-mini-example.txt",
-              "ToolTip": "C:\\Users\\henri\\Desktop\\GPT-realtime-API-token-usage\\Ouputs\\text-realtime-mini-example.txt",
-              "RelativeToolTip": "Ouputs\\text-realtime-mini-example.txt",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2025-12-05T06:45:33.969Z"
             }
           ]
         }
