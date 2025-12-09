@@ -10,15 +10,125 @@ using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 
+
+public enum AIModel
+{
+    GPT_Realtime_Mini,
+    GPT_Realtime,
+    GPT5_1,
+    GPT5_Mini,
+    GPT5_Nano,
+    GPT4_1,
+    GPT4_1_Mini
+}
+
+public class ModelConfig
+{
+    public string ModelName { get; init; } = "";
+    public double TextInputRate { get; init; }
+    public double TextOutputRate { get; init; }
+    public double ImageInputRate { get; init; }
+    public double CachedInputRate { get; init; }
+
+    public string WebSocketUrl {get; init; } = "";
+    public bool IsRealtime { get; init; }
+
+}
+
+public static class ModelConfigs
+{
+    public static ModelConfig Get(AIModel model)
+    {
+        return model switch
+        {
+            AIModel.GPT_Realtime_Mini => new ModelConfig
+            {
+                ModelName = "gpt-realtime-mini",
+                TextInputRate = 0.60 / 1_000_000.0,
+                TextOutputRate = 2.40 / 1_000_000.0,
+                ImageInputRate = 0.80 / 1_000_000.0,
+                CachedInputRate = 0.06 / 1_000_000.0,
+                WebSocketUrl = "wss://api.openai.com/v1/realtime?model=gpt-realtime-mini",
+                IsRealtime = true
+
+            },
+
+            AIModel.GPT_Realtime => new ModelConfig
+            {
+                ModelName = "gpt-realtime",
+                TextInputRate = 4.00 / 1_000_000.0,
+                TextOutputRate = 16.00 / 1_000_000.0,
+                ImageInputRate = 5.00 / 1_000_000.0,
+                CachedInputRate = 0.40 / 1_000_000.0,
+                WebSocketUrl = "wss://api.openai.com/v1/realtime?model=gpt-realtime",
+                IsRealtime = true
+            },
+
+            // Add other models here:
+            AIModel.GPT5_1 => new ModelConfig
+            {
+                ModelName = "gpt-5.1-2025-11-13",
+                TextInputRate = 1.25 / 1_000_000.0,
+                TextOutputRate = 10 / 1_000_000.0,
+                ImageInputRate =  0.00 / 1_000_000.0,
+                CachedInputRate = 0.125 / 1_000_000.0,
+                WebSocketUrl = "",   // no websocket
+                IsRealtime = false
+            },
+
+            AIModel.GPT5_Mini => new ModelConfig
+            {
+                ModelName = "gpt-5-mini-2025-08-07",
+                TextInputRate = 0.25 / 1_000_000.0,
+                TextOutputRate = 2.00 / 1_000_000.0,
+                ImageInputRate =  0.00 / 1_000_000.0,
+                CachedInputRate = 0.025 / 1_000_000.0,
+                WebSocketUrl = "",   // no websocket
+                IsRealtime = false
+            },
+
+            AIModel.GPT5_Nano => new ModelConfig
+            {
+                ModelName = "gpt-5-nano-2025-08-07",
+                TextInputRate = 0.05 / 1_000_000.0,
+                TextOutputRate = 0.40 / 1_000_000.0,
+                ImageInputRate =  0.00 / 1_000_000.0,
+                CachedInputRate = 0.005 / 1_000_000.0,
+                WebSocketUrl = "",   // no websocket
+                IsRealtime = false
+            },
+
+            AIModel.GPT4_1 => new ModelConfig
+            {
+                ModelName = "gpt-4.1-2025-04-14",
+                TextInputRate = 2.00 / 1_000_000.0,
+                TextOutputRate = 8.00 / 1_000_000.0,
+                ImageInputRate =  0.00 / 1_000_000.0,
+                CachedInputRate = 0.50 / 1_000_000.0,
+                WebSocketUrl = "",   // no websocket
+                IsRealtime = false
+            },
+
+            AIModel.GPT4_1_Mini => new ModelConfig
+            {
+                ModelName = "gpt-4.1-mini-2025-04-14",
+                TextInputRate = 0.40 / 1_000_000.0,
+                TextOutputRate = 1.60 / 1_000_000.0,
+                ImageInputRate =  0.00 / 1_000_000.0,
+                CachedInputRate = 0.10 / 1_000_000.0,
+                WebSocketUrl = "",   // no websocket
+                IsRealtime = false
+            },
+
+            _ => throw new ArgumentOutOfRangeException(nameof(model), model, null)
+        };
+    }
+}
+
+
+
 class DatasetExperiment
 {
-    // Pricing constants for gpt-realtime-mini (USD per 1M tokens)
-    // Adjust if you switch to gpt-realtime.
-    private const double TextInputRatePerToken = 0.60 / 1_000_000.0;
-    private const double TextOutputRatePerToken = 2.40 / 1_000_000.0;
-    private const double ImageInputRatePerToken = 0.80 / 1_000_000.0;
-    private const double CachedInputRatePerToken = 0.06 / 1_000_000.0;
-
     static async Task Main(string[] args)
     {
         var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
@@ -33,7 +143,6 @@ class DatasetExperiment
             : apiKey;
         Console.WriteLine("Using API key (partial): " + visible);
 
-        string model = "gpt-realtime-mini";
         int maxSamples = args.Length > 0 && int.TryParse(args[0], out var n) ? n : 2;
 
         // Load the dataset.
@@ -47,26 +156,106 @@ class DatasetExperiment
 
         IPreprocessor preprocessor = new IdentityPreprocessor();
 
-        var uri = new Uri($"wss://api.openai.com/v1/realtime?model={model}");
+
+        // SELECT MODEL HERE ---------------------------------------------------------
+        AIModel selected = AIModel.GPT4_1;
+        // ---------------------------------------------------------------------------
+
+
+        ModelConfig cfg = ModelConfigs.Get(selected);
+
+        Console.WriteLine("Using model: " + cfg.ModelName);
+
+        if (cfg.IsRealtime)
+        {
+            Console.WriteLine("Using Realtime WebSocket endpoint: " + cfg.WebSocketUrl);
+            await RunRealtimeExperimentAsync(apiKey, cfg, rawSamples, preprocessor);
+        }
+        else
+        {
+            Console.WriteLine("Using REST /v1/responses endpoint");
+            await RunRestExperimentAsync(apiKey, cfg, rawSamples, preprocessor);
+        }
+    }
+
+    static async Task RunRestExperimentAsync(string apiKey, ModelConfig cfg, List<DatasetExperiment.DatasetSample> rawSamples, IPreprocessor preprocessor)
+    {
+        using var http = new HttpClient
+        {
+            BaseAddress = new Uri("https://api.openai.com"),
+            Timeout = TimeSpan.FromMinutes(10)
+        };
+        http.DefaultRequestHeaders.Authorization =
+            new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiKey);
+
+        var metricsList = new List<SampleMetrics>();
+        int index = 0;
+
+        foreach (var sample in rawSamples)
+        {
+            index++;
+            var pre = preprocessor.Preprocess(sample);
+
+            Console.WriteLine();
+            Console.WriteLine($"=== Sample {index}/{rawSamples.Count} id={sample.Id} ===");
+
+            Console.WriteLine("Question:");
+            Console.WriteLine(sample.Text);
+            Console.WriteLine();
+
+            Console.WriteLine("Baseline answer (dataset):");
+            Console.WriteLine(sample.Answer);
+            Console.WriteLine();
+
+            var metrics = await RunSingleSampleRestAsync(http, pre, cfg);
+            metrics.SampleId = sample.Id;
+            metricsList.Add(metrics);
+
+            PrintMetrics(metrics);
+        }
+
+        string baseDir = "logs";
+        string timestamp = DateTime.UtcNow.ToString("yyyy-MM-dd_HH-mm-ss");
+        string experimentId = $"{timestamp}_{cfg.ModelName}_baseline_rest";
+
+        SaveExperimentResults(baseDir, experimentId,
+            model: cfg.ModelName,
+            datasetName: "VOIL-A",
+            preprocessorName: preprocessor.GetType().Name,
+            metrics: metricsList);
+    }
+
+
+    static async Task RunRealtimeExperimentAsync(string apiKey, ModelConfig cfg, List<DatasetExperiment.DatasetSample> rawSamples, IPreprocessor preprocessor)
+    {
         using var ws = new ClientWebSocket();
         ws.Options.SetRequestHeader("Authorization", $"Bearer {apiKey}");
         ws.Options.SetRequestHeader("OpenAI-Beta", "realtime=v1");
-
         Console.WriteLine("Connecting to OpenAI Realtime...");
-        await ws.ConnectAsync(uri, CancellationToken.None);
+        await ws.ConnectAsync(new Uri(cfg.WebSocketUrl), CancellationToken.None);
         Console.WriteLine("Connected.");
 
         // First event should be session.created
         await ReceiveAndPrintOneFrame(ws);
 
         // Limit output to text only
+        //string sessionUpdateJson = @"
+        //{
+        //  ""type"": ""session.update"",
+        //  ""session"": {
+        //    ""modalities"": [""text""]
+        //  }
+        //}";
         string sessionUpdateJson = @"
         {
           ""type"": ""session.update"",
           ""session"": {
-            ""modalities"": [""text""]
+            ""modalities"": [""text""],
+            ""instructions"": ""You are a helpful assistant. Answer in one short, direct sentence with no extra details.""
           }
         }";
+        await SendJson(ws, sessionUpdateJson);
+
         await SendJson(ws, sessionUpdateJson);
         Console.WriteLine("Sent session.update");
 
@@ -89,7 +278,7 @@ class DatasetExperiment
             Console.WriteLine(sample.Answer);
             Console.WriteLine();
 
-            var metrics = await RunSingleSampleAsync(ws, pre);
+            var metrics = await RunSingleSampleAsync(ws, pre, cfg);
             metrics.SampleId = sample.Id;
             metricsList.Add(metrics);
 
@@ -100,31 +289,10 @@ class DatasetExperiment
         string timestamp = DateTime.UtcNow.ToString("yyyy-MM-dd_HH-mm-ss");
         string experimentId = $"{timestamp}_gpt-realtime-mini_baseline";
 
-        SaveExperimentResults(baseDir, experimentId, model: model,
+        SaveExperimentResults(baseDir, experimentId, model: cfg.ModelName,
             datasetName: "VOIL-A", preprocessorName: preprocessor.GetType().Name,
             metrics: metricsList);
 
-
-        // Optionally dump as CSV for later analysis
-        Console.WriteLine();
-        Console.WriteLine("CSV summary:");
-        Console.WriteLine("sample_id,end_to_end_ms,send_to_response_created_ms,response_created_to_first_token_ms,first_token_to_done_ms,input_tokens,output_tokens,total_tokens,text_input_tokens,image_input_tokens,cached_tokens,total_cost_usd");
-        foreach (var m in metricsList)
-        {
-            Console.WriteLine(string.Join(",",
-                m.SampleId,
-                m.EndToEndMs,
-                m.SendToResponseCreatedMs,
-                m.ResponseCreatedToFirstTokenMs,
-                m.FirstTokenToDoneMs,
-                m.InputTokens,
-                m.OutputTokens,
-                m.TotalTokens,
-                m.TextInputTokens,
-                m.ImageInputTokens,
-                m.CachedTokens,
-                m.TotalCostUsd.ToString("F8")));
-        }
 
         if (ws.State == WebSocketState.Open)
         {
@@ -134,7 +302,175 @@ class DatasetExperiment
         Console.WriteLine("Done.");
     }
 
-    private static async Task<SampleMetrics> RunSingleSampleAsync(ClientWebSocket ws, PreprocessedSample pre)
+    static async Task<SampleMetrics> RunSingleSampleRestAsync(HttpClient http, PreprocessedSample pre, ModelConfig cfg)
+    {
+        var metrics = new SampleMetrics();
+
+        // Build the "content" array in the same way as for realtime
+        var contentParts = new List<object>();
+
+        if (!string.IsNullOrWhiteSpace(pre.Text))
+        {
+            contentParts.Add(new
+            {
+                type = "input_text",
+                text = pre.Text
+            });
+        }
+
+        if (!string.IsNullOrWhiteSpace(pre.ImageDataUrl))
+        {
+            contentParts.Add(new
+            {
+                type = "input_image",
+                image_url = pre.ImageDataUrl,
+                detail = "low"
+            });
+        }
+
+        // Build the /v1/responses request body
+        var body = new
+        {
+            model = cfg.ModelName,   // for example "gpt-5.1"
+            input = new[]
+            {
+                new
+                {
+                    role = "user",
+                    content = contentParts
+                }
+            },
+            // // Optional: keep responses short to mirror your realtime settings
+            // max_output_tokens = 256
+        };
+
+        string jsonBody = JsonSerializer.Serialize(body);
+        using var requestContent = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+
+        var sendTime = DateTime.UtcNow;
+        metrics.ClientSendTimeUtc = sendTime;
+
+        using var response = await http.PostAsync("/v1/responses", requestContent);
+        var responseText = await response.Content.ReadAsStringAsync();
+        var doneTime = DateTime.UtcNow;
+        // Console.WriteLine("REST response received: " + responseText);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            Console.WriteLine("REST error from server:");
+            Console.WriteLine("Status: " + (int)response.StatusCode + " " + response.StatusCode);
+            Console.WriteLine(responseText);
+
+            // Set timing and return with empty usage
+            metrics.EndToEndMs = (long)(doneTime - sendTime).TotalMilliseconds;
+            return metrics;
+        }
+
+        using var doc = JsonDocument.Parse(responseText);
+        var root = doc.RootElement;
+
+        // Extract assistant text from all output items of type "message"
+        var assistantBuilder = new StringBuilder();
+
+        if (root.TryGetProperty("output", out var outputElem) &&
+            outputElem.ValueKind == JsonValueKind.Array)
+        {
+            foreach (var outputItem in outputElem.EnumerateArray())
+            {
+                if (outputItem.TryGetProperty("type", out var outTypeProp) &&
+                    outTypeProp.ValueKind == JsonValueKind.String &&
+                    outTypeProp.GetString() == "message" &&
+                    outputItem.TryGetProperty("content", out var contentElem) &&
+                    contentElem.ValueKind == JsonValueKind.Array)
+                {
+                    foreach (var part in contentElem.EnumerateArray())
+                    {
+                        if (part.TryGetProperty("type", out var typeProp) &&
+                            typeProp.ValueKind == JsonValueKind.String &&
+                            typeProp.GetString() == "output_text" &&
+                            part.TryGetProperty("text", out var textProp) &&
+                            textProp.ValueKind == JsonValueKind.String)
+                        {
+                            assistantBuilder.Append(textProp.GetString());
+                        }
+                    }
+                }
+            }
+        }
+
+        metrics.AssistantText = assistantBuilder.ToString();
+
+        // Extract usage
+        if (root.TryGetProperty("usage", out var usage))
+        // Console.WriteLine("REST usage: " + usage.ToString());
+        {
+            if (usage.TryGetProperty("total_tokens", out var totalTokensProp) &&
+                totalTokensProp.ValueKind == JsonValueKind.Number)
+            {
+                metrics.TotalTokens = totalTokensProp.GetInt32();
+            }
+
+            if (usage.TryGetProperty("input_tokens", out var inputTokensProp) &&
+                inputTokensProp.ValueKind == JsonValueKind.Number)
+            {
+                metrics.InputTokens = inputTokensProp.GetInt32();
+                metrics.TextInputTokens = metrics.InputTokens;
+            }
+
+            if (usage.TryGetProperty("output_tokens", out var outputTokensProp) &&
+                outputTokensProp.ValueKind == JsonValueKind.Number)
+            {
+                metrics.OutputTokens = outputTokensProp.GetInt32();
+            }
+
+            if (usage.TryGetProperty("input_token_details", out var inputDetails) &&
+                inputDetails.ValueKind == JsonValueKind.Object)
+            {
+                if (inputDetails.TryGetProperty("cached_tokens", out var cachedProp) &&
+                    cachedProp.ValueKind == JsonValueKind.Number)
+                {
+                    metrics.CachedTokens = cachedProp.GetInt32();
+                }
+
+                if (inputDetails.TryGetProperty("text_tokens", out var textTokensProp) &&
+                    textTokensProp.ValueKind == JsonValueKind.Number)
+                {
+                    metrics.TextInputTokens = textTokensProp.GetInt32();
+                }
+
+                if (inputDetails.TryGetProperty("image_tokens", out var imageTokensProp) &&
+                    imageTokensProp.ValueKind == JsonValueKind.Number)
+                {
+                    metrics.ImageInputTokens = imageTokensProp.GetInt32();
+                }
+            }
+        }
+
+        // Timing metrics
+        metrics.EndToEndMs = (long)(doneTime - sendTime).TotalMilliseconds;
+
+        // For REST we do not have internal events, so keep the breakdown simple
+        metrics.SendToResponseCreatedMs = metrics.EndToEndMs;
+        metrics.ResponseCreatedToFirstTokenMs = 0;
+        metrics.FirstTokenToDoneMs = 0;
+
+        // Cost estimate, same logic as realtime
+        int textInput = metrics.InputTokens;
+        int imageInput = metrics.ImageInputTokens;
+        int cached = metrics.CachedTokens;
+        int outputTokens = metrics.OutputTokens;
+
+        double textInputCost = textInput * cfg.TextInputRate;
+        double imageInputCost = imageInput * cfg.ImageInputRate;
+        double cachedCost = cached * cfg.CachedInputRate;
+        double outputCost = outputTokens * cfg.TextOutputRate;
+
+        metrics.TotalCostUsd = textInputCost + imageInputCost + cachedCost + outputCost;
+
+        return metrics;
+    }
+
+    private static async Task<SampleMetrics> RunSingleSampleAsync(ClientWebSocket ws, PreprocessedSample pre, ModelConfig cfg)
     {
         var buffer = new byte[64 * 1024];
 
@@ -222,7 +558,7 @@ class DatasetExperiment
             if (type == "response.created")
             {
                 var response = root.GetProperty("response");
-                currentResponseId = response.GetProperty("id").GetString();
+                currentResponseId = response.GetProperty("id").GetString() ?? "";
                 tResponseCreated = DateTime.UtcNow;
             }
             else if (type == "response.output_text.delta" || type == "response.text.delta")
@@ -330,10 +666,10 @@ class DatasetExperiment
         int cached = metrics.CachedTokens;
         int output = metrics.OutputTokens;
 
-        double textInputCost = textInput * TextInputRatePerToken;
-        double imageInputCost = imageInput * ImageInputRatePerToken;
-        double cachedCost = cached * CachedInputRatePerToken;
-        double outputCost = output * TextOutputRatePerToken;  // assistant text tokens
+        double textInputCost = textInput * cfg.TextInputRate;
+        double imageInputCost = imageInput * cfg.ImageInputRate;
+        double cachedCost = cached * cfg.CachedInputRate;
+        double outputCost = output * cfg.TextOutputRate;  // assistant text tokens
 
         metrics.TotalCostUsd = textInputCost + imageInputCost + cachedCost + outputCost;
 
@@ -356,6 +692,7 @@ class DatasetExperiment
         Console.WriteLine($"  text input tokens:  {m.TextInputTokens}");
         Console.WriteLine($"  image input tokens: {m.ImageInputTokens}");
         Console.WriteLine($"  cached tokens:      {m.CachedTokens}");
+        Console.WriteLine($"  text output tokens: {m.OutputTokens}");
         Console.WriteLine();
 
         Console.WriteLine("Cost estimate for this interaction (gpt-realtime-mini):");
@@ -377,6 +714,31 @@ class DatasetExperiment
             var json = Encoding.UTF8.GetString(buffer, 0, result.Count);
             Console.WriteLine("First event from server:");
             Console.WriteLine(json);
+
+            try
+            {
+                using var doc = JsonDocument.Parse(json);
+                var root = doc.RootElement;
+
+                if (root.TryGetProperty("type", out var typeProp)
+                    && typeProp.GetString() == "error"
+                    && root.TryGetProperty("error", out var errorProp))
+                {
+                    var msg = errorProp.TryGetProperty("message", out var m) ? m.GetString() : null;
+                    var code = errorProp.TryGetProperty("code", out var c) ? c.GetString() : null;
+
+                    Console.WriteLine("Error detected");
+                    Console.WriteLine("Message: " + msg);
+                    Console.WriteLine("Code: " + code);
+
+                    Environment.Exit(1);
+                }
+            }
+            catch (JsonException)
+            {
+                Console.WriteLine("Invalid JSON received");
+                Environment.Exit(1);
+            }
         }
     }
 

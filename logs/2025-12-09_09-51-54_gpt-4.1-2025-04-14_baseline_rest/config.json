@@ -1,0 +1,8 @@
+{
+  "experiment_id": "2025-12-09_09-51-54_gpt-4.1-2025-04-14_baseline_rest",
+  "timestamp": "2025-12-09T09:51:54.6441883Z",
+  "model": "gpt-4.1-2025-04-14",
+  "dataset_name": "VOIL-A",
+  "num_samples": 2,
+  "preprocessor": "IdentityPreprocessor"
+}
