@@ -1,0 +1,8 @@
+{
+  "experiment_id": "2025-12-11_09-03-59_gpt-5-nano-2025-08-07_baseline",
+  "timestamp": "2025-12-11T09:03:59.4363742Z",
+  "model": "gpt-5-nano-2025-08-07",
+  "dataset_name": "VOIL-A",
+  "num_samples": 10,
+  "preprocessor": "IdentityPreprocessor"
+}

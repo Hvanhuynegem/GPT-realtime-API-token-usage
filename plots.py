@@ -5,7 +5,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # "Define" the model you want to plot
-TARGET_MODEL = "gpt-realtime-mini"  # change this to the model you want
+TARGET_MODEL = ["gpt-realtime-mini", "gpt-realtime","gpt-5.1-2025-11-13", "gpt-5-mini-2025-08-07", "gpt-5-nano-2025-08-07", "gpt-4.1-2025-04-14", "gpt-4.1-mini-2025-04-14"]
+
 
 
 def load_all_metrics(log_root: str = "logs") -> pd.DataFrame:
@@ -99,7 +100,6 @@ def plot_boxplots(df: pd.DataFrame, group_by: str = "model", save_dir: Path | No
         "total_tokens",
         "text_input_tokens",
         "image_input_tokens",
-        "cached_tokens",
     ]
 
     cost_col = "total_cost_usd"
@@ -168,17 +168,18 @@ def plot_boxplots(df: pd.DataFrame, group_by: str = "model", save_dir: Path | No
 
 def main():
     df_all = load_all_metrics("logs")
+    # Run for each target model
+    for model in TARGET_MODEL:
+        # Keep only the latest run for the selected model
+        df_latest = select_latest_run_for_model(df_all, model)
 
-    # Keep only the latest run for the selected model
-    df_latest = select_latest_run_for_model(df_all, TARGET_MODEL)
+        # Determine folder of the latest experiment
+        exp_id = df_latest["experiment_id"].iloc[0]
+        output_dir = Path("logs") / exp_id
+        output_dir.mkdir(exist_ok=True)
 
-    # Determine folder of the latest experiment
-    exp_id = df_latest["experiment_id"].iloc[0]
-    output_dir = Path("logs") / exp_id
-    output_dir.mkdir(exist_ok=True)
-
-    # Produce and save the plots
-    plot_boxplots(df_latest, group_by="experiment_id", save_dir=output_dir)
+        # Produce and save the plots
+        plot_boxplots(df_latest, group_by="experiment_id", save_dir=output_dir)
 
 
 if __name__ == "__main__":

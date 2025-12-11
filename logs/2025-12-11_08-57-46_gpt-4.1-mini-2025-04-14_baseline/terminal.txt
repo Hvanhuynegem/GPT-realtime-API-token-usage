@@ -1,0 +1,258 @@
+
+PS C:\Users\henri\Documents\Thesis\GPT-realtime-API-token-usage> dotnet run
+Using API key (partial): sk-pro...hVsA
+Current working directory: C:\Users\henri\Documents\Thesis\GPT-realtime-API-token-usage
+Dataset dir: C:\Users\henri\Documents\Thesis\GPT-realtime-API-token-usage\dataset
+Using model: gpt-4.1-mini-2025-04-14
+Using REST /v1/responses endpoint
+
+=== Sample 1/10 id=514366_35_2 ===
+Question:
+Is the man in the black t-shirt and blue jeans skateboarding?
+
+Baseline answer (dataset):
+Yes, the man in the black t-shirt and blue jeans is skateboarding, as he is seen jumping and performing a trick with his skateboard.
+
+RunSingleSampleRestAsync attempt 1/5
+Assistant output:
+Yes, the man in the black t-shirt and blue jeans is skateboarding.
+
+End to end latency (send -> response.done): 2469 ms
+Approx client -> server + initial queue (send -> response.created): 2469 ms
+Approx server processing start (response.created -> first token): 0 ms
+Approx generation + streaming (first token -> done): 0 ms
+
+Tokens - total: 141, input: 124, output: 17
+  text input tokens:  0
+  image input tokens: 0
+  cached tokens:      0
+  text output tokens: 17
+
+Cost estimate for this interaction (gpt-realtime-mini):
+  Total cost: 0.00002720 USD
+
+=== Sample 2/10 id=428305_69_3 ===
+Question:
+What items can be seen on the shelf?
+
+Baseline answer (dataset):
+On the shelf, there are a sink, a tap, papers, a flower vase, clothes, a glass, and a few other objects.
+
+RunSingleSampleRestAsync attempt 1/5
+Assistant output:
+The shelf contains candles, small containers, a plant, rolled towels, and a handbag.
+
+End to end latency (send -> response.done): 1724 ms
+Approx client -> server + initial queue (send -> response.created): 1724 ms
+Approx server processing start (response.created -> first token): 0 ms
+Approx generation + streaming (first token -> done): 0 ms
+
+Tokens - total: 138, input: 119, output: 19
+  text input tokens:  0
+  image input tokens: 0
+  cached tokens:      0
+  text output tokens: 19
+
+Cost estimate for this interaction (gpt-realtime-mini):
+  Total cost: 0.00003040 USD
+
+=== Sample 3/10 id=286212_91_4 ===
+Question:
+What is the background of the scene?
+
+Baseline answer (dataset):
+In the background, there is a fencing that encloses the area where the giraffe and zebra are standing. This fence indicates that the scene takes place at a zoo or a similar protected environment.
+
+RunSingleSampleRestAsync attempt 1/5
+Assistant output:
+The background of the scene is a forested area with a fence.
+
+End to end latency (send -> response.done): 2586 ms
+Approx client -> server + initial queue (send -> response.created): 2586 ms
+Approx server processing start (response.created -> first token): 0 ms
+Approx generation + streaming (first token -> done): 0 ms
+
+Tokens - total: 133, input: 118, output: 15
+  text input tokens:  0
+  image input tokens: 0
+  cached tokens:      0
+  text output tokens: 15
+
+Cost estimate for this interaction (gpt-realtime-mini):
+  Total cost: 0.00002400 USD
+
+=== Sample 4/10 id=58079_34_1 ===
+Question:
+Which part of the person's body is visible in the view?
+
+Baseline answer (dataset):
+In the view, only the person's hand is visible.
+
+RunSingleSampleRestAsync attempt 1/5
+Assistant output:
+The person's hand is visible in the view.
+
+End to end latency (send -> response.done): 2965 ms
+Approx client -> server + initial queue (send -> response.created): 2965 ms
+Approx server processing start (response.created -> first token): 0 ms
+Approx generation + streaming (first token -> done): 0 ms
+
+Tokens - total: 132, input: 122, output: 10
+  text input tokens:  0
+  image input tokens: 0
+  cached tokens:      0
+  text output tokens: 10
+
+Cost estimate for this interaction (gpt-realtime-mini):
+  Total cost: 0.00001600 USD
+
+=== Sample 5/10 id=119579_102_1 ===
+Question:
+What color are the flowers in the vase?
+
+Baseline answer (dataset):
+The flowers in the vase are red.
+
+RunSingleSampleRestAsync attempt 1/5
+Assistant output:
+The flowers in the vase are red.
+
+End to end latency (send -> response.done): 1154 ms
+Approx client -> server + initial queue (send -> response.created): 1154 ms
+Approx server processing start (response.created -> first token): 0 ms
+Approx generation + streaming (first token -> done): 0 ms
+
+Tokens - total: 128, input: 119, output: 9
+  text input tokens:  0
+  image input tokens: 0
+  cached tokens:      0
+  text output tokens: 9
+
+Cost estimate for this interaction (gpt-realtime-mini):
+  Total cost: 0.00001440 USD
+
+=== Sample 6/10 id=464196_74_all ===
+Question:
+Is the projector screen connected to one of the laptops?
+
+Baseline answer (dataset):
+Yes, the projector screen appears to be connected to one of the laptops on the desk. This setup allows the content displayed on the laptop to be projected onto the large screen for better visibility and collaborative work or presentations.
+
+RunSingleSampleRestAsync attempt 1/5
+Assistant output:
+Yes, the projector screen is connected to the silver laptop on the left.
+
+End to end latency (send -> response.done): 2678 ms
+Approx client -> server + initial queue (send -> response.created): 2678 ms
+Approx server processing start (response.created -> first token): 0 ms
+Approx generation + streaming (first token -> done): 0 ms
+
+Tokens - total: 137, input: 121, output: 16
+  text input tokens:  0
+  image input tokens: 0
+  cached tokens:      0
+  text output tokens: 16
+
+Cost estimate for this interaction (gpt-realtime-mini):
+  Total cost: 0.00002560 USD
+
+=== Sample 7/10 id=74478_76_1 ===
+Question:
+What is the man on the right wearing and holding?
+
+Baseline answer (dataset):
+The man on the right is wearing a jacket, t-shirt, and trousers. He is holding a glass.
+
+RunSingleSampleRestAsync attempt 1/5
+Assistant output:
+The man on the right is wearing glasses and a dark jacket, and he is holding a glass of drink.
+
+End to end latency (send -> response.done): 2197 ms
+Approx client -> server + initial queue (send -> response.created): 2197 ms
+Approx server processing start (response.created -> first token): 0 ms
+Approx generation + streaming (first token -> done): 0 ms
+
+Tokens - total: 144, input: 121, output: 23
+  text input tokens:  0
+  image input tokens: 0
+  cached tokens:      0
+  text output tokens: 23
+
+Cost estimate for this interaction (gpt-realtime-mini):
+  Total cost: 0.00003680 USD
+
+=== Sample 8/10 id=235843_97_2 ===
+Question:
+What colors are the dogs?
+
+Baseline answer (dataset):
+The dogs are in white and black colors.
+
+RunSingleSampleRestAsync attempt 1/5
+Assistant output:
+The dogs are white and white with brown and black markings.
+
+End to end latency (send -> response.done): 826 ms
+Approx client -> server + initial queue (send -> response.created): 826 ms
+Approx server processing start (response.created -> first token): 0 ms
+Approx generation + streaming (first token -> done): 0 ms
+
+Tokens - total: 129, input: 116, output: 13
+  text input tokens:  0
+  image input tokens: 0
+  cached tokens:      0
+  text output tokens: 13
+
+Cost estimate for this interaction (gpt-realtime-mini):
+  Total cost: 0.00002080 USD
+
+=== Sample 9/10 id=449075_36_3 ===
+Question:
+What is the object on the ground?
+
+Baseline answer (dataset):
+The object on the ground is a wheel with rods, which could be part of a cart or some other equipment.
+
+RunSingleSampleRestAsync attempt 1/5
+Assistant output:
+The object on the ground appears to be a small black bag or pouch.
+
+End to end latency (send -> response.done): 750 ms
+Approx client -> server + initial queue (send -> response.created): 750 ms
+Approx server processing start (response.created -> first token): 0 ms
+Approx generation + streaming (first token -> done): 0 ms
+
+Tokens - total: 134, input: 118, output: 16
+  text input tokens:  0
+  image input tokens: 0
+  cached tokens:      0
+  text output tokens: 16
+
+Cost estimate for this interaction (gpt-realtime-mini):
+  Total cost: 0.00002560 USD
+
+=== Sample 10/10 id=430643_0_3 ===
+Question:
+Is the man cooking with an open flame or using an electric stove?
+
+Baseline answer (dataset):
+The man is cooking with an open flame, as there is a fire present in the scene.
+
+RunSingleSampleRestAsync attempt 1/5
+Assistant output:
+The man is cooking with an open flame.
+
+End to end latency (send -> response.done): 1066 ms
+Approx client -> server + initial queue (send -> response.created): 1066 ms
+Approx server processing start (response.created -> first token): 0 ms
+Approx generation + streaming (first token -> done): 0 ms
+
+Tokens - total: 134, input: 124, output: 10
+  text input tokens:  0
+  image input tokens: 0
+  cached tokens:      0
+  text output tokens: 10
+
+Cost estimate for this interaction (gpt-realtime-mini):
+  Total cost: 0.00001600 USD
+PS C:\Users\henri\Documents\Thesis\GPT-realtime-API-token-usage> 
