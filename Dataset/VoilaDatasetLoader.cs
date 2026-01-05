@@ -37,15 +37,35 @@ public static class VoilaDatasetLoader
 
             yield return new DatasetSample
             {
-                Id = row.id,
-                Text = row.question,
-                Answer = row.answer,
-                ImagePath = row.image_path
+                Id = row.id ?? "",
+                Text = row.question ?? "",
+                Answer = row.answer ?? "",
+                ImagePath = row.image_path,
+                Trace = ConvertGazePoints(row.gaze_points_px)
             };
 
             count++;
             if (maxSamples.HasValue && count >= maxSamples.Value)
                 yield break;
         }
+    }
+
+    private static IReadOnlyList<(int x, int y)> ConvertGazePoints(List<List<int>>? gazePointsPx)
+    {
+        if (gazePointsPx == null || gazePointsPx.Count == 0)
+            return Array.Empty<(int, int)>();
+
+        var points = new List<(int x, int y)>(gazePointsPx.Count);
+
+        foreach (var p in gazePointsPx)
+        {
+            // Expect [x, y]
+            if (p == null || p.Count < 2)
+                continue;
+
+            points.Add((p[0], p[1]));
+        }
+
+        return points;
     }
 }

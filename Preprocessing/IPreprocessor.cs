@@ -4,8 +4,13 @@ namespace Thesis.Preprocessing;
 public class PreprocessedSample
 {
     public string Text { get; set; } = "";
+
     public string? ImageDataUrl { get; set; }
+
+    public string? RoiImageDataUrl { get; set; }
+    public string? GlobalThumbnailDataUrl { get; set; }
 }
+
 
 public interface IPreprocessor
 {

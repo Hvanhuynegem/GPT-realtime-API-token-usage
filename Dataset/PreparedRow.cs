@@ -6,4 +6,5 @@ public class PreparedRow
         public string question { get; set; } = "";
         public string answer { get; set; } = "";
         public string image_path { get; set; } = "";
+        public List<List<int>>? gaze_points_px { get; set; }
     }

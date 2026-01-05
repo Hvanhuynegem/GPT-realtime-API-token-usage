@@ -87,3 +87,4 @@ C:\Users\henri\Documents\Thesis\GPT-realtime-API-token-usage\obj\Debug\net8.0-wi
 C:\Users\henri\Documents\Thesis\GPT-realtime-API-token-usage\obj\Debug\net8.0-windows\OpenAIRealltimeTest.pdb
 C:\Users\henri\Documents\Thesis\GPT-realtime-API-token-usage\obj\Debug\net8.0-windows\OpenAIRealltimeTest.genruntimeconfig.cache
 C:\Users\henri\Documents\Thesis\GPT-realtime-API-token-usage\obj\Debug\net8.0-windows\ref\OpenAIRealltimeTest.dll
+C:\Users\henri\Documents\Thesis\GPT-realtime-API-token-usage\bin\Debug\net8.0-windows\SixLabors.ImageSharp.dll

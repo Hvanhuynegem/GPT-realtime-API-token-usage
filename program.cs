@@ -1,7 +1,16 @@
+// class Program
+// {
+//     static async Task Main(string[] args)
+//     {
+//         await DatasetExperiment.RunAsync();
+//     }
+// }
+
 class Program
 {
-    static async Task Main(string[] args)
+    static void Main(string[] args)
     {
-        await DatasetExperiment.RunAsync();
+        GazeRoiExperiment.Run();
     }
 }
+
