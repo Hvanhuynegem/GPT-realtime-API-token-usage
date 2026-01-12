@@ -25,6 +25,16 @@ class PreprocessingTechniquesTestbench
             ("Jpeg_Q85", new JpegPreprocessor(quality: 85, useOriginalBytes: false)),
             ("WebP_Lossy_Q75", new WebPPreprocessor(quality: 75, lossless: false)),
             ("Bmp", new BmpPreprocessor()),
+
+            // NEW: Gaze ROI + global thumbnail
+            ("GazeRoi+GlobalThumb",
+                new GazeRoiAndThumbnailPreprocessor(
+                    rho: 0.5f,
+                    minRoiRelSize: 0.2f,
+                    gaussianSigma: 15f,
+                    globalThumbW: 28,
+                    globalThumbH: 28,
+                    jpegQuality: 90)),
         };
 
         Directory.CreateDirectory(outDir);
@@ -69,16 +79,35 @@ class PreprocessingTechniquesTestbench
                     TimeMs = sw.Elapsed.TotalMilliseconds
                 });
 
-                if (!string.IsNullOrWhiteSpace(processed.ImageDataUrl) && originalBinaryBytes > 0 && origW > 0 && origH > 0)
+                // Choose the "effective payload" data URLs for size accounting:
+                // - If ROI exists: ROI + GlobalThumb
+                // - Else if GlobalThumb exists: GlobalThumb only
+                // - Else: fallback to ImageDataUrl (single-image techniques)
+                var payloadImages = GetPayloadImageDataUrls(processed);
+
+                if (payloadImages.Count > 0 && originalBinaryBytes > 0 && origW > 0 && origH > 0)
                 {
-                    var (processedBinaryBytes, base64Chars, base64Utf8Bytes, dataUrlUtf8Bytes) =
-                        GetDataUrlSizeStats(processed.ImageDataUrl);
+                    var composite = GetCompositeDataUrlStats(payloadImages);
 
-                    var (procW, procH) = GetPixelDimsFromDataUrl(processed.ImageDataUrl);
+                    // Primary dims (for backwards compatibility with existing CSV columns)
+                    // Use ROI if present, else GlobalThumb if present, else ImageDataUrl.
+                    string primaryUrl = GetPrimaryDataUrl(processed);
+                    var (procW, procH) = !string.IsNullOrWhiteSpace(primaryUrl)
+                        ? GetPixelDimsFromDataUrl(primaryUrl)
+                        : (0, 0);
 
-                    double ratio = (double)processedBinaryBytes / (double)originalBinaryBytes;
+                    // Total pixels across all payload images (ROI + thumbnail, or thumbnail only, etc.)
+                    long totalPixels = 0;
+                    foreach (var url in payloadImages)
+                    {
+                        var (w, h) = GetPixelDimsFromDataUrl(url);
+                        if (w > 0 && h > 0)
+                            totalPixels += (long)w * h;
+                    }
 
-                    int jsonUtf8Bytes = BuildRealtimeJsonUtf8ByteCount(processed.ImageDataUrl);
+                    double ratio = (double)composite.BinaryBytesTotal / (double)originalBinaryBytes;
+
+                    int jsonUtf8Bytes = BuildRealtimeJsonUtf8ByteCount(payloadImages);
 
                     sizeRecords.Add(new SizeRecord
                     {
@@ -87,17 +116,30 @@ class PreprocessingTechniquesTestbench
 
                         OriginalPixelsW = origW,
                         OriginalPixelsH = origH,
+
+                        // Kept for compatibility: dims of primary payload image
                         ProcessedPixelsW = procW,
                         ProcessedPixelsH = procH,
 
+                        // NEW: total pixels across all payload images
+                        ProcessedPixelsTotal = totalPixels,
+
                         OriginalBinaryBytes = originalBinaryBytes,
-                        ProcessedBinaryBytes = processedBinaryBytes,
+
+                        // This is what you asked: ROI bytes + thumbnail bytes (or thumbnail only, etc.)
+                        ProcessedBinaryBytes = composite.BinaryBytesTotal,
+
                         CompressionRatio = ratio,
 
-                        Base64Chars = base64Chars,
-                        Base64BytesUtf8 = base64Utf8Bytes,
-                        DataUrlBytesUtf8 = dataUrlUtf8Bytes,
-                        JsonBytesUtf8 = jsonUtf8Bytes
+                        // NEW: totals across all payload images
+                        Base64CharsTotal = composite.Base64CharsTotal,
+                        Base64BytesUtf8Total = composite.Base64Utf8BytesTotal,
+                        DataUrlBytesUtf8Total = composite.DataUrlUtf8BytesTotal,
+
+                        // Kept name, but now represents the realistic JSON for N input_image entries
+                        JsonBytesUtf8 = jsonUtf8Bytes,
+
+                        PayloadImageCount = payloadImages.Count
                     });
                 }
             }
@@ -184,9 +226,17 @@ class PreprocessingTechniquesTestbench
         return (info.Width, info.Height);
     }
 
-    // Counts bytes of a realistic Realtime JSON event with the data URL embedded.
-    private static int BuildRealtimeJsonUtf8ByteCount(string imageDataUrl)
+    // Counts bytes of a realistic Realtime JSON event with 1+ images embedded.
+    private static int BuildRealtimeJsonUtf8ByteCount(IReadOnlyList<string> imageDataUrls)
     {
+        var content = new List<object>
+        {
+            new { type = "input_text", text = "test" }
+        };
+
+        foreach (var url in imageDataUrls)
+            content.Add(new { type = "input_image", image_url = url });
+
         var payload = new
         {
             type = "conversation.item.create",
@@ -194,15 +244,74 @@ class PreprocessingTechniquesTestbench
             {
                 type = "message",
                 role = "user",
-                content = new object[]
-                {
-                    new { type = "input_text", text = "test" },
-                    new { type = "input_image", image_url = imageDataUrl }
-                }
+                content = content.ToArray()
             }
         };
 
         return JsonSerializer.SerializeToUtf8Bytes(payload).Length;
+    }
+
+    private static List<string> GetPayloadImageDataUrls(PreprocessedSample processed)
+    {
+        // Your requested semantics: treat ROI + thumb as the processed payload.
+        // Do not include processed.ImageDataUrl if it is just the original (optional field).
+        if (!string.IsNullOrWhiteSpace(processed.RoiImageDataUrl))
+        {
+            var list = new List<string> { processed.RoiImageDataUrl };
+            if (!string.IsNullOrWhiteSpace(processed.GlobalThumbnailDataUrl))
+                list.Add(processed.GlobalThumbnailDataUrl);
+            return list;
+        }
+
+        if (!string.IsNullOrWhiteSpace(processed.GlobalThumbnailDataUrl))
+            return new List<string> { processed.GlobalThumbnailDataUrl };
+
+        if (!string.IsNullOrWhiteSpace(processed.ImageDataUrl))
+            return new List<string> { processed.ImageDataUrl };
+
+        return new List<string>();
+    }
+
+    private static string GetPrimaryDataUrl(PreprocessedSample processed)
+    {
+        if (!string.IsNullOrWhiteSpace(processed.RoiImageDataUrl))
+            return processed.RoiImageDataUrl;
+        if (!string.IsNullOrWhiteSpace(processed.GlobalThumbnailDataUrl))
+            return processed.GlobalThumbnailDataUrl;
+        return processed.ImageDataUrl ?? "";
+    }
+
+    private static CompositeStats GetCompositeDataUrlStats(IReadOnlyList<string> dataUrls)
+    {
+        long binTotal = 0;
+        int b64CharsTotal = 0;
+        int b64Utf8Total = 0;
+        int dataUrlUtf8Total = 0;
+
+        foreach (var url in dataUrls)
+        {
+            var (bin, b64Chars, b64Utf8, dataUtf8) = GetDataUrlSizeStats(url);
+            binTotal += bin;
+            b64CharsTotal += b64Chars;
+            b64Utf8Total += b64Utf8;
+            dataUrlUtf8Total += dataUtf8;
+        }
+
+        return new CompositeStats
+        {
+            BinaryBytesTotal = binTotal,
+            Base64CharsTotal = b64CharsTotal,
+            Base64Utf8BytesTotal = b64Utf8Total,
+            DataUrlUtf8BytesTotal = dataUrlUtf8Total
+        };
+    }
+
+    private sealed class CompositeStats
+    {
+        public long BinaryBytesTotal { get; set; }
+        public int Base64CharsTotal { get; set; }
+        public int Base64Utf8BytesTotal { get; set; }
+        public int DataUrlUtf8BytesTotal { get; set; }
     }
 
     private static void SaveVisualizationImages(
@@ -227,7 +336,7 @@ class PreprocessingTechniquesTestbench
         {
             var processed = pre.Preprocess(sample);
 
-            if (!string.IsNullOrWhiteSpace(processed.ImageDataUrl))
+            if (string.IsNullOrWhiteSpace(processed.RoiImageDataUrl) && !string.IsNullOrWhiteSpace(processed.ImageDataUrl))
             {
                 string outPath = Path.Combine(visDir, $"{SanitizeFileName(name)}.jpg");
                 ImageOutput.SaveDataUrl(processed.ImageDataUrl, outPath);
@@ -286,12 +395,14 @@ class PreprocessingTechniquesTestbench
             "original_pixels_h",
             "processed_pixels_w",
             "processed_pixels_h",
+            "processed_pixels_total",
+            "payload_image_count",
             "original_binary_bytes",
             "processed_binary_bytes",
             "compression_ratio",
-            "base64_chars",
-            "base64_bytes_utf8",
-            "data_url_bytes_utf8",
+            "base64_chars_total",
+            "base64_bytes_utf8_total",
+            "data_url_bytes_utf8_total",
             "json_bytes_utf8"
         ));
 
@@ -304,12 +415,14 @@ class PreprocessingTechniquesTestbench
                 r.OriginalPixelsH.ToString(CultureInfo.InvariantCulture),
                 r.ProcessedPixelsW.ToString(CultureInfo.InvariantCulture),
                 r.ProcessedPixelsH.ToString(CultureInfo.InvariantCulture),
+                r.ProcessedPixelsTotal.ToString(CultureInfo.InvariantCulture),
+                r.PayloadImageCount.ToString(CultureInfo.InvariantCulture),
                 r.OriginalBinaryBytes.ToString(CultureInfo.InvariantCulture),
                 r.ProcessedBinaryBytes.ToString(CultureInfo.InvariantCulture),
                 r.CompressionRatio.ToString("F6", CultureInfo.InvariantCulture),
-                r.Base64Chars.ToString(CultureInfo.InvariantCulture),
-                r.Base64BytesUtf8.ToString(CultureInfo.InvariantCulture),
-                r.DataUrlBytesUtf8.ToString(CultureInfo.InvariantCulture),
+                r.Base64CharsTotal.ToString(CultureInfo.InvariantCulture),
+                r.Base64BytesUtf8Total.ToString(CultureInfo.InvariantCulture),
+                r.DataUrlBytesUtf8Total.ToString(CultureInfo.InvariantCulture),
                 r.JsonBytesUtf8.ToString(CultureInfo.InvariantCulture)
             ));
         }
@@ -349,16 +462,28 @@ class PreprocessingTechniquesTestbench
 
         public int OriginalPixelsW { get; set; }
         public int OriginalPixelsH { get; set; }
+
+        // Backwards compatible: dims of the primary payload image (ROI or thumb or single processed image)
         public int ProcessedPixelsW { get; set; }
         public int ProcessedPixelsH { get; set; }
 
+        // NEW: total pixels across all payload images (ROI + thumb, etc.)
+        public long ProcessedPixelsTotal { get; set; }
+
+        public int PayloadImageCount { get; set; }
+
         public long OriginalBinaryBytes { get; set; }
+
+        // NEW behavior: total bytes across all payload images
         public long ProcessedBinaryBytes { get; set; }
+
         public double CompressionRatio { get; set; }
 
-        public int Base64Chars { get; set; }
-        public int Base64BytesUtf8 { get; set; }
-        public int DataUrlBytesUtf8 { get; set; }
+        // NEW: totals across all payload images
+        public int Base64CharsTotal { get; set; }
+        public int Base64BytesUtf8Total { get; set; }
+        public int DataUrlBytesUtf8Total { get; set; }
+
         public int JsonBytesUtf8 { get; set; }
     }
 
