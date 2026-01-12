@@ -1,12 +1,11 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-using System.IO;
-using System.Linq;
+using System.Text;
+using System.Text.Json;
 using Thesis.Dataset;
 using Thesis.Preprocessing;
 using Thesis.Metrics;
+using SixLabors.ImageSharp;
 
 class PreprocessingTechniquesTestbench
 {
@@ -21,7 +20,11 @@ class PreprocessingTechniquesTestbench
             ("Baseline_NoOp", new IdentityPreprocessor()),
             ("Downsampler", new DownsamplerPreprocessor(targetWidth: 100, targetHeight: 100)),
             ("Grayscale", new GrayscalePreprocessor()),
-            // Add more techniques as needed
+
+            // Format conversion preprocessors
+            ("Jpeg_Q85", new JpegPreprocessor(quality: 85, useOriginalBytes: false)),
+            ("WebP_Lossy_Q75", new WebPPreprocessor(quality: 75, lossless: false)),
+            ("Bmp", new BmpPreprocessor()),
         };
 
         Directory.CreateDirectory(outDir);
@@ -33,7 +36,6 @@ class PreprocessingTechniquesTestbench
         if (samples.Count == 0)
             throw new InvalidOperationException("No samples loaded. Check datasetDir and prepared.jsonl.");
 
-        // Pick one sample for visualization (first one)
         DatasetSample vizSample = samples.First();
         SaveVisualizationImages(outDir, vizSample, techniques);
 
@@ -53,7 +55,8 @@ class PreprocessingTechniquesTestbench
 
             foreach (var s in samples)
             {
-                long originalBytes = GetOriginalBytes(s);
+                long originalBinaryBytes = GetOriginalBinaryBytes(s);
+                var (origW, origH) = GetOriginalPixelDims(s);
 
                 var sw = Stopwatch.StartNew();
                 var processed = preprocessor.Preprocess(s);
@@ -66,19 +69,35 @@ class PreprocessingTechniquesTestbench
                     TimeMs = sw.Elapsed.TotalMilliseconds
                 });
 
-                // Size measurement (only if we have an image output)
-                if (!string.IsNullOrWhiteSpace(processed.ImageDataUrl) && originalBytes > 0)
+                if (!string.IsNullOrWhiteSpace(processed.ImageDataUrl) && originalBinaryBytes > 0 && origW > 0 && origH > 0)
                 {
-                    long processedBytes = Base64PayloadByteCount(processed.ImageDataUrl);
-                    double ratio = (double)processedBytes / (double)originalBytes;
+                    var (processedBinaryBytes, base64Chars, base64Utf8Bytes, dataUrlUtf8Bytes) =
+                        GetDataUrlSizeStats(processed.ImageDataUrl);
+
+                    var (procW, procH) = GetPixelDimsFromDataUrl(processed.ImageDataUrl);
+
+                    double ratio = (double)processedBinaryBytes / (double)originalBinaryBytes;
+
+                    int jsonUtf8Bytes = BuildRealtimeJsonUtf8ByteCount(processed.ImageDataUrl);
 
                     sizeRecords.Add(new SizeRecord
                     {
                         Technique = name,
                         ImageId = SafeImageId(s),
-                        OriginalBytes = originalBytes,
-                        ProcessedBytes = processedBytes,
-                        CompressionRatio = ratio
+
+                        OriginalPixelsW = origW,
+                        OriginalPixelsH = origH,
+                        ProcessedPixelsW = procW,
+                        ProcessedPixelsH = procH,
+
+                        OriginalBinaryBytes = originalBinaryBytes,
+                        ProcessedBinaryBytes = processedBinaryBytes,
+                        CompressionRatio = ratio,
+
+                        Base64Chars = base64Chars,
+                        Base64BytesUtf8 = base64Utf8Bytes,
+                        DataUrlBytesUtf8 = dataUrlUtf8Bytes,
+                        JsonBytesUtf8 = jsonUtf8Bytes
                     });
                 }
             }
@@ -86,15 +105,12 @@ class PreprocessingTechniquesTestbench
 
         string ts = DateTime.Now.ToString("yyyyMMdd_HHmmss");
 
-        // Write raw times CSV (for boxplot)
         string rawCsvPath = Path.Combine(outDir, $"PreprocessingTimes_{ts}.csv");
         WriteTimeCsv(rawCsvPath, timeRecords);
 
-        // Write sizes CSV (for size scatter plot)
         string sizeCsvPath = Path.Combine(outDir, $"PreprocessingSizes_{ts}.csv");
         WriteSizeCsv(sizeCsvPath, sizeRecords);
 
-        // Compute averages (for bar chart)
         var averages = timeRecords
             .GroupBy(r => r.Technique)
             .Select(g => new AvgRecord
@@ -119,27 +135,74 @@ class PreprocessingTechniquesTestbench
         Console.WriteLine($"Sizes:       {sizeCsvPath}");
     }
 
-    private static long GetOriginalBytes(DatasetSample s)
+    private static long GetOriginalBinaryBytes(DatasetSample s)
     {
         if (!string.IsNullOrWhiteSpace(s.ImagePath) && File.Exists(s.ImagePath))
             return new FileInfo(s.ImagePath).Length;
         return 0;
     }
 
-    // data:image/jpeg;base64,<payload>  -> bytes of decoded payload
-    private static long Base64PayloadByteCount(string dataUrl)
+    private static (int W, int H) GetOriginalPixelDims(DatasetSample s)
+    {
+        if (string.IsNullOrWhiteSpace(s.ImagePath) || !File.Exists(s.ImagePath))
+            return (0, 0);
+
+        var info = Image.Identify(s.ImagePath);
+        if (info == null) return (0, 0);
+        return (info.Width, info.Height);
+    }
+
+    // Returns (decoded binary bytes, base64 chars, base64 utf8 bytes, data url utf8 bytes)
+    private static (long BinaryBytes, int Base64Chars, int Base64Utf8Bytes, int DataUrlUtf8Bytes)
+        GetDataUrlSizeStats(string dataUrl)
     {
         int comma = dataUrl.IndexOf(',');
         if (comma < 0)
             throw new ArgumentException("Invalid data URL (missing comma).");
 
-        string b64 = dataUrl[(comma + 1)..];
-
-        // Some data URLs might contain whitespace/newlines
-        b64 = b64.Trim();
+        string b64 = dataUrl[(comma + 1)..].Trim();
 
         byte[] bytes = Convert.FromBase64String(b64);
-        return bytes.LongLength;
+
+        int base64Chars = b64.Length;
+        int base64Utf8Bytes = Encoding.UTF8.GetByteCount(b64);
+        int dataUrlUtf8Bytes = Encoding.UTF8.GetByteCount(dataUrl);
+
+        return (bytes.LongLength, base64Chars, base64Utf8Bytes, dataUrlUtf8Bytes);
+    }
+
+    private static (int W, int H) GetPixelDimsFromDataUrl(string dataUrl)
+    {
+        int comma = dataUrl.IndexOf(',');
+        if (comma < 0) return (0, 0);
+
+        string b64 = dataUrl[(comma + 1)..].Trim();
+        byte[] bytes = Convert.FromBase64String(b64);
+
+        var info = Image.Identify(bytes);
+        if (info == null) return (0, 0);
+        return (info.Width, info.Height);
+    }
+
+    // Counts bytes of a realistic Realtime JSON event with the data URL embedded.
+    private static int BuildRealtimeJsonUtf8ByteCount(string imageDataUrl)
+    {
+        var payload = new
+        {
+            type = "conversation.item.create",
+            item = new
+            {
+                type = "message",
+                role = "user",
+                content = new object[]
+                {
+                    new { type = "input_text", text = "test" },
+                    new { type = "input_image", image_url = imageDataUrl }
+                }
+            }
+        };
+
+        return JsonSerializer.SerializeToUtf8Bytes(payload).Length;
     }
 
     private static void SaveVisualizationImages(
@@ -216,15 +279,39 @@ class PreprocessingTechniquesTestbench
     private static void WriteSizeCsv(string path, List<SizeRecord> records)
     {
         using var w = new StreamWriter(path);
-        w.WriteLine("technique,image_id,original_bytes,processed_bytes,compression_ratio");
+        w.WriteLine(string.Join(",",
+            "technique",
+            "image_id",
+            "original_pixels_w",
+            "original_pixels_h",
+            "processed_pixels_w",
+            "processed_pixels_h",
+            "original_binary_bytes",
+            "processed_binary_bytes",
+            "compression_ratio",
+            "base64_chars",
+            "base64_bytes_utf8",
+            "data_url_bytes_utf8",
+            "json_bytes_utf8"
+        ));
+
         foreach (var r in records)
         {
             w.WriteLine(string.Join(",",
                 EscapeCsv(r.Technique),
                 EscapeCsv(r.ImageId),
-                r.OriginalBytes.ToString(CultureInfo.InvariantCulture),
-                r.ProcessedBytes.ToString(CultureInfo.InvariantCulture),
-                r.CompressionRatio.ToString("F6", CultureInfo.InvariantCulture)));
+                r.OriginalPixelsW.ToString(CultureInfo.InvariantCulture),
+                r.OriginalPixelsH.ToString(CultureInfo.InvariantCulture),
+                r.ProcessedPixelsW.ToString(CultureInfo.InvariantCulture),
+                r.ProcessedPixelsH.ToString(CultureInfo.InvariantCulture),
+                r.OriginalBinaryBytes.ToString(CultureInfo.InvariantCulture),
+                r.ProcessedBinaryBytes.ToString(CultureInfo.InvariantCulture),
+                r.CompressionRatio.ToString("F6", CultureInfo.InvariantCulture),
+                r.Base64Chars.ToString(CultureInfo.InvariantCulture),
+                r.Base64BytesUtf8.ToString(CultureInfo.InvariantCulture),
+                r.DataUrlBytesUtf8.ToString(CultureInfo.InvariantCulture),
+                r.JsonBytesUtf8.ToString(CultureInfo.InvariantCulture)
+            ));
         }
     }
 
@@ -259,9 +346,20 @@ class PreprocessingTechniquesTestbench
     {
         public string Technique { get; set; } = "";
         public string ImageId { get; set; } = "";
-        public long OriginalBytes { get; set; }
-        public long ProcessedBytes { get; set; }
+
+        public int OriginalPixelsW { get; set; }
+        public int OriginalPixelsH { get; set; }
+        public int ProcessedPixelsW { get; set; }
+        public int ProcessedPixelsH { get; set; }
+
+        public long OriginalBinaryBytes { get; set; }
+        public long ProcessedBinaryBytes { get; set; }
         public double CompressionRatio { get; set; }
+
+        public int Base64Chars { get; set; }
+        public int Base64BytesUtf8 { get; set; }
+        public int DataUrlBytesUtf8 { get; set; }
+        public int JsonBytesUtf8 { get; set; }
     }
 
     private sealed class AvgRecord

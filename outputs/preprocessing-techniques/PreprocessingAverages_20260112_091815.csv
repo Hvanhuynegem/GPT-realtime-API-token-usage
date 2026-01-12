@@ -1,0 +1,7 @@
+technique,avg_time_ms,samples
+Baseline_NoOp,0.166,1000
+Bmp,0.932,1000
+Jpeg_Q85,1.103,1000
+Grayscale,1.418,1000
+Downsampler,2.033,1000
+WebP_Lossy_Q75,19.407,1000
