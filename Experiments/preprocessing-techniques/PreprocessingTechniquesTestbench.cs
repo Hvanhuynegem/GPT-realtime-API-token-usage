@@ -35,6 +35,17 @@ class PreprocessingTechniquesTestbench
                     globalThumbW: 28,
                     globalThumbH: 28,
                     jpegQuality: 90)),
+
+            // Saliency-based ROI + global thumbnail
+            ("SalientRoi+GlobalThumb",
+                new SpectralResidualSalientPreprocessor(
+                    avgFilterSize: 3,
+                    gaussianSigma: 8f,
+                    roiThresholdMul: 3f,
+                    minRoiRelSize: 0.2f,
+                    globalThumbW: 28,
+                    globalThumbH: 28,
+                    jpegQuality: 90)),
         };
 
         Directory.CreateDirectory(outDir);
