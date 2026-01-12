@@ -1,0 +1,4 @@
+technique,avg_time_ms,samples
+Baseline_NoOp,0.140,1000
+Grayscale,1.361,1000
+Downsampler,2.518,1000
