@@ -104,15 +104,27 @@ public sealed class GazeRoiAndThumbnailPreprocessor : IPreprocessor
         return new PreprocessedSample
         {
             Text = sample.Text,
-            RoiImageDataUrl = roiDataUrl,
             GlobalThumbnailDataUrl = globalThumbDataUrl,
 
             // optional
-            ImageDataUrl = ImageFileToDataUrl(sample.ImagePath)
+            ImageDataUrl = ImageFileToDataUrl(sample.ImagePath),
+
+            Rois = new List<RoiCrop>
+            {
+                new RoiCrop
+                {
+                    Index = 0,
+                    Label = null,          // or "gaze"
+                    Confidence = 1.0f,     // or rho, or leave 1.0f as "not a detector"
+                    X1 = roi.X,
+                    Y1 = roi.Y,
+                    X2 = roi.X + roi.Width,
+                    Y2 = roi.Y + roi.Height,
+                    ImageDataUrl = roiDataUrl
+                }
+            }
         };
     }
-
-    // ----- ROI extraction (same idea as your Python: smallest support S_rho, bbox, min size) -----
 
     private static Rectangle ExtractRoiFromHeatmap(
         float[] hmProb,

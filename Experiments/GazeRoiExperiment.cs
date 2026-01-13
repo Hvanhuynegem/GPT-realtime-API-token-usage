@@ -15,17 +15,25 @@ class GazeRoiExperiment
         string outDir = Path.Combine("outputs");
         Directory.CreateDirectory(outDir);
 
-        if (processed.RoiImageDataUrl != null)
+        // Save ROI crops (0..N)
+        if (processed.Rois != null && processed.Rois.Count > 0)
         {
-            string roiPath = Path.Combine(
-                outDir,
-                $"GazeRoiExperiment_{timestamp}_roi.jpg"
-            );
+            foreach (var roi in processed.Rois)
+            {
+                if (string.IsNullOrWhiteSpace(roi.ImageDataUrl))
+                    continue;
 
-            ImageOutput.SaveDataUrl(processed.RoiImageDataUrl, roiPath);
+                string roiPath = Path.Combine(
+                    outDir,
+                    $"GazeRoiExperiment_{timestamp}_roi_{roi.Index}.jpg"
+                );
+
+                ImageOutput.SaveDataUrl(roi.ImageDataUrl, roiPath);
+            }
         }
 
-        if (processed.GlobalThumbnailDataUrl != null)
+        // Save global thumbnail
+        if (!string.IsNullOrWhiteSpace(processed.GlobalThumbnailDataUrl))
         {
             string thumbPath = Path.Combine(
                 outDir,
@@ -40,11 +48,8 @@ class GazeRoiExperiment
     {
         string datasetDir = "data"; // root containing prepared.jsonl
 
-        DatasetSample sample = VoilaDatasetLoader
+        return VoilaDatasetLoader
             .LoadSamplesFromVoila(datasetDir, maxSamples: 1)
             .First();
-
-        return sample;
     }
-
 }

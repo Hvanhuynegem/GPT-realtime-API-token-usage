@@ -69,14 +69,7 @@ public sealed class SpectralResidualSalientPreprocessor : IPreprocessor
         var roi = FindSalientRoi(saliencyFull, _roiThresholdMul, _minRoiRelSize);
 
         // 4) Encode outputs
-        string imageDataUrl = ImageDataUrl.ImageFileToDataUrl(path);
-
-        string? roiDataUrl = null;
-        if (roi.Width > 0 && roi.Height > 0)
-        {
-            using var roiImg = src.Clone(ctx => ctx.Crop(roi));
-            roiDataUrl = ImageToJpegDataUrl(roiImg, _jpegQuality);
-        }
+        string? imageDataUrl = ImageDataUrl.ImageFileToDataUrl(path);
 
         string? globalThumbUrl = null;
         if (_globalThumbSize is not null)
@@ -90,12 +83,32 @@ public sealed class SpectralResidualSalientPreprocessor : IPreprocessor
             globalThumbUrl = ImageToJpegDataUrl(thumb, _jpegQuality);
         }
 
+        List<RoiCrop> rois = new();
+
+        if (roi.Width > 0 && roi.Height > 0)
+        {
+            using var roiImg = src.Clone(ctx => ctx.Crop(roi));
+            string roiDataUrl = ImageToJpegDataUrl(roiImg, _jpegQuality);
+
+            rois.Add(new RoiCrop
+            {
+                Index = 0,
+                Label = "spectral_residual",
+                Confidence = 1.0f,                 // no detector confidence available, so keep 1.0
+                X1 = roi.X,
+                Y1 = roi.Y,
+                X2 = roi.X + roi.Width,            // exclusive
+                Y2 = roi.Y + roi.Height,           // exclusive
+                ImageDataUrl = roiDataUrl
+            });
+        }
+
         return new PreprocessedSample
         {
             Text = sample.Text,
             ImageDataUrl = imageDataUrl,
-            RoiImageDataUrl = roiDataUrl,
-            GlobalThumbnailDataUrl = globalThumbUrl
+            GlobalThumbnailDataUrl = globalThumbUrl,
+            Rois = rois
         };
     }
 

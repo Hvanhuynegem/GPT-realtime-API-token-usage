@@ -46,6 +46,17 @@ class PreprocessingTechniquesTestbench
                     globalThumbW: 28,
                     globalThumbH: 28,
                     jpegQuality: 90)),
+
+            // Salience-based Yolov12 ROI + global thumbnail
+            ("YoloV12SalientRoi+GlobalThumb",
+                new YoloPreprocessor(
+                    onnxRelativePath: @"Preprocessing\Yolov12\yolo12n.onnx",
+                    inputSize: 640,
+                    confThreshold: 0.25f,
+                    iouThreshold: 0.45f,
+                    thumbW: 28,
+                    thumbH: 28,
+                    jpegQuality: 90)),
         };
 
         Directory.CreateDirectory(outDir);
@@ -264,14 +275,21 @@ class PreprocessingTechniquesTestbench
 
     private static List<string> GetPayloadImageDataUrls(PreprocessedSample processed)
     {
-        // Your requested semantics: treat ROI + thumb as the processed payload.
-        // Do not include processed.ImageDataUrl if it is just the original (optional field).
-        if (!string.IsNullOrWhiteSpace(processed.RoiImageDataUrl))
+        // New semantics:
+        // - If any ROI images exist: include all ROI crops + optional global thumb
+        // - Else if global thumb exists: thumb only
+        // - Else: fallback to ImageDataUrl (single-image techniques)
+
+        var roiUrls = processed.Rois?
+            .Select(r => r.ImageDataUrl)
+            .Where(u => !string.IsNullOrWhiteSpace(u))
+            .ToList() ?? new List<string>();
+
+        if (roiUrls.Count > 0)
         {
-            var list = new List<string> { processed.RoiImageDataUrl };
             if (!string.IsNullOrWhiteSpace(processed.GlobalThumbnailDataUrl))
-                list.Add(processed.GlobalThumbnailDataUrl);
-            return list;
+                roiUrls.Add(processed.GlobalThumbnailDataUrl);
+            return roiUrls;
         }
 
         if (!string.IsNullOrWhiteSpace(processed.GlobalThumbnailDataUrl))
@@ -285,12 +303,19 @@ class PreprocessingTechniquesTestbench
 
     private static string GetPrimaryDataUrl(PreprocessedSample processed)
     {
-        if (!string.IsNullOrWhiteSpace(processed.RoiImageDataUrl))
-            return processed.RoiImageDataUrl;
+        var firstRoi = processed.Rois?
+            .Select(r => r.ImageDataUrl)
+            .FirstOrDefault(u => !string.IsNullOrWhiteSpace(u));
+
+        if (!string.IsNullOrWhiteSpace(firstRoi))
+            return firstRoi;
+
         if (!string.IsNullOrWhiteSpace(processed.GlobalThumbnailDataUrl))
             return processed.GlobalThumbnailDataUrl;
+
         return processed.ImageDataUrl ?? "";
     }
+
 
     private static CompositeStats GetCompositeDataUrlStats(IReadOnlyList<string> dataUrls)
     {
@@ -347,23 +372,35 @@ class PreprocessingTechniquesTestbench
         {
             var processed = pre.Preprocess(sample);
 
-            if (string.IsNullOrWhiteSpace(processed.RoiImageDataUrl) && !string.IsNullOrWhiteSpace(processed.ImageDataUrl))
+            var roiUrls = processed.Rois?
+                .Select(r => r.ImageDataUrl)
+                .Where(u => !string.IsNullOrWhiteSpace(u))
+                .ToList() ?? new List<string>();
+
+            // If there are no ROIs, save the single main image (if present)
+            if (roiUrls.Count == 0 && !string.IsNullOrWhiteSpace(processed.ImageDataUrl))
             {
                 string outPath = Path.Combine(visDir, $"{SanitizeFileName(name)}.jpg");
                 ImageOutput.SaveDataUrl(processed.ImageDataUrl, outPath);
             }
 
-            if (!string.IsNullOrWhiteSpace(processed.RoiImageDataUrl))
+            // If there are ROIs, save them all (index-stable filenames)
+            if (roiUrls.Count > 0)
             {
-                string outPath = Path.Combine(visDir, $"{SanitizeFileName(name)}_roi.jpg");
-                ImageOutput.SaveDataUrl(processed.RoiImageDataUrl, outPath);
+                for (int i = 0; i < roiUrls.Count; i++)
+                {
+                    string outPath = Path.Combine(visDir, $"{SanitizeFileName(name)}_roi_{i}.jpg");
+                    ImageOutput.SaveDataUrl(roiUrls[i], outPath);
+                }
             }
 
+            // Save global thumb if present
             if (!string.IsNullOrWhiteSpace(processed.GlobalThumbnailDataUrl))
             {
                 string outPath = Path.Combine(visDir, $"{SanitizeFileName(name)}_global.jpg");
                 ImageOutput.SaveDataUrl(processed.GlobalThumbnailDataUrl, outPath);
             }
+
         }
 
         Console.WriteLine($"Saved visualization images to: {visDir}");

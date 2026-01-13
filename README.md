@@ -71,3 +71,9 @@ The generated plots are saved to disk for further analysis.
 * Model selection and configuration are handled in the code, not via command-line arguments.
 * Both Realtime and REST models can be benchmarked using the same pipeline.
 
+
+## Packages required:
+
+```
+dotnet add package Microsoft.ML.OnnxRuntime --version 1.18.0
+```

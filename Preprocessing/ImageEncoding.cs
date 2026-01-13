@@ -30,4 +30,13 @@ public static class ImageEncoding
         string b64 = Convert.ToBase64String(bytes);
         return $"data:{mime};base64,{b64}";
     }
+
+    public static string EncodeImageAsDataUrl(Image image, string mime, IImageEncoder encoder)
+    {
+        using var ms = new MemoryStream();
+        image.Save(ms, encoder);
+
+        string b64 = Convert.ToBase64String(ms.ToArray());
+        return $"data:{mime};base64,{b64}";
+    }
 }
