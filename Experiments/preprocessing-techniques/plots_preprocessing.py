@@ -29,9 +29,12 @@ print(f"Using latest file: {CSV_PATH}")
 
 df = pd.read_csv(CSV_PATH)
 
-# Box-and-whisker: execution time per image
-techniques = sorted(df["technique"].unique().tolist())
-data = [df[df["technique"] == t]["time_ms"].values for t in techniques]
+# Box-and-whisker: execution time per image (excluding YOLOv12)
+BOXPLOT_EXCLUDE = "YoloV12SalientRoi+GlobalThumb"
+df_box = df[df["technique"] != BOXPLOT_EXCLUDE]
+
+techniques = sorted(df_box["technique"].unique().tolist())
+data = [df_box[df_box["technique"] == t]["time_ms"].values for t in techniques]
 
 plt.figure()
 plt.boxplot(data, labels=techniques, showfliers=True)
@@ -39,6 +42,7 @@ plt.xlabel("preprocessing technique")
 plt.ylabel("time in ms")
 plt.xticks(rotation=30, ha="right")
 plt.tight_layout()
+
 out1 = Path(CSV_PATH).with_name("boxplot_execution_time.png")
 plt.savefig(out1, dpi=200)
 plt.close()
@@ -89,7 +93,15 @@ else:
     print("Wrote:", out3)
 
     # 2) Bar chart: average processed bytes per technique (includes BMP by default)
-    avg_processed = ds.groupby("technique")["processed_binary_bytes"].mean().sort_values()
+    
+    # Exclude BMP from bar chart
+    ds_bar = ds[~ds["technique_lower"].str.contains("bmp", na=False)]
+    avg_processed = (
+        ds_bar.groupby("technique")["processed_binary_bytes"]
+        .mean()
+        .sort_values()
+    )
+
 
     plt.figure()
     plt.bar(avg_processed.index.tolist(), avg_processed.values)

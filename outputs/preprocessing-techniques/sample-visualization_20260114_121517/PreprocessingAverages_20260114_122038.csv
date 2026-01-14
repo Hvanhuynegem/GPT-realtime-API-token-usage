@@ -1,0 +1,10 @@
+technique,avg_time_ms,samples
+Baseline_NoOp,0.170,1000
+Bmp,0.877,1000
+Jpeg_Q85,1.149,1000
+Grayscale,1.330,1000
+Downsampler,1.985,1000
+WebP_Lossy_Q75,18.914,1000
+SalientRoi+GlobalThumb,25.690,1000
+GazeRoi+GlobalThumb,39.247,1000
+YoloV12SalientRoi+GlobalThumb,223.430,1000
