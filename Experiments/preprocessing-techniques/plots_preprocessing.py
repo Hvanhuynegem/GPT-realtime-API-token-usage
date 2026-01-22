@@ -514,3 +514,46 @@ else:
             print(f"- mean sal_in_gaze:                 {m['sal_in_gaze'].mean():.3f}")
             print("Pearson correlation matrix:")
             print(corr.round(3))
+
+
+# -----------------------------
+# NEW: YOLOv12 ROI count plot
+# -----------------------------
+
+roi_csv = sorted(OUT_DIR.glob("PreprocessingRois_*.csv"), key=lambda p: p.stat().st_mtime)
+if not roi_csv:
+    print("No PreprocessingRois_*.csv found. Skipping YOLO ROI count plot.")
+else:
+    ROI_PATH = roi_csv[-1]
+    dr = pd.read_csv(ROI_PATH)
+
+    YOLO_TECH = "YoloV12SalientRoi+GlobalThumb"
+    yolo = dr[dr["technique"] == YOLO_TECH].copy()
+
+    if yolo.empty:
+        print("No YOLOv12 ROI rows found. Skipping YOLO ROI count plot.")
+    else:
+        # Count ROIs per image
+        roi_counts = (
+            yolo.groupby("image_id")
+            .size()
+            .values
+        )
+
+        plt.figure()
+        plt.boxplot(roi_counts, showfliers=True)
+        plt.ylabel("Number of ROIs per image")
+        plt.xticks([1], ["YOLOv12"])
+        plt.tight_layout()
+
+        out_yolo = Path(ROI_PATH).with_name("boxplot_yolov12_roi_count.png")
+        plt.savefig(out_yolo, dpi=250)
+        plt.close()
+
+        print("Wrote:", out_yolo)
+        print(f"YOLOv12 ROI count stats: "
+              f"min={roi_counts.min()}, "
+              f"median={int(pd.Series(roi_counts).median())}, "
+              f"mean={roi_counts.mean():.2f}, "
+              f"max={roi_counts.max()}")
+
