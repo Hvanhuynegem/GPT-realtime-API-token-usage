@@ -38,8 +38,8 @@ data = [df_box[df_box["technique"] == t]["time_ms"].values for t in techniques]
 
 plt.figure()
 plt.boxplot(data, labels=techniques, showfliers=True)
-plt.xlabel("preprocessing technique")
-plt.ylabel("time in ms")
+plt.xlabel("Preprocessing technique")
+plt.ylabel("Time in ms")
 plt.xticks(rotation=30, ha="right")
 plt.tight_layout()
 
@@ -51,8 +51,8 @@ plt.close()
 avg = df.groupby("technique")["time_ms"].mean().sort_values()
 plt.figure()
 plt.bar(avg.index.tolist(), avg.values)
-plt.xlabel("preprocessing technique")
-plt.ylabel("average time in ms")
+plt.xlabel("Preprocessing technique")
+plt.ylabel("Average time in ms")
 plt.xticks(rotation=30, ha="right")
 plt.tight_layout()
 out2 = Path(CSV_PATH).with_name("barchart_avg_time.png")
@@ -82,8 +82,8 @@ else:
         sub = ds_scatter[ds_scatter["technique"] == tech]
         plt.scatter(sub["original_binary_bytes"], sub["compression_ratio"], label=tech, s=10)
 
-    plt.xlabel("original size (bytes)")
-    plt.ylabel("compression ratio (processed/original)")
+    plt.xlabel("Original size (bytes)")
+    plt.ylabel("Compression factor (processed/original)")
     plt.legend()
     plt.tight_layout()
 
@@ -105,8 +105,8 @@ else:
 
     plt.figure()
     plt.bar(avg_processed.index.tolist(), avg_processed.values)
-    plt.xlabel("preprocessing technique")
-    plt.ylabel("average processed bytes")
+    plt.xlabel("Preprocessing technique")
+    plt.ylabel("Average processed bytes")
     plt.xticks(rotation=30, ha="right")
     plt.tight_layout()
 
@@ -114,3 +114,42 @@ else:
     plt.savefig(out4, dpi=200)
     plt.close()
     print("Wrote:", out4)
+    
+    # Bar chart: standard deviation of time per technique
+    std = df.groupby("technique")["time_ms"].std().sort_values()
+
+    plt.figure()
+    plt.bar(std.index.tolist(), std.values)
+    plt.xlabel("Preprocessing technique")
+    plt.ylabel("Standard deviation of time in ms")
+    plt.xticks(rotation=30, ha="right")
+    plt.tight_layout()
+
+    out_std = Path(CSV_PATH).with_name("barchart_std_time.png")
+    plt.savefig(out_std, dpi=200)
+    plt.close()
+
+    print("Wrote:", out_std)
+
+    # Bar chart: coefficient of variation (std / mean) per technique
+    stats = (
+        df.groupby("technique")["time_ms"]
+        .agg(["mean", "std"])
+    )
+
+    stats["cv"] = stats["std"] / stats["mean"]
+    stats = stats.sort_values("cv")
+
+    plt.figure()
+    plt.bar(stats.index.tolist(), stats["cv"].values)
+    plt.xlabel("Preprocessing technique")
+    plt.ylabel("Coefficient of variation (std / mean)")
+    plt.xticks(rotation=30, ha="right")
+    plt.tight_layout()
+
+    out_cv = Path(CSV_PATH).with_name("barchart_cv_time.png")
+    plt.savefig(out_cv, dpi=200)
+    plt.close()
+
+    print("Wrote:", out_cv)
+

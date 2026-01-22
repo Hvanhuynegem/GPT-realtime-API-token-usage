@@ -47,8 +47,12 @@ namespace Thesis.Preprocessing
             int targetWidth,
             int targetHeight)
         {
-            using var input = File.OpenRead(imagePath);
-            using var image = Image.Load(input);
+            // using var input = File.OpenRead(imagePath);
+            // using var image = Image.Load(input);
+
+            byte[] bytes = File.ReadAllBytes(imagePath);
+            using var image = Image.Load(bytes);
+
 
             image.Mutate(ctx =>
             {

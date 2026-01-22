@@ -34,7 +34,7 @@ class PreprocessingTechniquesTestbench
                     gaussianSigma: 15f,
                     globalThumbW: 28,
                     globalThumbH: 28,
-                    jpegQuality: 90)),
+                    jpegQuality: 85)),
 
             // Saliency-based ROI + global thumbnail
             ("SalientRoi+GlobalThumb",
