@@ -75,6 +75,8 @@ class PreprocessingTechniquesTestbench
 
         var timeRecords = new List<TimeRecord>();
         var sizeRecords = new List<SizeRecord>();
+        var roiRecords = new List<RoiRecord>();
+
 
         foreach (var (name, preprocessor) in techniques)
         {
@@ -100,6 +102,52 @@ class PreprocessingTechniquesTestbench
                     ImageId = SafeImageId(s),
                     TimeMs = sw.Elapsed.TotalMilliseconds
                 });
+
+                // Store per-ROI stats for later analysis (only if technique produced ROIs)
+                if (processed.Rois != null && processed.Rois.Count > 0)
+                {
+                    for (int i = 0; i < processed.Rois.Count; i++)
+                    {
+                        var roiObj = processed.Rois[i];
+                        var url = roiObj?.ImageDataUrl;
+
+                        if (string.IsNullOrWhiteSpace(url))
+                            continue;
+
+                        var (bin, b64Chars, b64Utf8, dataUtf8) = GetDataUrlSizeStats(url);
+                        var (w, h) = GetPixelDimsFromDataUrl(url);
+
+                        roiRecords.Add(new RoiRecord
+                        {
+                            Technique = name,
+                            ImageId = SafeImageId(s),
+                            RoiIndex = i,
+
+                            RoiPixelsW = w,
+                            RoiPixelsH = h,
+
+                            RoiBinaryBytes = bin,
+                            RoiBase64Chars = b64Chars,
+                            RoiBase64BytesUtf8 = b64Utf8,
+                            RoiDataUrlBytesUtf8 = dataUtf8,
+
+                            // RoiCrop: X1,Y1,X2,Y2 are absolute coords in the original image space
+                            RoiX = GetOptionalInt(roiObj, "X1", "x1", "Left", "left", "X", "x"),
+                            RoiY = GetOptionalInt(roiObj, "Y1", "y1", "Top", "top", "Y", "y"),
+
+                            // Width/Height derived from (X2-X1) and (Y2-Y1)
+                            RoiBoxW = GetDerivedBoxW(roiObj),
+                            RoiBoxH = GetDerivedBoxH(roiObj),
+
+                            // RoiCrop uses Confidence
+                            RoiScore = GetOptionalDouble(roiObj, "Confidence", "confidence", "Score", "score"),
+
+                            RoiLabel = GetOptionalString(roiObj, "Label", "label", "ClassName", "className", "Name", "name")
+                        });
+
+                    }
+                }
+
 
                 // Choose the "effective payload" data URLs for size accounting:
                 // - If ROI exists: ROI + GlobalThumb
@@ -175,6 +223,10 @@ class PreprocessingTechniquesTestbench
         string sizeCsvPath = Path.Combine(outDir, $"PreprocessingSizes_{ts}.csv");
         WriteSizeCsv(sizeCsvPath, sizeRecords);
 
+        string roiCsvPath = Path.Combine(outDir, $"PreprocessingRois_{ts}.csv");
+        WriteRoiCsv(roiCsvPath, roiRecords);
+
+
         var averages = timeRecords
             .GroupBy(r => r.Technique)
             .Select(g => new AvgRecord
@@ -197,6 +249,7 @@ class PreprocessingTechniquesTestbench
         Console.WriteLine($"Raw timings: {rawCsvPath}");
         Console.WriteLine($"Averages:    {avgCsvPath}");
         Console.WriteLine($"Sizes:       {sizeCsvPath}");
+        Console.WriteLine($"ROIs:        {roiCsvPath}");
     }
 
     private static long GetOriginalBinaryBytes(DatasetSample s)
@@ -476,6 +529,153 @@ class PreprocessingTechniquesTestbench
         }
     }
 
+    private static void WriteRoiCsv(string path, List<RoiRecord> records)
+    {
+        using var w = new StreamWriter(path);
+        w.WriteLine(string.Join(",",
+            "technique",
+            "image_id",
+            "roi_index",
+            "roi_pixels_w",
+            "roi_pixels_h",
+            "roi_binary_bytes",
+            "roi_base64_chars",
+            "roi_base64_bytes_utf8",
+            "roi_data_url_bytes_utf8",
+            "roi_x",
+            "roi_y",
+            "roi_box_w",
+            "roi_box_h",
+            "roi_score",
+            "roi_label"
+        ));
+
+        foreach (var r in records)
+        {
+            w.WriteLine(string.Join(",",
+                EscapeCsv(r.Technique),
+                EscapeCsv(r.ImageId),
+                r.RoiIndex.ToString(CultureInfo.InvariantCulture),
+                r.RoiPixelsW.ToString(CultureInfo.InvariantCulture),
+                r.RoiPixelsH.ToString(CultureInfo.InvariantCulture),
+                r.RoiBinaryBytes.ToString(CultureInfo.InvariantCulture),
+                r.RoiBase64Chars.ToString(CultureInfo.InvariantCulture),
+                r.RoiBase64BytesUtf8.ToString(CultureInfo.InvariantCulture),
+                r.RoiDataUrlBytesUtf8.ToString(CultureInfo.InvariantCulture),
+                r.RoiX.HasValue ? r.RoiX.Value.ToString(CultureInfo.InvariantCulture) : "",
+                r.RoiY.HasValue ? r.RoiY.Value.ToString(CultureInfo.InvariantCulture) : "",
+                r.RoiBoxW.HasValue ? r.RoiBoxW.Value.ToString(CultureInfo.InvariantCulture) : "",
+                r.RoiBoxH.HasValue ? r.RoiBoxH.Value.ToString(CultureInfo.InvariantCulture) : "",
+                r.RoiScore.HasValue ? r.RoiScore.Value.ToString("F6", CultureInfo.InvariantCulture) : "",
+                EscapeCsv(r.RoiLabel ?? "")
+            ));
+        }
+    }
+
+    private static int? GetDerivedBoxW(object roiObj)
+    {
+        var x1 = GetOptionalInt(roiObj, "X1", "x1");
+        var x2 = GetOptionalInt(roiObj, "X2", "x2");
+        if (!x1.HasValue || !x2.HasValue) return GetOptionalInt(roiObj, "W", "w", "Width", "width");
+        return Math.Max(0, x2.Value - x1.Value);
+    }
+
+    private static int? GetDerivedBoxH(object roiObj)
+    {
+        var y1 = GetOptionalInt(roiObj, "Y1", "y1");
+        var y2 = GetOptionalInt(roiObj, "Y2", "y2");
+        if (!y1.HasValue || !y2.HasValue) return GetOptionalInt(roiObj, "H", "h", "Height", "height");
+        return Math.Max(0, y2.Value - y1.Value);
+    }
+
+
+    private static int? GetOptionalInt(object obj, params string[] names)
+    {
+        if (obj == null) return null;
+
+        var t = obj.GetType();
+        foreach (var n in names)
+        {
+            var p = t.GetProperty(n);
+            if (p == null) continue;
+
+            var v = p.GetValue(obj);
+            if (v == null) continue;
+
+            try
+            {
+                if (v is int i) return i;
+                if (v is long l) return checked((int)l);
+                if (v is float f) return (int)f;
+                if (v is double d) return (int)d;
+                if (v is string s && int.TryParse(s, NumberStyles.Any, CultureInfo.InvariantCulture, out var parsed))
+                    return parsed;
+
+                return Convert.ToInt32(v, CultureInfo.InvariantCulture);
+            }
+            catch
+            {
+                // ignore conversion errors
+            }
+        }
+
+        return null;
+    }
+
+    private static double? GetOptionalDouble(object obj, params string[] names)
+    {
+        if (obj == null) return null;
+
+        var t = obj.GetType();
+        foreach (var n in names)
+        {
+            var p = t.GetProperty(n);
+            if (p == null) continue;
+
+            var v = p.GetValue(obj);
+            if (v == null) continue;
+
+            try
+            {
+                if (v is double d) return d;
+                if (v is float f) return (double)f;
+                if (v is int i) return (double)i;
+                if (v is long l) return (double)l;
+                if (v is string s && double.TryParse(s, NumberStyles.Any, CultureInfo.InvariantCulture, out var parsed))
+                    return parsed;
+
+                return Convert.ToDouble(v, CultureInfo.InvariantCulture);
+            }
+            catch
+            {
+                // ignore conversion errors
+            }
+        }
+
+        return null;
+    }
+
+    private static string? GetOptionalString(object obj, params string[] names)
+    {
+        if (obj == null) return null;
+
+        var t = obj.GetType();
+        foreach (var n in names)
+        {
+            var p = t.GetProperty(n);
+            if (p == null) continue;
+
+            var v = p.GetValue(obj);
+            if (v == null) continue;
+
+            return v.ToString();
+        }
+
+        return null;
+    }
+
+
+
     private static void WriteAvgCsv(string path, List<AvgRecord> records)
     {
         using var w = new StreamWriter(path);
@@ -533,6 +733,32 @@ class PreprocessingTechniquesTestbench
         public int DataUrlBytesUtf8Total { get; set; }
 
         public int JsonBytesUtf8 { get; set; }
+    }
+
+
+    private sealed class RoiRecord
+    {
+        public string Technique { get; set; } = "";
+        public string ImageId { get; set; } = "";
+
+        public int RoiIndex { get; set; }
+
+        // Derived from decoding the ROI image bytes (always available if ImageDataUrl is valid)
+        public int RoiPixelsW { get; set; }
+        public int RoiPixelsH { get; set; }
+
+        public long RoiBinaryBytes { get; set; }
+        public int RoiBase64Chars { get; set; }
+        public int RoiBase64BytesUtf8 { get; set; }
+        public int RoiDataUrlBytesUtf8 { get; set; }
+
+        // Optional metadata if your ROI object exposes it
+        public int? RoiX { get; set; }
+        public int? RoiY { get; set; }
+        public int? RoiBoxW { get; set; }
+        public int? RoiBoxH { get; set; }
+        public double? RoiScore { get; set; }
+        public string? RoiLabel { get; set; }
     }
 
     private sealed class AvgRecord
