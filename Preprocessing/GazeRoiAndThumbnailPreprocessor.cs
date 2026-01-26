@@ -71,20 +71,27 @@ public sealed class GazeRoiAndThumbnailPreprocessor : IPreprocessor
             };
         }
 
-        // Trace is in pixel coordinates (NOT normalized)
-        List<(int x, int y)> gazePixels = new(sample.Trace.Count);
+        // Trace is in pixel coordinates (NOT normalized) -> convert to normalized [0,1]
+        List<(float xn, float yn)> gazeNorm = new(sample.Trace.Count);
+
+        float invWm1 = 1f / Math.Max(1, width - 1);
+        float invHm1 = 1f / Math.Max(1, height - 1);
 
         foreach (var (xRaw, yRaw) in sample.Trace)
         {
-            int xPix = (int)MathF.Round(xRaw);
-            int yPix = (int)MathF.Round(yRaw);
+            float x = xRaw;
+            float y = yRaw;
 
-            xPix = Math.Clamp(xPix, 0, width - 1);
-            yPix = Math.Clamp(yPix, 0, height - 1);
+            // clamp in pixel space first (robust if trace goes slightly out of bounds)
+            x = Math.Clamp(x, 0f, width - 1);
+            y = Math.Clamp(y, 0f, height - 1);
 
-            gazePixels.Add((xPix, yPix));
+            // normalize to [0,1]
+            float xn = x * invWm1;
+            float yn = y * invHm1;
+
+            gazeNorm.Add((xn, yn));
         }
-
 
         // -------------------------------
         // NEW: ROI detection on low-res grid
@@ -105,19 +112,24 @@ public sealed class GazeRoiAndThumbnailPreprocessor : IPreprocessor
         float sx = (detW - 1) / (float)Math.Max(1, (width - 1));
         float sy = (detH - 1) / (float)Math.Max(1, (height - 1));
 
-        // Build low-res heatmap (accumulate gaze points after mapping to det grid)
+        // Build low-res heatmap directly from normalized gaze points
         float[] hmDet = new float[detW * detH];
-        foreach (var (x, y) in gazePixels)
+
+        foreach (var (xn, yn) in gazeNorm)
         {
-            int xd = (int)MathF.Round(x * sx);
-            int yd = (int)MathF.Round(y * sy);
+            int xd = (int)MathF.Round(xn * (detW - 1));
+            int yd = (int)MathF.Round(yn * (detH - 1));
             if ((uint)xd < (uint)detW && (uint)yd < (uint)detH)
                 hmDet[yd * detW + xd] += 1f;
         }
 
-        // Scale sigma to low-res pixel space (sigma is expressed in original pixels)
-        float sigmaDet = _gaussianSigma * MathF.Sqrt((detW / (float)width) * (detH / (float)height));
+
+        // Average scale factor based on dimension ratios.
+        float scaleX = detW / (float)width;
+        float scaleY = detH / (float)height;
+        float sigmaDet = _gaussianSigma * MathF.Sqrt(scaleX * scaleY);
         sigmaDet = MathF.Max(0.1f, sigmaDet);
+
 
         float[] blurredDet = GaussianBlurSeparable(hmDet, detW, detH, sigmaDet);
 

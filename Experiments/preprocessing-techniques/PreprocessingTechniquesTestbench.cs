@@ -23,7 +23,7 @@ class PreprocessingTechniquesTestbench
 
             // Format conversion preprocessors
             ("Jpeg_Q85", new JpegPreprocessor(quality: 85, useOriginalBytes: false)),
-            ("WebP_Lossy_Q75", new WebPPreprocessor(quality: 75, lossless: false)),
+            ("WebP_Lossy_Q85", new WebPPreprocessor(quality: 85, lossless: false)),
             ("Bmp", new BmpPreprocessor()),
 
             // NEW: Gaze ROI + global thumbnail
@@ -45,7 +45,7 @@ class PreprocessingTechniquesTestbench
                     minRoiRelSize: 0.2f,
                     globalThumbW: 28,
                     globalThumbH: 28,
-                    jpegQuality: 90)),
+                    jpegQuality: 85)),
 
             // Salience-based Yolov12 ROI + global thumbnail
             ("YoloV12SalientRoi+GlobalThumb",
@@ -56,7 +56,7 @@ class PreprocessingTechniquesTestbench
                     iouThreshold: 0.45f,
                     thumbW: 28,
                     thumbH: 28,
-                    jpegQuality: 90)),
+                    jpegQuality: 85)),
         };
 
         Directory.CreateDirectory(outDir);

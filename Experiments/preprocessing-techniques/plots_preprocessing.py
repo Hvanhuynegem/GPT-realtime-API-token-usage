@@ -348,6 +348,29 @@ else:
     plt.close()
     print("Wrote:", out4)
 
+        # Bar chart: coefficient of variation for processed size (std / mean) per technique
+    size_stats = (
+        ds_bar.groupby("technique")["processed_binary_bytes"]
+        .agg(["mean", "std"])
+    )
+
+    # Avoid division by zero
+    size_stats["cv"] = size_stats["std"] / size_stats["mean"].replace(0, pd.NA)
+    size_stats = size_stats.dropna(subset=["cv"]).sort_values("cv")
+
+    plt.figure()
+    plt.bar(size_stats.index.tolist(), size_stats["cv"].values)
+    plt.xlabel("Preprocessing technique")
+    plt.ylabel("Processed size CV (std / mean)")
+    plt.xticks(rotation=30, ha="right")
+    plt.tight_layout()
+
+    out_cv_size = Path(SIZES_PATH).with_name("barchart_cv_processed_bytes.png")
+    plt.savefig(out_cv_size, dpi=200)
+    plt.close()
+    print("Wrote:", out_cv_size)
+
+
     # Bar chart: standard deviation of time per technique
     std = df.groupby("technique")["time_ms"].std().sort_values()
 
@@ -476,7 +499,7 @@ else:
             plt.figure()
             plt.boxplot(
                 [m["gaze_in_sal"].values, m["sal_in_gaze"].values, m["iou"].values],
-                labels=["Gaze in Saliency", "Saliency in Gaze", "Intersection over Union"],
+                labels=["Gaze ROI in Saliency ROI", "Saliency ROI in Gaze ROI", "Intersection over Union"],
                 showfliers=True
             )
             plt.ylabel("Overlap (0..1)")
