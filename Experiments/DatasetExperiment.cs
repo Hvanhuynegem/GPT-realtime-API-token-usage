@@ -6,7 +6,13 @@ using Thesis.OpenAI;
 
 class DatasetExperiment
 {
-    public static async Task RunAsync()
+    public static async Task RunAsync(
+    List<DatasetSample> rawSamples,
+    IPreprocessor preprocessor,
+    string preprocessorName,
+    AIModel selectedModel,
+    string planRunId
+    )
     {
         var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
         if (string.IsNullOrWhiteSpace(apiKey))
@@ -15,46 +21,90 @@ class DatasetExperiment
             return;
         }
 
-        var visible = apiKey.Length > 10
-            ? apiKey[..6] + "..." + apiKey[^4..]
-            : apiKey;
-        Console.WriteLine("Using API key (partial): " + visible);
+        ModelConfig cfg = ModelConfigs.Get(selectedModel);
 
-        int maxSamples = 1;
-
-        // Load the dataset.
-        Console.WriteLine("Current working directory: " + Directory.GetCurrentDirectory());
-
-        string dataDir = Path.Combine(Directory.GetCurrentDirectory(), "data");
-        // string datasetDir = "C:\\Users\\henri\\Desktop\\GPT-realtime-API-token-usage\\dataset";
-        Console.WriteLine("Dataset dir: " + dataDir);
-
-        var rawSamples = VoilaDatasetLoader.LoadSamplesFromVoila(dataDir, maxSamples).ToList();
-        IPreprocessor preprocessor = new IdentityPreprocessor();
-
-
-        // SELECT MODEL HERE ---------------------------------------------------------
-        AIModel selected = AIModel.GPT_Realtime_Mini;
-        // ---------------------------------------------------------------------------
-
-
-        ModelConfig cfg = ModelConfigs.Get(selected);
-
-        Console.WriteLine("Using model: " + cfg.ModelName);
+        Console.WriteLine($"Model: {cfg.ModelName}");
+        Console.WriteLine($"Preprocessor: {preprocessorName}");
 
         if (cfg.IsRealtime)
         {
-            Console.WriteLine("Using Realtime WebSocket endpoint: " + cfg.WebSocketUrl);
-            await RunRealtimeExperimentAsync(apiKey, cfg, rawSamples, preprocessor);
+            await RunRealtimeExperimentAsync(
+                apiKey,
+                cfg,
+                rawSamples,
+                preprocessor,
+                preprocessorName,
+                planRunId
+            );
         }
         else
         {
-            Console.WriteLine("Using REST /v1/responses endpoint");
-            await RunRestExperimentAsync(apiKey, cfg, rawSamples, preprocessor);
+            await RunRestExperimentAsync(
+                apiKey,
+                cfg,
+                rawSamples,
+                preprocessor,
+                preprocessorName,
+                planRunId
+            );
         }
     }
 
-    static async Task RunRestExperimentAsync(string apiKey, ModelConfig cfg, List<DatasetSample> rawSamples, IPreprocessor preprocessor)
+    // public static async Task RunAsync()
+    // {
+    //     var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
+    //     if (string.IsNullOrWhiteSpace(apiKey))
+    //     {
+    //         Console.WriteLine("OPENAI_API_KEY is not set.");
+    //         return;
+    //     }
+
+    //     var visible = apiKey.Length > 10
+    //         ? apiKey[..6] + "..." + apiKey[^4..]
+    //         : apiKey;
+    //     Console.WriteLine("Using API key (partial): " + visible);
+
+    //     int maxSamples = 1;
+
+    //     // Load the dataset.
+    //     Console.WriteLine("Current working directory: " + Directory.GetCurrentDirectory());
+
+    //     string dataDir = Path.Combine(Directory.GetCurrentDirectory(), "data");
+    //     // string datasetDir = "C:\\Users\\henri\\Desktop\\GPT-realtime-API-token-usage\\dataset";
+    //     Console.WriteLine("Dataset dir: " + dataDir);
+
+    //     var rawSamples = VoilaDatasetLoader.LoadSamplesFromVoila(dataDir, maxSamples).ToList();
+    //     IPreprocessor preprocessor = new IdentityPreprocessor();
+
+
+    //     // SELECT MODEL HERE ---------------------------------------------------------
+    //     AIModel selected = AIModel.GPT_Realtime_Mini;
+    //     // ---------------------------------------------------------------------------
+
+
+    //     ModelConfig cfg = ModelConfigs.Get(selected);
+
+    //     Console.WriteLine("Using model: " + cfg.ModelName);
+
+    //     if (cfg.IsRealtime)
+    //     {
+    //         Console.WriteLine("Using Realtime WebSocket endpoint: " + cfg.WebSocketUrl);
+    //         await RunRealtimeExperimentAsync(apiKey, cfg, rawSamples, preprocessor);
+    //     }
+    //     else
+    //     {
+    //         Console.WriteLine("Using REST /v1/responses endpoint");
+    //         await RunRestExperimentAsync(apiKey, cfg, rawSamples, preprocessor);
+    //     }
+    // }
+
+    static async Task RunRestExperimentAsync(
+        string apiKey, 
+        ModelConfig cfg, 
+        List<DatasetSample> rawSamples, 
+        IPreprocessor preprocessor, 
+        string preprocessorName, 
+        string planRunId)
     {
         using var http = new HttpClient
         {
@@ -91,18 +141,26 @@ class DatasetExperiment
         }
 
         string baseDir = "logs";
-        string timestamp = DateTime.UtcNow.ToString("yyyy-MM-dd_HH-mm-ss");
-        string experimentId = $"{timestamp}_{cfg.ModelName}_baseline";
+        string experimentId = planRunId; // same for all preprocessors
 
-        ExperimentLogger.SaveExperimentResults(baseDir, experimentId,
+
+        ExperimentLogger.SaveExperimentResults(
+            baseDir, 
+            experimentId,
             model: cfg.ModelName,
             datasetName: "VOIL-A",
-            preprocessorName: preprocessor.GetType().Name,
+            preprocessorName: preprocessorName,
             metrics: metricsList);
     }
 
 
-    static async Task RunRealtimeExperimentAsync(string apiKey, ModelConfig cfg, List<DatasetSample> rawSamples, IPreprocessor preprocessor)
+    static async Task RunRealtimeExperimentAsync(
+        string apiKey, 
+        ModelConfig cfg, 
+        List<DatasetSample> rawSamples, 
+        IPreprocessor preprocessor, 
+        string preprocessorName,
+        string planRunId)
     {
         var metricsList = new List<SampleMetrics>();
 
@@ -166,11 +224,12 @@ class DatasetExperiment
         }
 
         string baseDir = "logs";
-        string timestamp = DateTime.UtcNow.ToString("yyyy-MM-dd_HH-mm-ss");
-        string experimentId = $"{timestamp}_{cfg.ModelName}_baseline";
+        string experimentId = planRunId; // same for all preprocessors
+
 
         ExperimentLogger.SaveExperimentResults(baseDir, experimentId, model: cfg.ModelName,
-            datasetName: "VOIL-A", preprocessorName: preprocessor.GetType().Name,
+            datasetName: "VOIL-A", 
+            preprocessorName: preprocessorName,
             metrics: metricsList);
 
         Console.WriteLine("Done.");

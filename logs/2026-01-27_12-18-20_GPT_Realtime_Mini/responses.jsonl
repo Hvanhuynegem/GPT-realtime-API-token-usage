@@ -1,0 +1,45 @@
+{"preprocessor":"Baseline_NoOp","sample_id":"100021_103_1","assistant_text":"That wooden thing is a cutting board being used for chopping vegetables."}
+{"preprocessor":"Baseline_NoOp","sample_id":"100021_103_2","assistant_text":"The cutting board has broccoli, carrots, green beans, celery, and some leafy greens."}
+{"preprocessor":"Baseline_NoOp","sample_id":"100021_103_3","assistant_text":"The bottle with the cream cap appears to be a jar of peanut butter."}
+{"preprocessor":"Baseline_NoOp","sample_id":"100037_80_1","assistant_text":"The main focus of the view is the zebra standing in the foreground."}
+{"preprocessor":"Baseline_NoOp","sample_id":"100037_80_2","assistant_text":"The trees in the background appear to be dry, leafless, thorny acacia trees, common in savanna habitats."}
+{"preprocessor":"Downsampler","sample_id":"100021_103_1","assistant_text":"It\u2019s a cutting board being used to prepare and serve vegetables, cheese, and other snacks."}
+{"preprocessor":"Downsampler","sample_id":"100021_103_2","assistant_text":"It looks like there are carrots, broccoli, celery, and green beans on the cutting board."}
+{"preprocessor":"Downsampler","sample_id":"100021_103_3","assistant_text":"The bottle with the cream cap is likely holding a condiment or sauce to complement the food on the board."}
+{"preprocessor":"Downsampler","sample_id":"100037_80_1","assistant_text":"The main focus of this view is the zebra in the foreground."}
+{"preprocessor":"Downsampler","sample_id":"100037_80_2","assistant_text":"It looks like there are acacia trees in the background."}
+{"preprocessor":"Grayscale","sample_id":"100021_103_1","assistant_text":"The wooden thing is a cutting board being used to hold and prepare the food."}
+{"preprocessor":"Grayscale","sample_id":"100021_103_2","assistant_text":"It looks like there are carrots, celery, onions, and possibly some green beans on the cutting board."}
+{"preprocessor":"Grayscale","sample_id":"100021_103_3","assistant_text":"The bottle with the cream cap likely contains a sauce or dressing for the food items on the board."}
+{"preprocessor":"Grayscale","sample_id":"100037_80_1","assistant_text":"The main focus of this view is the zebra standing in the foreground among trees."}
+{"preprocessor":"Grayscale","sample_id":"100037_80_2","assistant_text":"The trees in the background appear to be sparse and possibly thorny, similar to acacia trees."}
+{"preprocessor":"Jpeg_Q85","sample_id":"100021_103_1","assistant_text":"The wooden thing is a cutting board being used for chopping vegetables and tofu."}
+{"preprocessor":"Jpeg_Q85","sample_id":"100021_103_2","assistant_text":"The cutting board has carrots, celery, green beans, broccoli, and what looks like pieces of lettuce."}
+{"preprocessor":"Jpeg_Q85","sample_id":"100021_103_3","assistant_text":"The bottle with the cream cap appears to be a jar of peanut butter, often used for adding flavor to dishes or as a spread."}
+{"preprocessor":"Jpeg_Q85","sample_id":"100037_80_1","assistant_text":"The main focus of this view is a group of zebras in a dry, wooded area."}
+{"preprocessor":"Jpeg_Q85","sample_id":"100037_80_2","assistant_text":"It looks like there are mostly dry, leafless acacia or similar thorny trees in the background."}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"100021_103_1","assistant_text":"The wooden board is being used as a cutting board for preparing vegetables and tofu."}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"100021_103_2","assistant_text":"It looks like there are carrots, celery, broccoli, green beans, and possibly some tofu on the cutting board."}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"100021_103_3","assistant_text":"The bottle with the cream cap appears to be a jar of peanut butter, likely for adding flavor or seasoning."}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"100037_80_1","assistant_text":"The main focus of this view is the zebra in the foreground standing among trees."}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"100037_80_2","assistant_text":"These appear to be acacia or similar dry-savanna trees common in regions where zebras roam."}
+{"preprocessor":"Bmp","sample_id":"100021_103_1","assistant_text":""}
+{"preprocessor":"Bmp","sample_id":"100021_103_2","assistant_text":""}
+{"preprocessor":"Bmp","sample_id":"100021_103_3","assistant_text":""}
+{"preprocessor":"Bmp","sample_id":"100037_80_1","assistant_text":""}
+{"preprocessor":"Bmp","sample_id":"100037_80_2","assistant_text":""}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"100021_103_1","assistant_text":"The wooden thing is a cutting board being used to chop and prepare vegetables."}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"100021_103_2","assistant_text":"The cutting board has broccoli, celery, green beans, carrots, and possibly napa cabbage."}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"100021_103_3","assistant_text":"That bottle with the cream cap likely contains a sauce or seasoning, such as soy sauce or sesame oil, used to flavor the dish."}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"100037_80_1","assistant_text":"The main focus of the view is a group of zebras in a dry woodland area."}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"100037_80_2","assistant_text":"The trees in the background appear to be dry, leafless, thorny shrubs, likely acacia or similar types found in savannas."}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"100021_103_1","assistant_text":"It\u2019s being used as a cutting board for preparing vegetables and tofu."}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"100021_103_2","assistant_text":"I see carrots, celery, broccoli, green beans, and some leafy greens on the cutting board."}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"100021_103_3","assistant_text":"The bottle with the cream cap likely contains a sauce or seasoning for the vegetables."}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"100037_80_1","assistant_text":"The main focus of this view is the zebra standing in the foreground."}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"100037_80_2","assistant_text":"They appear to be leafless or sparse deciduous trees, possibly acacia or similar dry-season trees."}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"100021_103_1","assistant_text":"The wooden thing is a cutting board used to prepare vegetables and tofu."}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"100021_103_2","assistant_text":"It looks like there are carrots, green beans, celery, broccoli, and some sliced cabbage on the cutting board."}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"100021_103_3","assistant_text":"The bottle with the cream cap likely contains a sauce or marinade, such as soy sauce or cooking sauce, used for the vegetables and tofu."}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"100037_80_1","assistant_text":"The main focus of this view is the two zebras standing in a dry, wooded area."}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"100037_80_2","assistant_text":"They appear to be Acacia trees, commonly found in savannas."}

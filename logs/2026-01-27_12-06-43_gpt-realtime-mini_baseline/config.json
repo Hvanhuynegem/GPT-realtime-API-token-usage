@@ -1,0 +1,8 @@
+{
+  "experiment_id": "2026-01-27_12-06-43_gpt-realtime-mini_baseline",
+  "timestamp": "2026-01-27T12:06:43.1155936Z",
+  "model": "gpt-realtime-mini",
+  "dataset_name": "VOIL-A",
+  "num_samples": 5,
+  "preprocessor": "Jpeg_Q85"
+}

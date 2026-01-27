@@ -16,55 +16,68 @@ public static class ExperimentLogger
         string expDir = Path.Combine(baseDir, experimentId);
         Directory.CreateDirectory(expDir);
 
-        // 1. Save config.json
-        var config = new
+        // 1) config.json: write once
+        string configPath = Path.Combine(expDir, "config.json");
+        if (!File.Exists(configPath))
         {
-            experiment_id = experimentId,
-            timestamp = DateTime.UtcNow.ToString("o"),
-            model = model,
-            dataset_name = datasetName,
-            num_samples = metrics.Count,
-            preprocessor = preprocessorName
-        };
+            var config = new
+            {
+                experiment_id = experimentId,
+                timestamp = DateTime.UtcNow.ToString("o"),
+                model = model,
+                dataset_name = datasetName
+            };
 
-        string configJson = JsonSerializer.Serialize(config, new JsonSerializerOptions
-        {
-            WriteIndented = true
-        });
-        File.WriteAllText(Path.Combine(expDir, "config.json"), configJson);
-
-        // 2. Save metrics.csv
-        var sb = new StringBuilder();
-        sb.AppendLine("sample_id,end_to_end_ms,send_to_response_created_ms,response_created_to_first_token_ms,first_token_to_done_ms,input_tokens,output_tokens,total_tokens,text_input_tokens,image_input_tokens,cached_tokens,total_cost_usd");
-
-        foreach (var m in metrics)
-        {
-            sb.AppendLine(string.Join(",",
-                EscapeCsv(m.SampleId),
-                m.EndToEndMs,
-                m.SendToResponseCreatedMs,
-                m.ResponseCreatedToFirstTokenMs,
-                m.FirstTokenToDoneMs,
-                m.InputTokens,
-                m.OutputTokens,
-                m.TotalTokens,
-                m.TextInputTokens,
-                m.ImageInputTokens,
-                m.CachedTokens,
-                m.TotalCostUsd.ToString("F8", System.Globalization.CultureInfo.InvariantCulture)));
+            string configJson = JsonSerializer.Serialize(config, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(configPath, configJson);
         }
 
-        File.WriteAllText(Path.Combine(expDir, "metrics.csv"), sb.ToString());
+        // 2) metrics.csv: append, write header only once
+        string metricsPath = Path.Combine(expDir, "metrics.csv");
+        bool writeHeader = !File.Exists(metricsPath);
 
-        // 3. Optional: save raw responses as JSONL
-        // One line per sample with sample id and assistant text etc.
-        var lines = metrics.Select(m => JsonSerializer.Serialize(new
+        using (var sw = new StreamWriter(metricsPath, append: true))
         {
-            sample_id = m.SampleId,
-            assistant_text = m.AssistantText
-        }));
-        File.WriteAllLines(Path.Combine(expDir, "responses.jsonl"), lines);
+            if (writeHeader)
+            {
+                sw.WriteLine("preprocessor,sample_id,end_to_end_ms,send_to_response_created_ms,response_created_to_first_token_ms,first_token_to_done_ms,input_tokens,output_tokens,total_tokens,text_input_tokens,image_input_tokens,cached_tokens,total_cost_usd");
+            }
+
+            foreach (var m in metrics)
+            {
+                sw.WriteLine(string.Join(",",
+                    EscapeCsv(preprocessorName),
+                    EscapeCsv(m.SampleId),
+                    m.EndToEndMs,
+                    m.SendToResponseCreatedMs,
+                    m.ResponseCreatedToFirstTokenMs,
+                    m.FirstTokenToDoneMs,
+                    m.InputTokens,
+                    m.OutputTokens,
+                    m.TotalTokens,
+                    m.TextInputTokens,
+                    m.ImageInputTokens,
+                    m.CachedTokens,
+                    m.TotalCostUsd.ToString("F8", System.Globalization.CultureInfo.InvariantCulture)));
+            }
+        }
+
+        // 3) responses.jsonl: append
+        string responsesPath = Path.Combine(expDir, "responses.jsonl");
+        using (var sw = new StreamWriter(responsesPath, append: true))
+        {
+            foreach (var m in metrics)
+            {
+                sw.WriteLine(JsonSerializer.Serialize(new
+                {
+                    preprocessor = preprocessorName,
+                    sample_id = m.SampleId,
+                    assistant_text = m.AssistantText
+                }));
+            }
+        }
     }
+
 
     static string EscapeCsv(string value)
     {

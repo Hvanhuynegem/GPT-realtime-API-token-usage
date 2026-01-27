@@ -1,0 +1,8 @@
+{
+  "experiment_id": "2026-01-27_12-09-00_gpt-realtime-mini_baseline",
+  "timestamp": "2026-01-27T12:09:00.5549841Z",
+  "model": "gpt-realtime-mini",
+  "dataset_name": "VOIL-A",
+  "num_samples": 5,
+  "preprocessor": "YoloV12SalientRoi\u002BGlobalThumb"
+}

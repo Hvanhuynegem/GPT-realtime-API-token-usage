@@ -1,0 +1,6 @@
+sample_id,end_to_end_ms,send_to_response_created_ms,response_created_to_first_token_ms,first_token_to_done_ms,input_tokens,output_tokens,total_tokens,text_input_tokens,image_input_tokens,cached_tokens,total_cost_usd
+100021_103_1,1303,184,999,119,97,18,115,32,65,0,0.00011440
+100021_103_2,1558,182,1253,122,98,26,124,33,65,0,0.00013420
+100021_103_3,567,178,268,119,100,23,123,35,65,0,0.00012820
+100037_80_1,800,200,474,125,97,22,119,32,65,0,0.00012400
+100037_80_2,642,190,364,87,99,23,122,34,65,0,0.00012760
