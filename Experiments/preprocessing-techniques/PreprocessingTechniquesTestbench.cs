@@ -12,7 +12,7 @@ class PreprocessingTechniquesTestbench
     public static void Run(
         int maxSamples = 1000,
         int warmupSamples = 10,
-        string datasetDir = "data",
+        string datasetDir = "data/voila-data",
         string outDir = "outputs/preprocessing-techniques")
     {
         var techniques = new List<(string Name, IPreprocessor Preprocessor)>

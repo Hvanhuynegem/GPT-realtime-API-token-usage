@@ -23,11 +23,6 @@
 {"preprocessor":"WebP_Lossy_Q85","sample_id":"100021_103_3","assistant_text":"The bottle with the cream cap appears to be a jar of peanut butter, likely for adding flavor or seasoning."}
 {"preprocessor":"WebP_Lossy_Q85","sample_id":"100037_80_1","assistant_text":"The main focus of this view is the zebra in the foreground standing among trees."}
 {"preprocessor":"WebP_Lossy_Q85","sample_id":"100037_80_2","assistant_text":"These appear to be acacia or similar dry-savanna trees common in regions where zebras roam."}
-{"preprocessor":"Bmp","sample_id":"100021_103_1","assistant_text":""}
-{"preprocessor":"Bmp","sample_id":"100021_103_2","assistant_text":""}
-{"preprocessor":"Bmp","sample_id":"100021_103_3","assistant_text":""}
-{"preprocessor":"Bmp","sample_id":"100037_80_1","assistant_text":""}
-{"preprocessor":"Bmp","sample_id":"100037_80_2","assistant_text":""}
 {"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"100021_103_1","assistant_text":"The wooden thing is a cutting board being used to chop and prepare vegetables."}
 {"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"100021_103_2","assistant_text":"The cutting board has broccoli, celery, green beans, carrots, and possibly napa cabbage."}
 {"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"100021_103_3","assistant_text":"That bottle with the cream cap likely contains a sauce or seasoning, such as soy sauce or sesame oil, used to flavor the dish."}

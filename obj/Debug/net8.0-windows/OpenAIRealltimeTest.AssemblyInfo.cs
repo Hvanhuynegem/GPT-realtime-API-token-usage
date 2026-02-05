@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("OpenAIRealltimeTest")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fd4d56100e9c13bc5b494b674c05c4c8f3cd9d6a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f704578887ebed8731dce13aa64beff9c4675449")]
 [assembly: System.Reflection.AssemblyProductAttribute("OpenAIRealltimeTest")]
 [assembly: System.Reflection.AssemblyTitleAttribute("OpenAIRealltimeTest")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

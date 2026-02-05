@@ -288,6 +288,25 @@ public static class RealtimeRunner
         throw new Exception("RunSingleSampleWebsocketAsync fell through without returning.");
     }
 
+    public static async Task<string> ReceiveOneFrameAsString(ClientWebSocket ws, CancellationToken ct)
+    {
+        var buffer = new ArraySegment<byte>(new byte[1024 * 64]);
+        using var ms = new MemoryStream();
+
+        WebSocketReceiveResult result;
+        do
+        {
+            result = await ws.ReceiveAsync(buffer, ct);
+            if (result.MessageType == WebSocketMessageType.Close)
+                throw new WebSocketException("Server closed connection during first frame.");
+
+            ms.Write(buffer.Array!, buffer.Offset, result.Count);
+        }
+        while (!result.EndOfMessage);
+
+        return System.Text.Encoding.UTF8.GetString(ms.ToArray());
+    }
+
     public static Task SendJson(ClientWebSocket ws, string json)
     {
         var bytes = Encoding.UTF8.GetBytes(json);

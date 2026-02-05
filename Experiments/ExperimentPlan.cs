@@ -22,11 +22,12 @@ namespace Thesis.Experiments
             // -------------------------
             // Dataset loading (ONCE)
             // -------------------------
-            string dataDir = Path.Combine(Directory.GetCurrentDirectory(), "data");
+            // string dataDir = Path.Combine(Directory.GetCurrentDirectory(), "data", "voila-data");
+            string dataDir = Path.Combine(Directory.GetCurrentDirectory(), "data", "VQA-HMUG-data");
             Console.WriteLine("Dataset dir: " + dataDir);
 
             var rawSamples = VoilaDatasetLoader
-                .LoadSamplesFromVoila(dataDir, maxSamples)
+                .LoadSamplesFromVQAMHUG(dataDir, maxSamples)
                 .ToList();
 
             Console.WriteLine($"Loaded {rawSamples.Count} samples.");
@@ -43,7 +44,7 @@ namespace Thesis.Experiments
                 // Format conversion preprocessors
                 new("Jpeg_Q85", () => new JpegPreprocessor(quality: 85, useOriginalBytes: false)),
                 new("WebP_Lossy_Q85", () => new WebPPreprocessor(quality: 85, lossless: false)),
-                new("Bmp", () => new BmpPreprocessor()),
+                // new("Bmp", () => new BmpPreprocessor()),
 
                 // Gaze ROI + global thumbnail
                 new("GazeRoi+GlobalThumb", () =>

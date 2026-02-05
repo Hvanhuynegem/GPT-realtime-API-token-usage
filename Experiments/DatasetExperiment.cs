@@ -3,6 +3,8 @@ using Thesis.Dataset;
 using Thesis.Preprocessing;
 using Thesis.Metrics;
 using Thesis.OpenAI;
+using System.Text.Json;
+
 
 class DatasetExperiment
 {
@@ -49,54 +51,6 @@ class DatasetExperiment
             );
         }
     }
-
-    // public static async Task RunAsync()
-    // {
-    //     var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
-    //     if (string.IsNullOrWhiteSpace(apiKey))
-    //     {
-    //         Console.WriteLine("OPENAI_API_KEY is not set.");
-    //         return;
-    //     }
-
-    //     var visible = apiKey.Length > 10
-    //         ? apiKey[..6] + "..." + apiKey[^4..]
-    //         : apiKey;
-    //     Console.WriteLine("Using API key (partial): " + visible);
-
-    //     int maxSamples = 1;
-
-    //     // Load the dataset.
-    //     Console.WriteLine("Current working directory: " + Directory.GetCurrentDirectory());
-
-    //     string dataDir = Path.Combine(Directory.GetCurrentDirectory(), "data");
-    //     // string datasetDir = "C:\\Users\\henri\\Desktop\\GPT-realtime-API-token-usage\\dataset";
-    //     Console.WriteLine("Dataset dir: " + dataDir);
-
-    //     var rawSamples = VoilaDatasetLoader.LoadSamplesFromVoila(dataDir, maxSamples).ToList();
-    //     IPreprocessor preprocessor = new IdentityPreprocessor();
-
-
-    //     // SELECT MODEL HERE ---------------------------------------------------------
-    //     AIModel selected = AIModel.GPT_Realtime_Mini;
-    //     // ---------------------------------------------------------------------------
-
-
-    //     ModelConfig cfg = ModelConfigs.Get(selected);
-
-    //     Console.WriteLine("Using model: " + cfg.ModelName);
-
-    //     if (cfg.IsRealtime)
-    //     {
-    //         Console.WriteLine("Using Realtime WebSocket endpoint: " + cfg.WebSocketUrl);
-    //         await RunRealtimeExperimentAsync(apiKey, cfg, rawSamples, preprocessor);
-    //     }
-    //     else
-    //     {
-    //         Console.WriteLine("Using REST /v1/responses endpoint");
-    //         await RunRestExperimentAsync(apiKey, cfg, rawSamples, preprocessor);
-    //     }
-    // }
 
     static async Task RunRestExperimentAsync(
         string apiKey, 
@@ -167,24 +121,18 @@ class DatasetExperiment
         int index = 0;
         foreach (var sample in rawSamples)
         {
-            using var ws = new ClientWebSocket();
-            ws.Options.SetRequestHeader("Authorization", $"Bearer {apiKey}");
-            ws.Options.SetRequestHeader("OpenAI-Beta", "realtime=v1");
             Console.WriteLine("Connecting to OpenAI Realtime...");
-            await ws.ConnectAsync(new Uri(cfg.WebSocketUrl), CancellationToken.None);
+            using var ws = await ConnectRealtimeWithRetryAsync(
+                apiKey,
+                cfg.WebSocketUrl,
+                maxAttempts: 6,
+                baseDelayMs: 250,
+                maxDelayMs: 8000,
+                ct: CancellationToken.None
+            );
             Console.WriteLine("Connected.");
 
-            // First event should be session.created
-            await RealtimeRunner.ReceiveAndPrintOneFrame(ws);
 
-            // Limit output to text only
-            //string sessionUpdateJson = @"
-            //{
-            //  ""type"": ""session.update"",
-            //  ""session"": {
-            //    ""modalities"": [""text""]
-            //  }
-            //}";
             string sessionUpdateJson = @"
             {
             ""type"": ""session.update"",
@@ -259,4 +207,110 @@ class DatasetExperiment
         Console.WriteLine($"  Total cost: {m.TotalCostUsd:F8} USD");
     }
 
+
+    static async Task<ClientWebSocket> ConnectRealtimeWithRetryAsync(
+    string apiKey,
+    string webSocketUrl,
+    int maxAttempts = 6,
+    int baseDelayMs = 250,
+    int maxDelayMs = 8000,
+    CancellationToken ct = default)
+    {
+        var rng = new Random();
+
+        for (int attempt = 1; attempt <= maxAttempts; attempt++)
+        {
+            ClientWebSocket? ws = null;
+            try
+            {
+                ws = new ClientWebSocket();
+                ws.Options.SetRequestHeader("Authorization", $"Bearer {apiKey}");
+                ws.Options.SetRequestHeader("OpenAI-Beta", "realtime=v1");
+
+                await ws.ConnectAsync(new Uri(webSocketUrl), ct);
+
+                // Optional: validate first frame is not an error
+                // If your ReceiveAndPrintOneFrame already prints and returns the raw JSON,
+                // use that. Otherwise use a "peek" receive method.
+                string first = await RealtimeRunner.ReceiveOneFrameAsString(ws, ct);
+
+                if (IsServerErrorEvent(first))
+                {
+                    // Clean close and retry
+                    try
+                    {
+                        if (ws.State == WebSocketState.Open)
+                            await ws.CloseAsync(WebSocketCloseStatus.InternalServerError, "Retry after server_error", ct);
+                    }
+                    catch { /* ignore */ }
+
+                    ws.Dispose();
+
+                    throw new Exception("Server returned error on first frame.");
+                }
+
+                // If you still want to print it:
+                Console.WriteLine("First event from server:");
+                Console.WriteLine(first);
+
+                return ws;
+            }
+            catch (Exception ex) when (attempt < maxAttempts && IsRetryableRealtimeException(ex))
+            {
+                try { ws?.Dispose(); } catch { /* ignore */ }
+
+                int delay = ComputeBackoffWithJitterMs(attempt, baseDelayMs, maxDelayMs, rng);
+                Console.WriteLine($"Realtime connect attempt {attempt} failed: {ex.Message}");
+                Console.WriteLine($"Retrying in {delay} ms...");
+                await Task.Delay(delay, ct);
+            }
+        }
+
+        throw new Exception($"Failed to connect to Realtime after {maxAttempts} attempts.");
+    }
+
+    static bool IsRetryableRealtimeException(Exception ex)
+    {
+        // Conservative: retry on websocket/network/transient issues.
+        if (ex is WebSocketException) return true;
+        if (ex is OperationCanceledException) return false; // user cancelled
+        if (ex is TimeoutException) return true;
+
+        // Your first-frame "server_error" throws generic Exception above
+        if (ex.Message.Contains("Server returned error", StringComparison.OrdinalIgnoreCase)) return true;
+
+        return false;
+    }
+
+    static int ComputeBackoffWithJitterMs(int attempt, int baseDelayMs, int maxDelayMs, Random rng)
+    {
+        // Exponential backoff: base * 2^(attempt-1), capped, plus jitter [0..base)
+        double exp = baseDelayMs * Math.Pow(2, attempt - 1);
+        int capped = (int)Math.Min(exp, maxDelayMs);
+        int jitter = rng.Next(0, baseDelayMs);
+        return capped + jitter;
+    }
+
+    static bool IsServerErrorEvent(string json)
+    {
+        // Detect: {"type":"error","error":{"type":"server_error", ...}}
+        try
+        {
+            using var doc = JsonDocument.Parse(json);
+            var root = doc.RootElement;
+
+            if (!root.TryGetProperty("type", out var typeProp)) return false;
+            if (!string.Equals(typeProp.GetString(), "error", StringComparison.OrdinalIgnoreCase)) return false;
+
+            if (!root.TryGetProperty("error", out var errObj)) return false;
+            if (!errObj.TryGetProperty("type", out var errType)) return false;
+
+            var t = errType.GetString() ?? "";
+            return string.Equals(t, "server_error", StringComparison.OrdinalIgnoreCase);
+        }
+        catch
+        {
+            return false;
+        }
+    }
 }

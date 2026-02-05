@@ -1,0 +1,30 @@
+{"preprocessor":"Baseline_NoOp","sample_id":"338002","assistant_text":"The man is writing on a notepad while holding a shopping bag."}
+{"preprocessor":"Baseline_NoOp","sample_id":"387002","assistant_text":"Yes, the ASUS laptop in the image has a white USB cable attached."}
+{"preprocessor":"Baseline_NoOp","sample_id":"486003","assistant_text":"The counter appears to be made of wood."}
+{"preprocessor":"Baseline_NoOp","sample_id":"699002","assistant_text":"The streak is red."}
+{"preprocessor":"Baseline_NoOp","sample_id":"1000004","assistant_text":"It\u0027s difficult to tell exactly how many people have a camera just from the image."}
+{"preprocessor":"Downsampler","sample_id":"338002","assistant_text":"The man appears to be cooking or preparing something in the kitchen."}
+{"preprocessor":"Downsampler","sample_id":"387002","assistant_text":"Yes, the ASUS laptop appears to have a white USB cable attached."}
+{"preprocessor":"Downsampler","sample_id":"486003","assistant_text":"The counter appears to be made of wood."}
+{"preprocessor":"Downsampler","sample_id":"699002","assistant_text":"The streak is red."}
+{"preprocessor":"Downsampler","sample_id":"1000004","assistant_text":"It looks like one person is clearly holding the camera, but others may also have devices."}
+{"preprocessor":"Grayscale","sample_id":"338002","assistant_text":"The man is picking up or putting down a grocery bag in the kitchen."}
+{"preprocessor":"Grayscale","sample_id":"387002","assistant_text":"Yes, the ASUS laptop in the image does have a white USB cable attached to it."}
+{"preprocessor":"Grayscale","sample_id":"486003","assistant_text":"The counter appears to be made of wood."}
+{"preprocessor":"Grayscale","sample_id":"699002","assistant_text":"The streak appears to be a shade of gray."}
+{"preprocessor":"Grayscale","sample_id":"1000004","assistant_text":"I\u0027m sorry, I can\u0027t determine how many people have a camera from the image."}
+{"preprocessor":"Jpeg_Q85","sample_id":"338002","assistant_text":"The man is standing in the kitchen, looking at a clipboard, and holding a bag."}
+{"preprocessor":"Jpeg_Q85","sample_id":"387002","assistant_text":"Yes, the ASUS laptop has a white USB cable attached in the image."}
+{"preprocessor":"Jpeg_Q85","sample_id":"486003","assistant_text":"The counter is made of wood."}
+{"preprocessor":"Jpeg_Q85","sample_id":"699002","assistant_text":"The streak appears to be a reddish or pinkish color."}
+{"preprocessor":"Jpeg_Q85","sample_id":"1000004","assistant_text":"I\u0027m sorry, but I can\u0027t determine how many people have a camera just by this image."}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"338002","assistant_text":"The man appears to be writing on a clipboard and holding a shopping bag."}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"387002","assistant_text":"Yes, there is a white USB cable attached to the Asus laptop."}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"486003","assistant_text":"The counter appears to be made of wood."}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"699002","assistant_text":"The streak is red."}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"1000004","assistant_text":"It\u2019s not possible to determine how many people have a camera from the image alone."}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"338002","assistant_text":"The man is writing on a clipboard while holding a bag in the kitchen."}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"387002","assistant_text":"It looks like there is a white USB cable connected to the Asus laptop."}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"486003","assistant_text":"The counter appears to be made of wood."}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"699002","assistant_text":"The streak is red."}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"1000004","assistant_text":"It looks like two people in the group are holding or wearing cameras."}
