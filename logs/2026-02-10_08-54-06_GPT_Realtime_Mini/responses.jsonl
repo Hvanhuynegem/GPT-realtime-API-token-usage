@@ -1,0 +1,400 @@
+{"preprocessor":"Baseline_NoOp","sample_id":"338002","assistant_text":"writing on paper"}
+{"preprocessor":"Baseline_NoOp","sample_id":"387002","assistant_text":"yes"}
+{"preprocessor":"Baseline_NoOp","sample_id":"486003","assistant_text":"butcher block"}
+{"preprocessor":"Baseline_NoOp","sample_id":"699002","assistant_text":"red-brown"}
+{"preprocessor":"Baseline_NoOp","sample_id":"1000004","assistant_text":"1 person"}
+{"preprocessor":"Baseline_NoOp","sample_id":"1205000","assistant_text":"bamboo sticks"}
+{"preprocessor":"Baseline_NoOp","sample_id":"1342027","assistant_text":"white"}
+{"preprocessor":"Baseline_NoOp","sample_id":"1342078","assistant_text":"left hand"}
+{"preprocessor":"Baseline_NoOp","sample_id":"1398001","assistant_text":"red"}
+{"preprocessor":"Baseline_NoOp","sample_id":"1503002","assistant_text":"yes"}
+{"preprocessor":"Baseline_NoOp","sample_id":"1503003","assistant_text":"oval"}
+{"preprocessor":"Baseline_NoOp","sample_id":"1525025","assistant_text":"no"}
+{"preprocessor":"Baseline_NoOp","sample_id":"2006001","assistant_text":"purple pink blue"}
+{"preprocessor":"Baseline_NoOp","sample_id":"2295000","assistant_text":"wood"}
+{"preprocessor":"Baseline_NoOp","sample_id":"3255000","assistant_text":"six people"}
+{"preprocessor":"Baseline_NoOp","sample_id":"3378000","assistant_text":"yes"}
+{"preprocessor":"Baseline_NoOp","sample_id":"3693000","assistant_text":"dancing"}
+{"preprocessor":"Baseline_NoOp","sample_id":"3703001","assistant_text":"very ripe"}
+{"preprocessor":"Baseline_NoOp","sample_id":"3711010","assistant_text":"sedan"}
+{"preprocessor":"Baseline_NoOp","sample_id":"3716000","assistant_text":"no"}
+{"preprocessor":"Baseline_NoOp","sample_id":"3742003","assistant_text":"yes"}
+{"preprocessor":"Baseline_NoOp","sample_id":"3939000","assistant_text":"around 3 years"}
+{"preprocessor":"Baseline_NoOp","sample_id":"3939001","assistant_text":"2"}
+{"preprocessor":"Baseline_NoOp","sample_id":"3939002","assistant_text":"0"}
+{"preprocessor":"Baseline_NoOp","sample_id":"3947006","assistant_text":"cloudy"}
+{"preprocessor":"Baseline_NoOp","sample_id":"3983001","assistant_text":"ski gear"}
+{"preprocessor":"Baseline_NoOp","sample_id":"4265001","assistant_text":"open"}
+{"preprocessor":"Baseline_NoOp","sample_id":"4554002","assistant_text":"snowboarding"}
+{"preprocessor":"Baseline_NoOp","sample_id":"5060000","assistant_text":"mirror"}
+{"preprocessor":"Baseline_NoOp","sample_id":"5123004","assistant_text":"residence"}
+{"preprocessor":"Baseline_NoOp","sample_id":"5385001","assistant_text":"15"}
+{"preprocessor":"Baseline_NoOp","sample_id":"5388002","assistant_text":"baseball"}
+{"preprocessor":"Baseline_NoOp","sample_id":"5486002","assistant_text":"round"}
+{"preprocessor":"Baseline_NoOp","sample_id":"5502000","assistant_text":"kite festival"}
+{"preprocessor":"Baseline_NoOp","sample_id":"5652001","assistant_text":"maybe"}
+{"preprocessor":"Baseline_NoOp","sample_id":"5694002","assistant_text":"cockatoo"}
+{"preprocessor":"Baseline_NoOp","sample_id":"5816002","assistant_text":"yes"}
+{"preprocessor":"Baseline_NoOp","sample_id":"5992000","assistant_text":"3 sheep"}
+{"preprocessor":"Baseline_NoOp","sample_id":"6040004","assistant_text":"2"}
+{"preprocessor":"Baseline_NoOp","sample_id":"6471007","assistant_text":"I\u0027m sorry, but I can\u0027t determine the ethnicity of the batter from the image. Let me know if there\u0027s anything else I can help with."}
+{"preprocessor":"Baseline_NoOp","sample_id":"6580000","assistant_text":"metal frame"}
+{"preprocessor":"Baseline_NoOp","sample_id":"6580003","assistant_text":"no"}
+{"preprocessor":"Baseline_NoOp","sample_id":"6771003","assistant_text":"yes"}
+{"preprocessor":"Baseline_NoOp","sample_id":"6871002","assistant_text":"underwater enclosure"}
+{"preprocessor":"Baseline_NoOp","sample_id":"7072001","assistant_text":"beach"}
+{"preprocessor":"Baseline_NoOp","sample_id":"7570002","assistant_text":"2 plants"}
+{"preprocessor":"Baseline_NoOp","sample_id":"7726000","assistant_text":"wait for car"}
+{"preprocessor":"Baseline_NoOp","sample_id":"7938001","assistant_text":"winter"}
+{"preprocessor":"Baseline_NoOp","sample_id":"7938006","assistant_text":"white"}
+{"preprocessor":"Baseline_NoOp","sample_id":"7938007","assistant_text":"yes"}
+{"preprocessor":"Downsampler","sample_id":"338002","assistant_text":"washing dishes"}
+{"preprocessor":"Downsampler","sample_id":"387002","assistant_text":"yes"}
+{"preprocessor":"Downsampler","sample_id":"486003","assistant_text":"wood"}
+{"preprocessor":"Downsampler","sample_id":"699002","assistant_text":"red"}
+{"preprocessor":"Downsampler","sample_id":"1000004","assistant_text":"2"}
+{"preprocessor":"Downsampler","sample_id":"1205000","assistant_text":"bamboo"}
+{"preprocessor":"Downsampler","sample_id":"1342027","assistant_text":"white"}
+{"preprocessor":"Downsampler","sample_id":"1342078","assistant_text":"right hand"}
+{"preprocessor":"Downsampler","sample_id":"1398001","assistant_text":"red"}
+{"preprocessor":"Downsampler","sample_id":"1503002","assistant_text":"yes"}
+{"preprocessor":"Downsampler","sample_id":"1503003","assistant_text":"round"}
+{"preprocessor":"Downsampler","sample_id":"1525025","assistant_text":"no"}
+{"preprocessor":"Downsampler","sample_id":"2006001","assistant_text":"purple blue"}
+{"preprocessor":"Downsampler","sample_id":"2295000","assistant_text":"wood"}
+{"preprocessor":"Downsampler","sample_id":"3255000","assistant_text":"6"}
+{"preprocessor":"Downsampler","sample_id":"3378000","assistant_text":"no trees"}
+{"preprocessor":"Downsampler","sample_id":"3693000","assistant_text":"dancing"}
+{"preprocessor":"Downsampler","sample_id":"3703001","assistant_text":"very ripe"}
+{"preprocessor":"Downsampler","sample_id":"3711010","assistant_text":"sedan"}
+{"preprocessor":"Downsampler","sample_id":"3716000","assistant_text":"smiling"}
+{"preprocessor":"Downsampler","sample_id":"3742003","assistant_text":"yes apples"}
+{"preprocessor":"Downsampler","sample_id":"3939000","assistant_text":"yes"}
+{"preprocessor":"Downsampler","sample_id":"3939001","assistant_text":"2 children"}
+{"preprocessor":"Downsampler","sample_id":"3939002","assistant_text":"2 children"}
+{"preprocessor":"Downsampler","sample_id":"3947006","assistant_text":"cloudy"}
+{"preprocessor":"Downsampler","sample_id":"3983001","assistant_text":"ski equipment"}
+{"preprocessor":"Downsampler","sample_id":"4265001","assistant_text":"shut"}
+{"preprocessor":"Downsampler","sample_id":"4554002","assistant_text":"snowboarding"}
+{"preprocessor":"Downsampler","sample_id":"5060000","assistant_text":"mirror"}
+{"preprocessor":"Downsampler","sample_id":"5123004","assistant_text":"residence"}
+{"preprocessor":"Downsampler","sample_id":"5385001","assistant_text":"5"}
+{"preprocessor":"Downsampler","sample_id":"5388002","assistant_text":"baseball"}
+{"preprocessor":"Downsampler","sample_id":"5486002","assistant_text":"round"}
+{"preprocessor":"Downsampler","sample_id":"5502000","assistant_text":"kite festival"}
+{"preprocessor":"Downsampler","sample_id":"5652001","assistant_text":"yes"}
+{"preprocessor":"Downsampler","sample_id":"5694002","assistant_text":"cockatoo"}
+{"preprocessor":"Downsampler","sample_id":"5816002","assistant_text":"no"}
+{"preprocessor":"Downsampler","sample_id":"5992000","assistant_text":"4 sheep"}
+{"preprocessor":"Downsampler","sample_id":"6040004","assistant_text":"7"}
+{"preprocessor":"Downsampler","sample_id":"6471007","assistant_text":"I can\u0027t determine ethnicity."}
+{"preprocessor":"Downsampler","sample_id":"6580000","assistant_text":"metal frame"}
+{"preprocessor":"Downsampler","sample_id":"6580003","assistant_text":"no"}
+{"preprocessor":"Downsampler","sample_id":"6771003","assistant_text":"yes event"}
+{"preprocessor":"Downsampler","sample_id":"6871002","assistant_text":"pool enclosure"}
+{"preprocessor":"Downsampler","sample_id":"7072001","assistant_text":"beach"}
+{"preprocessor":"Downsampler","sample_id":"7570002","assistant_text":"1 plant"}
+{"preprocessor":"Downsampler","sample_id":"7726000","assistant_text":"traffic light"}
+{"preprocessor":"Downsampler","sample_id":"7938001","assistant_text":"winter"}
+{"preprocessor":"Downsampler","sample_id":"7938006","assistant_text":"light blue"}
+{"preprocessor":"Downsampler","sample_id":"7938007","assistant_text":"yes"}
+{"preprocessor":"Grayscale","sample_id":"338002","assistant_text":"cleaning kitchen"}
+{"preprocessor":"Grayscale","sample_id":"387002","assistant_text":"yes"}
+{"preprocessor":"Grayscale","sample_id":"486003","assistant_text":"wood"}
+{"preprocessor":"Grayscale","sample_id":"699002","assistant_text":"gray"}
+{"preprocessor":"Grayscale","sample_id":"1000004","assistant_text":"2"}
+{"preprocessor":"Grayscale","sample_id":"1205000","assistant_text":"bamboo"}
+{"preprocessor":"Grayscale","sample_id":"1342027","assistant_text":"gray"}
+{"preprocessor":"Grayscale","sample_id":"1342078","assistant_text":"right hand"}
+{"preprocessor":"Grayscale","sample_id":"1398001","assistant_text":"dark gray"}
+{"preprocessor":"Grayscale","sample_id":"1503002","assistant_text":"yes"}
+{"preprocessor":"Grayscale","sample_id":"1503003","assistant_text":"apple logo"}
+{"preprocessor":"Grayscale","sample_id":"1525025","assistant_text":"no"}
+{"preprocessor":"Grayscale","sample_id":"2006001","assistant_text":"red black white"}
+{"preprocessor":"Grayscale","sample_id":"2295000","assistant_text":"wood"}
+{"preprocessor":"Grayscale","sample_id":"3255000","assistant_text":"8 people"}
+{"preprocessor":"Grayscale","sample_id":"3378000","assistant_text":"no trees"}
+{"preprocessor":"Grayscale","sample_id":"3693000","assistant_text":"dancing"}
+{"preprocessor":"Grayscale","sample_id":"3703001","assistant_text":"very ripe"}
+{"preprocessor":"Grayscale","sample_id":"3711010","assistant_text":"old car"}
+{"preprocessor":"Grayscale","sample_id":"3716000","assistant_text":"no"}
+{"preprocessor":"Grayscale","sample_id":"3742003","assistant_text":"yes, apples"}
+{"preprocessor":"Grayscale","sample_id":"3939000","assistant_text":"yes"}
+{"preprocessor":"Grayscale","sample_id":"3939001","assistant_text":"3"}
+{"preprocessor":"Grayscale","sample_id":"3939002","assistant_text":"0"}
+{"preprocessor":"Grayscale","sample_id":"3947006","assistant_text":"cloudy"}
+{"preprocessor":"Grayscale","sample_id":"3983001","assistant_text":"skis poles"}
+{"preprocessor":"Grayscale","sample_id":"4265001","assistant_text":"shut"}
+{"preprocessor":"Grayscale","sample_id":"4554002","assistant_text":"snowboarding"}
+{"preprocessor":"Grayscale","sample_id":"5060000","assistant_text":"mirror"}
+{"preprocessor":"Grayscale","sample_id":"5123004","assistant_text":"residence"}
+{"preprocessor":"Grayscale","sample_id":"5385001","assistant_text":"15"}
+{"preprocessor":"Grayscale","sample_id":"5388002","assistant_text":"baseball"}
+{"preprocessor":"Grayscale","sample_id":"5486002","assistant_text":"round"}
+{"preprocessor":"Grayscale","sample_id":"5502000","assistant_text":"kite festival"}
+{"preprocessor":"Grayscale","sample_id":"5652001","assistant_text":"not clear"}
+{"preprocessor":"Grayscale","sample_id":"5694002","assistant_text":"cockatoo"}
+{"preprocessor":"Grayscale","sample_id":"5816002","assistant_text":"no"}
+{"preprocessor":"Grayscale","sample_id":"5992000","assistant_text":"3 sheep"}
+{"preprocessor":"Grayscale","sample_id":"6040004","assistant_text":"2"}
+{"preprocessor":"Grayscale","sample_id":"6471007","assistant_text":"I\u0027m sorry, I can\u0027t determine someone\u0027s ethnicity from an image."}
+{"preprocessor":"Grayscale","sample_id":"6580000","assistant_text":"metal frame"}
+{"preprocessor":"Grayscale","sample_id":"6580003","assistant_text":"yes"}
+{"preprocessor":"Grayscale","sample_id":"6771003","assistant_text":"yes"}
+{"preprocessor":"Grayscale","sample_id":"6871002","assistant_text":"underwater enclosure"}
+{"preprocessor":"Grayscale","sample_id":"7072001","assistant_text":"beach"}
+{"preprocessor":"Grayscale","sample_id":"7570002","assistant_text":"2 plants"}
+{"preprocessor":"Grayscale","sample_id":"7726000","assistant_text":"not safe"}
+{"preprocessor":"Grayscale","sample_id":"7938001","assistant_text":"winter"}
+{"preprocessor":"Grayscale","sample_id":"7938006","assistant_text":"white"}
+{"preprocessor":"Grayscale","sample_id":"7938007","assistant_text":"yes"}
+{"preprocessor":"Jpeg_Q85","sample_id":"338002","assistant_text":"writing on paper"}
+{"preprocessor":"Jpeg_Q85","sample_id":"387002","assistant_text":"yes"}
+{"preprocessor":"Jpeg_Q85","sample_id":"486003","assistant_text":"wood"}
+{"preprocessor":"Jpeg_Q85","sample_id":"699002","assistant_text":"red"}
+{"preprocessor":"Jpeg_Q85","sample_id":"1000004","assistant_text":"2 people"}
+{"preprocessor":"Jpeg_Q85","sample_id":"1205000","assistant_text":"bamboo"}
+{"preprocessor":"Jpeg_Q85","sample_id":"1342027","assistant_text":"white"}
+{"preprocessor":"Jpeg_Q85","sample_id":"1342078","assistant_text":"left hand"}
+{"preprocessor":"Jpeg_Q85","sample_id":"1398001","assistant_text":"red"}
+{"preprocessor":"Jpeg_Q85","sample_id":"1503002","assistant_text":"yes"}
+{"preprocessor":"Jpeg_Q85","sample_id":"1503003","assistant_text":"apple logo"}
+{"preprocessor":"Jpeg_Q85","sample_id":"1525025","assistant_text":"no"}
+{"preprocessor":"Jpeg_Q85","sample_id":"2006001","assistant_text":"purple pink blue"}
+{"preprocessor":"Jpeg_Q85","sample_id":"2295000","assistant_text":"wood"}
+{"preprocessor":"Jpeg_Q85","sample_id":"3255000","assistant_text":"7"}
+{"preprocessor":"Jpeg_Q85","sample_id":"3378000","assistant_text":"no"}
+{"preprocessor":"Jpeg_Q85","sample_id":"3693000","assistant_text":"dancing practice"}
+{"preprocessor":"Jpeg_Q85","sample_id":"3703001","assistant_text":"very ripe"}
+{"preprocessor":"Jpeg_Q85","sample_id":"3711010","assistant_text":"car"}
+{"preprocessor":"Jpeg_Q85","sample_id":"3716000","assistant_text":"no"}
+{"preprocessor":"Jpeg_Q85","sample_id":"3742003","assistant_text":"apples"}
+{"preprocessor":"Jpeg_Q85","sample_id":"3939000","assistant_text":"around 3"}
+{"preprocessor":"Jpeg_Q85","sample_id":"3939001","assistant_text":"2"}
+{"preprocessor":"Jpeg_Q85","sample_id":"3939002","assistant_text":"2"}
+{"preprocessor":"Jpeg_Q85","sample_id":"3947006","assistant_text":"cloudy"}
+{"preprocessor":"Jpeg_Q85","sample_id":"3983001","assistant_text":"skis poles bindings"}
+{"preprocessor":"Jpeg_Q85","sample_id":"4265001","assistant_text":"open"}
+{"preprocessor":"Jpeg_Q85","sample_id":"4554002","assistant_text":"snowboarding"}
+{"preprocessor":"Jpeg_Q85","sample_id":"5060000","assistant_text":"mirror"}
+{"preprocessor":"Jpeg_Q85","sample_id":"5123004","assistant_text":"residence"}
+{"preprocessor":"Jpeg_Q85","sample_id":"5385001","assistant_text":"15"}
+{"preprocessor":"Jpeg_Q85","sample_id":"5388002","assistant_text":"baseball"}
+{"preprocessor":"Jpeg_Q85","sample_id":"5486002","assistant_text":"round"}
+{"preprocessor":"Jpeg_Q85","sample_id":"5502000","assistant_text":"kite festival"}
+{"preprocessor":"Jpeg_Q85","sample_id":"5652001","assistant_text":"unsure"}
+{"preprocessor":"Jpeg_Q85","sample_id":"5694002","assistant_text":"cockatoo"}
+{"preprocessor":"Jpeg_Q85","sample_id":"5816002","assistant_text":"yes"}
+{"preprocessor":"Jpeg_Q85","sample_id":"5992000","assistant_text":"3 sheep"}
+{"preprocessor":"Jpeg_Q85","sample_id":"6040004","assistant_text":"2"}
+{"preprocessor":"Jpeg_Q85","sample_id":"6471007","assistant_text":"I\u0027m sorry, I can\u0027t determine ethnicity from the image."}
+{"preprocessor":"Jpeg_Q85","sample_id":"6580000","assistant_text":"metal frame"}
+{"preprocessor":"Jpeg_Q85","sample_id":"6580003","assistant_text":"no"}
+{"preprocessor":"Jpeg_Q85","sample_id":"6771003","assistant_text":"yes"}
+{"preprocessor":"Jpeg_Q85","sample_id":"6871002","assistant_text":"underwater enclosure"}
+{"preprocessor":"Jpeg_Q85","sample_id":"7072001","assistant_text":"beach"}
+{"preprocessor":"Jpeg_Q85","sample_id":"7570002","assistant_text":"2"}
+{"preprocessor":"Jpeg_Q85","sample_id":"7726000","assistant_text":"it\u2019s unsafe"}
+{"preprocessor":"Jpeg_Q85","sample_id":"7938001","assistant_text":"fall"}
+{"preprocessor":"Jpeg_Q85","sample_id":"7938006","assistant_text":"white"}
+{"preprocessor":"Jpeg_Q85","sample_id":"7938007","assistant_text":"yes"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"338002","assistant_text":"writing list"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"387002","assistant_text":"yes"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"486003","assistant_text":"wood"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"699002","assistant_text":"red"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"1000004","assistant_text":"2"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"1205000","assistant_text":"bamboo"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"1342027","assistant_text":"cream"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"1342078","assistant_text":"left hand"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"1398001","assistant_text":"red"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"1503002","assistant_text":"yes"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"1503003","assistant_text":"circle"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"1525025","assistant_text":"yes"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"2006001","assistant_text":"purple blue pink"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"2295000","assistant_text":"wood"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"3255000","assistant_text":"5 people"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"3378000","assistant_text":"no trees"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"3693000","assistant_text":"dancing practice"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"3703001","assistant_text":"overripe"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"3711010","assistant_text":"sedan"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"3716000","assistant_text":"no"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"3742003","assistant_text":"apples"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"3939000","assistant_text":"under 3"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"3939001","assistant_text":"2"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"3939002","assistant_text":"zero"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"3947006","assistant_text":"partly cloudy"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"3983001","assistant_text":"ski equipment"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"4265001","assistant_text":"open"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"4554002","assistant_text":"snowboarding"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"5060000","assistant_text":"mirror"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"5123004","assistant_text":"residence"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"5385001","assistant_text":"15"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"5388002","assistant_text":"baseball"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"5486002","assistant_text":"round"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"5502000","assistant_text":"kite festival"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"5652001","assistant_text":"unsure"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"5694002","assistant_text":"cockatoo"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"5816002","assistant_text":"yes"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"5992000","assistant_text":"3"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"6040004","assistant_text":"2"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"6471007","assistant_text":"I\u0027m sorry, but I can\u0027t determine someone\u0027s ethnicity from an image. Let me know if there\u0027s anything else I can help with."}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"6580000","assistant_text":"metal frame"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"6580003","assistant_text":"no"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"6771003","assistant_text":"yes"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"6871002","assistant_text":"aquarium"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"7072001","assistant_text":"beach"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"7570002","assistant_text":"2 plants"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"7726000","assistant_text":"caution required"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"7938001","assistant_text":"fall"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"7938006","assistant_text":"white"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"7938007","assistant_text":"yes"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"338002","assistant_text":"writing on paper"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"387002","assistant_text":"yes"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"486003","assistant_text":"wood"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"699002","assistant_text":"red"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"1000004","assistant_text":"1 person"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"1205000","assistant_text":"bamboo"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"1342027","assistant_text":"off-white"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"1342078","assistant_text":"right hand"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"1398001","assistant_text":"red"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"1503002","assistant_text":"yes"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"1503003","assistant_text":"oval"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"1525025","assistant_text":"no"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"2006001","assistant_text":"purple white pink"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"2295000","assistant_text":"wood"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"3255000","assistant_text":"7 people"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"3378000","assistant_text":"no trees"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"3693000","assistant_text":"dancing"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"3703001","assistant_text":"spotted black"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"3711010","assistant_text":"sedan"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"3716000","assistant_text":"no"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"3742003","assistant_text":"apples"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"3939000","assistant_text":"underage three"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"3939001","assistant_text":"2"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"3939002","assistant_text":"0"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"3947006","assistant_text":"cloudy"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"3983001","assistant_text":"skis poles backpacks"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"4265001","assistant_text":"open"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"4554002","assistant_text":"snowboarding"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"5060000","assistant_text":"mirror"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"5123004","assistant_text":"residence"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"5385001","assistant_text":"15"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"5388002","assistant_text":"baseball"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"5486002","assistant_text":"round"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"5502000","assistant_text":"kite festival"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"5652001","assistant_text":"not clear"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"5694002","assistant_text":"cockatoo"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"5816002","assistant_text":"yes, left table"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"5992000","assistant_text":"3 sheep"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"6040004","assistant_text":"2"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"6471007","assistant_text":"I\u0027m sorry, I can\u0027t determine the batter\u0027s ethnicity from the image. Let me know if there\u0027s anything else I can help with."}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"6580000","assistant_text":"metal frame"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"6580003","assistant_text":"no person visible"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"6771003","assistant_text":"yes"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"6871002","assistant_text":"aquarium enclosure"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"7072001","assistant_text":"beach"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"7570002","assistant_text":"2 plants"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"7726000","assistant_text":"not safe"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"7938001","assistant_text":"winter"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"7938006","assistant_text":"white"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"7938007","assistant_text":"yes"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"338002","assistant_text":"writing list"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"387002","assistant_text":"yes"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"486003","assistant_text":"wood"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"699002","assistant_text":"red"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"1000004","assistant_text":"1 person"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"1205000","assistant_text":"bamboo"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"1342027","assistant_text":"beige"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"1342078","assistant_text":"left hand"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"1398001","assistant_text":"red"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"1503002","assistant_text":"yes"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"1503003","assistant_text":"circle"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"1525025","assistant_text":"no"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"2006001","assistant_text":"purple pink blue"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"2295000","assistant_text":"wood"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"3255000","assistant_text":"six people"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"3378000","assistant_text":"no trees"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"3693000","assistant_text":"dancing practice"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"3703001","assistant_text":"very ripe"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"3711010","assistant_text":"sedan"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"3716000","assistant_text":"no"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"3742003","assistant_text":"apples"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"3939000","assistant_text":"yes"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"3939001","assistant_text":"3 children"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"3939002","assistant_text":"1"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"3947006","assistant_text":"cloudy"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"3983001","assistant_text":"ski gear"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"4265001","assistant_text":"shut"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"4554002","assistant_text":"skiing"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"5060000","assistant_text":"mirror"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"5123004","assistant_text":"residence"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"5385001","assistant_text":"15"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"5388002","assistant_text":"baseball"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"5486002","assistant_text":"round"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"5502000","assistant_text":"kite festival"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"5652001","assistant_text":"not clear"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"5694002","assistant_text":"cockatoo"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"5816002","assistant_text":"no"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"5992000","assistant_text":"3"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"6040004","assistant_text":"2"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"6471007","assistant_text":"I\u0027m sorry, but I can\u0027t determine ethnicity from appearance alone. Let me know if you\u0027d like help with anything else."}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"6580000","assistant_text":"metal wood fabric"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"6580003","assistant_text":"no person visible"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"6771003","assistant_text":"yes event"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"6871002","assistant_text":"aquarium"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"7072001","assistant_text":"beach"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"7570002","assistant_text":"2 plants"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"7726000","assistant_text":"not safe"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"7938001","assistant_text":"winter"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"7938006","assistant_text":"white"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"7938007","assistant_text":"yes"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"338002","assistant_text":"writing on clipboard"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"387002","assistant_text":"yes"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"486003","assistant_text":"wood"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"699002","assistant_text":"red"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"1000004","assistant_text":"2 people"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"1205000","assistant_text":"woven bamboo"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"1342027","assistant_text":"white"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"1342078","assistant_text":"left"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"1398001","assistant_text":"red"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"1503002","assistant_text":"yes"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"1503003","assistant_text":"apple logo"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"1525025","assistant_text":"no"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"2006001","assistant_text":"purple blue pink"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"2295000","assistant_text":"wood"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"3255000","assistant_text":"6 people"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"3378000","assistant_text":"crowd"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"3693000","assistant_text":"dancing"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"3703001","assistant_text":"very ripe"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"3711010","assistant_text":"sedan"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"3716000","assistant_text":"no"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"3742003","assistant_text":"apples"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"3939000","assistant_text":"around 3"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"3939001","assistant_text":"2 children"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"3939002","assistant_text":"one"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"3947006","assistant_text":"cloudy"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"3983001","assistant_text":"skis poles"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"4265001","assistant_text":"shut"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"4554002","assistant_text":"snowboarding"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"5060000","assistant_text":"mirror"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"5123004","assistant_text":"residence"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"5385001","assistant_text":"15"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"5388002","assistant_text":"baseball"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"5486002","assistant_text":"round"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"5502000","assistant_text":"kite festival"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"5652001","assistant_text":"unclear appearance"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"5694002","assistant_text":"cockatoo"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"5816002","assistant_text":"yes"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"5992000","assistant_text":"3 sheep"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"6040004","assistant_text":"2"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"6471007","assistant_text":"I\u0027m sorry, I can\u0027t determine the ethnicity of the batter from the image. Let me know if you need any other details."}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"6580000","assistant_text":"metal and wood"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"6580003","assistant_text":"no"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"6771003","assistant_text":"cosplay event"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"6871002","assistant_text":"zoo"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"7072001","assistant_text":"beach"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"7570002","assistant_text":"2 plants"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"7726000","assistant_text":"it\u2019s risky"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"7938001","assistant_text":"fall"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"7938006","assistant_text":"white"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"7938007","assistant_text":"yes"}

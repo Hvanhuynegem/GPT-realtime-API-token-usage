@@ -133,14 +133,24 @@ class DatasetExperiment
             Console.WriteLine("Connected.");
 
 
+            // string sessionUpdateJson = @"
+            // {
+            // ""type"": ""session.update"",
+            // ""session"": {
+            //     ""modalities"": [""text""],
+            //     ""instructions"": ""Answer like VQA: output only the final answer as a short phrase (1 to 3 words, max 4). No full sentence. No explanation. No extra details. No leading articles (a, an, the). No punctuation. Use lowercase. If the answer is a number, output digits. Examples: writing | holding bag | wood | yes | 2.""
+            // }
+            // }";
+
             string sessionUpdateJson = @"
             {
             ""type"": ""session.update"",
             ""session"": {
                 ""modalities"": [""text""],
-                ""instructions"": ""You are a helpful assistant. Answer in one short, direct sentence with no extra details.""
+                ""instructions"": ""You are answering a VQA benchmark. Output only the canonical short answer that humans would write.\n\nRules:\n- Output 1 to 2 words (max 3).\n- No full sentence, no extra objects, no prepositions like 'on', 'in', 'with'.\n- For action questions ('What is X doing?'), output only the main verb (e.g., 'writing', 'eating', 'standing').\n- No articles (a/an/the), no punctuation.\n- Lowercase.\n- Numbers as digits.\n- If unsure, choose the simplest, most common answer.\n\nExamples:\nQ: what is the man doing? A: writing\nQ: what material is the counter made of? A: wood\nQ: does the laptop have a cable? A: yes\nQ: how many people have a camera? A: 1""
             }
             }";
+
             await RealtimeRunner.SendJson(ws, sessionUpdateJson);
             Console.WriteLine("Sent session.update");
 

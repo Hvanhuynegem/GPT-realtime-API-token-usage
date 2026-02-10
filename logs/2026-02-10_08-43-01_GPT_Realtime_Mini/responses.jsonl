@@ -1,0 +1,40 @@
+{"preprocessor":"Baseline_NoOp","sample_id":"338002","assistant_text":"writing on clipboard"}
+{"preprocessor":"Baseline_NoOp","sample_id":"387002","assistant_text":"yes"}
+{"preprocessor":"Baseline_NoOp","sample_id":"486003","assistant_text":"wood"}
+{"preprocessor":"Baseline_NoOp","sample_id":"699002","assistant_text":"red"}
+{"preprocessor":"Baseline_NoOp","sample_id":"1000004","assistant_text":"2 people"}
+{"preprocessor":"Downsampler","sample_id":"338002","assistant_text":"washing dishes"}
+{"preprocessor":"Downsampler","sample_id":"387002","assistant_text":"yes"}
+{"preprocessor":"Downsampler","sample_id":"486003","assistant_text":"wood"}
+{"preprocessor":"Downsampler","sample_id":"699002","assistant_text":"red"}
+{"preprocessor":"Downsampler","sample_id":"1000004","assistant_text":"3 people"}
+{"preprocessor":"Grayscale","sample_id":"338002","assistant_text":"cleaning dishes"}
+{"preprocessor":"Grayscale","sample_id":"387002","assistant_text":"yes"}
+{"preprocessor":"Grayscale","sample_id":"486003","assistant_text":"wood"}
+{"preprocessor":"Grayscale","sample_id":"699002","assistant_text":"gray"}
+{"preprocessor":"Grayscale","sample_id":"1000004","assistant_text":"2"}
+{"preprocessor":"Jpeg_Q85","sample_id":"338002","assistant_text":"checking list"}
+{"preprocessor":"Jpeg_Q85","sample_id":"387002","assistant_text":"yes"}
+{"preprocessor":"Jpeg_Q85","sample_id":"486003","assistant_text":"wood"}
+{"preprocessor":"Jpeg_Q85","sample_id":"699002","assistant_text":"red"}
+{"preprocessor":"Jpeg_Q85","sample_id":"1000004","assistant_text":"3"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"338002","assistant_text":"writing"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"387002","assistant_text":"yes"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"486003","assistant_text":"wood"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"699002","assistant_text":"red"}
+{"preprocessor":"WebP_Lossy_Q85","sample_id":"1000004","assistant_text":"2 people"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"338002","assistant_text":"writing list"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"387002","assistant_text":"yes"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"486003","assistant_text":"wood"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"699002","assistant_text":"red"}
+{"preprocessor":"GazeRoi\u002BGlobalThumb","sample_id":"1000004","assistant_text":"1 person"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"338002","assistant_text":"writing"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"387002","assistant_text":"yes"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"486003","assistant_text":"wood"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"699002","assistant_text":"red"}
+{"preprocessor":"SalientRoi\u002BGlobalThumb","sample_id":"1000004","assistant_text":"1 person"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"338002","assistant_text":"writing something"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"387002","assistant_text":"yes"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"486003","assistant_text":"wood"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"699002","assistant_text":"red"}
+{"preprocessor":"YoloV12SalientRoi\u002BGlobalThumb","sample_id":"1000004","assistant_text":"one"}

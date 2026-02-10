@@ -1,0 +1,926 @@
+{
+  "summary": {
+    "dataset": "data\\VQA-HMUG-data\\prepared.json",
+    "responses": "logs\\2026-02-04_14-01-39_GPT_Realtime_Mini\\responses.jsonl",
+    "total_response_lines": 40,
+    "matched_predictions": 40,
+    "missing_in_dataset": 0,
+    "overall_accuracy_official_vqa": 0.0,
+    "per_preprocessor": {
+      "Baseline_NoOp": {
+        "n": 5,
+        "accuracy": 0.0
+      },
+      "Downsampler": {
+        "n": 5,
+        "accuracy": 0.0
+      },
+      "GazeRoi+GlobalThumb": {
+        "n": 5,
+        "accuracy": 0.0
+      },
+      "Grayscale": {
+        "n": 5,
+        "accuracy": 0.0
+      },
+      "Jpeg_Q85": {
+        "n": 5,
+        "accuracy": 0.0
+      },
+      "SalientRoi+GlobalThumb": {
+        "n": 5,
+        "accuracy": 0.0
+      },
+      "WebP_Lossy_Q85": {
+        "n": 5,
+        "accuracy": 0.0
+      },
+      "YoloV12SalientRoi+GlobalThumb": {
+        "n": 5,
+        "accuracy": 0.0
+      }
+    }
+  },
+  "details": [
+    {
+      "preprocessor": "Baseline_NoOp",
+      "sample_id": "338002",
+      "question": "What is the man doing?",
+      "prediction_raw": "The man is writing on a clipboard and holding a bag.",
+      "prediction_used_for_eval": "man is writing on clipboard and holding bag",
+      "human_answers_used_for_eval": [
+        "writing",
+        "writing",
+        "writing",
+        "writing",
+        "standing",
+        "writing list",
+        "writing",
+        "writing",
+        "eating",
+        "holding bag"
+      ],
+      "used_normalization": true,
+      "matches_m_total": 0,
+      "accuracy_official_vqa": 0.0
+    },
+    {
+      "preprocessor": "Baseline_NoOp",
+      "sample_id": "387002",
+      "question": "Does the asus laptop have a white USB cable attached?",
+      "prediction_raw": "Yes, the ASUS laptop has a white USB cable attached to it.",
+      "prediction_used_for_eval": "Yes, the ASUS laptop has a white USB cable attached to it.",
+      "human_answers_used_for_eval": [
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes"
+      ],
+      "used_normalization": false,
+      "matches_m_total": 0,
+      "accuracy_official_vqa": 0.0
+    },
+    {
+      "preprocessor": "Baseline_NoOp",
+      "sample_id": "486003",
+      "question": "What material is the counter made of?",
+      "prediction_raw": "The counter appears to be made of wood.",
+      "prediction_used_for_eval": "The counter appears to be made of wood.",
+      "human_answers_used_for_eval": [
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood"
+      ],
+      "used_normalization": false,
+      "matches_m_total": 0,
+      "accuracy_official_vqa": 0.0
+    },
+    {
+      "preprocessor": "Baseline_NoOp",
+      "sample_id": "699002",
+      "question": "What color is the streak?",
+      "prediction_raw": "The streak appears to be a reddish or pinkish color.",
+      "prediction_used_for_eval": "streak appears to be reddish or pinkish color",
+      "human_answers_used_for_eval": [
+        "red",
+        "red",
+        "gray",
+        "orange",
+        "red",
+        "red",
+        "red",
+        "red",
+        "red",
+        "gray"
+      ],
+      "used_normalization": true,
+      "matches_m_total": 0,
+      "accuracy_official_vqa": 0.0
+    },
+    {
+      "preprocessor": "Baseline_NoOp",
+      "sample_id": "1000004",
+      "question": "How many people have a camera?",
+      "prediction_raw": "It looks like at least one person is holding a camera in the group, but I can't see clearly who else might have one.",
+      "prediction_used_for_eval": "it looks like at least 1 person is holding camera in group but i can't see clearly who else might have 1",
+      "human_answers_used_for_eval": [
+        "0",
+        "1",
+        "0",
+        "1",
+        "0",
+        "0",
+        "1",
+        "0",
+        "0",
+        "1"
+      ],
+      "used_normalization": true,
+      "matches_m_total": 0,
+      "accuracy_official_vqa": 0.0
+    },
+    {
+      "preprocessor": "Downsampler",
+      "sample_id": "338002",
+      "question": "What is the man doing?",
+      "prediction_raw": "The man is standing near the kitchen counter, preparing food.",
+      "prediction_used_for_eval": "man is standing near kitchen counter preparing food",
+      "human_answers_used_for_eval": [
+        "writing",
+        "writing",
+        "writing",
+        "writing",
+        "standing",
+        "writing list",
+        "writing",
+        "writing",
+        "eating",
+        "holding bag"
+      ],
+      "used_normalization": true,
+      "matches_m_total": 0,
+      "accuracy_official_vqa": 0.0
+    },
+    {
+      "preprocessor": "Downsampler",
+      "sample_id": "387002",
+      "question": "Does the asus laptop have a white USB cable attached?",
+      "prediction_raw": "Yes, there is a white USB cable attached to the Asus laptop.",
+      "prediction_used_for_eval": "Yes, there is a white USB cable attached to the Asus laptop.",
+      "human_answers_used_for_eval": [
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes"
+      ],
+      "used_normalization": false,
+      "matches_m_total": 0,
+      "accuracy_official_vqa": 0.0
+    },
+    {
+      "preprocessor": "Downsampler",
+      "sample_id": "486003",
+      "question": "What material is the counter made of?",
+      "prediction_raw": "The counter appears to be made of wood.",
+      "prediction_used_for_eval": "The counter appears to be made of wood.",
+      "human_answers_used_for_eval": [
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood"
+      ],
+      "used_normalization": false,
+      "matches_m_total": 0,
+      "accuracy_official_vqa": 0.0
+    },
+    {
+      "preprocessor": "Downsampler",
+      "sample_id": "699002",
+      "question": "What color is the streak?",
+      "prediction_raw": "The streak appears to be red.",
+      "prediction_used_for_eval": "streak appears to be red",
+      "human_answers_used_for_eval": [
+        "red",
+        "red",
+        "gray",
+        "orange",
+        "red",
+        "red",
+        "red",
+        "red",
+        "red",
+        "gray"
+      ],
+      "used_normalization": true,
+      "matches_m_total": 0,
+      "accuracy_official_vqa": 0.0
+    },
+    {
+      "preprocessor": "Downsampler",
+      "sample_id": "1000004",
+      "question": "How many people have a camera?",
+      "prediction_raw": "There are two people holding cameras in the image.",
+      "prediction_used_for_eval": "there are 2 people holding cameras in image",
+      "human_answers_used_for_eval": [
+        "0",
+        "1",
+        "0",
+        "1",
+        "0",
+        "0",
+        "1",
+        "0",
+        "0",
+        "1"
+      ],
+      "used_normalization": true,
+      "matches_m_total": 0,
+      "accuracy_official_vqa": 0.0
+    },
+    {
+      "preprocessor": "Grayscale",
+      "sample_id": "338002",
+      "question": "What is the man doing?",
+      "prediction_raw": "The man is standing in the kitchen, holding a bag and looking at something on the counter.",
+      "prediction_used_for_eval": "man is standing in kitchen holding bag and looking at something on counter",
+      "human_answers_used_for_eval": [
+        "writing",
+        "writing",
+        "writing",
+        "writing",
+        "standing",
+        "writing list",
+        "writing",
+        "writing",
+        "eating",
+        "holding bag"
+      ],
+      "used_normalization": true,
+      "matches_m_total": 0,
+      "accuracy_official_vqa": 0.0
+    },
+    {
+      "preprocessor": "Grayscale",
+      "sample_id": "387002",
+      "question": "Does the asus laptop have a white USB cable attached?",
+      "prediction_raw": "Yes, there is a white USB cable attached to the ASUS laptop.",
+      "prediction_used_for_eval": "Yes, there is a white USB cable attached to the ASUS laptop.",
+      "human_answers_used_for_eval": [
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes"
+      ],
+      "used_normalization": false,
+      "matches_m_total": 0,
+      "accuracy_official_vqa": 0.0
+    },
+    {
+      "preprocessor": "Grayscale",
+      "sample_id": "486003",
+      "question": "What material is the counter made of?",
+      "prediction_raw": "The counter appears to be made of wood.",
+      "prediction_used_for_eval": "The counter appears to be made of wood.",
+      "human_answers_used_for_eval": [
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood"
+      ],
+      "used_normalization": false,
+      "matches_m_total": 0,
+      "accuracy_official_vqa": 0.0
+    },
+    {
+      "preprocessor": "Grayscale",
+      "sample_id": "699002",
+      "question": "What color is the streak?",
+      "prediction_raw": "The streak appears to be a dark gray or black color.",
+      "prediction_used_for_eval": "streak appears to be dark gray or black color",
+      "human_answers_used_for_eval": [
+        "red",
+        "red",
+        "gray",
+        "orange",
+        "red",
+        "red",
+        "red",
+        "red",
+        "red",
+        "gray"
+      ],
+      "used_normalization": true,
+      "matches_m_total": 0,
+      "accuracy_official_vqa": 0.0
+    },
+    {
+      "preprocessor": "Grayscale",
+      "sample_id": "1000004",
+      "question": "How many people have a camera?",
+      "prediction_raw": "I'm not able to determine how many people have a camera from the image.",
+      "prediction_used_for_eval": "i'm not able to determine how many people have camera from image",
+      "human_answers_used_for_eval": [
+        "0",
+        "1",
+        "0",
+        "1",
+        "0",
+        "0",
+        "1",
+        "0",
+        "0",
+        "1"
+      ],
+      "used_normalization": true,
+      "matches_m_total": 0,
+      "accuracy_official_vqa": 0.0
+    },
+    {
+      "preprocessor": "Jpeg_Q85",
+      "sample_id": "338002",
+      "question": "What is the man doing?",
+      "prediction_raw": "The man is standing in the kitchen, holding a shopping bag and writing on a piece of paper.",
+      "prediction_used_for_eval": "man is standing in kitchen holding shopping bag and writing on piece of paper",
+      "human_answers_used_for_eval": [
+        "writing",
+        "writing",
+        "writing",
+        "writing",
+        "standing",
+        "writing list",
+        "writing",
+        "writing",
+        "eating",
+        "holding bag"
+      ],
+      "used_normalization": true,
+      "matches_m_total": 0,
+      "accuracy_official_vqa": 0.0
+    },
+    {
+      "preprocessor": "Jpeg_Q85",
+      "sample_id": "387002",
+      "question": "Does the asus laptop have a white USB cable attached?",
+      "prediction_raw": "Yes, the Asus laptop does have a white USB cable attached.",
+      "prediction_used_for_eval": "Yes, the Asus laptop does have a white USB cable attached.",
+      "human_answers_used_for_eval": [
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes"
+      ],
+      "used_normalization": false,
+      "matches_m_total": 0,
+      "accuracy_official_vqa": 0.0
+    },
+    {
+      "preprocessor": "Jpeg_Q85",
+      "sample_id": "486003",
+      "question": "What material is the counter made of?",
+      "prediction_raw": "The counter appears to be made of wood.",
+      "prediction_used_for_eval": "The counter appears to be made of wood.",
+      "human_answers_used_for_eval": [
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood"
+      ],
+      "used_normalization": false,
+      "matches_m_total": 0,
+      "accuracy_official_vqa": 0.0
+    },
+    {
+      "preprocessor": "Jpeg_Q85",
+      "sample_id": "699002",
+      "question": "What color is the streak?",
+      "prediction_raw": "The streak is a reddish-pink color.",
+      "prediction_used_for_eval": "streak is reddish pink color",
+      "human_answers_used_for_eval": [
+        "red",
+        "red",
+        "gray",
+        "orange",
+        "red",
+        "red",
+        "red",
+        "red",
+        "red",
+        "gray"
+      ],
+      "used_normalization": true,
+      "matches_m_total": 0,
+      "accuracy_official_vqa": 0.0
+    },
+    {
+      "preprocessor": "Jpeg_Q85",
+      "sample_id": "1000004",
+      "question": "How many people have a camera?",
+      "prediction_raw": "I can see several people in the image, but I can’t determine exactly how many of them have a camera.",
+      "prediction_used_for_eval": "i can see several people in image but i can’t determine exactly how many of them have camera",
+      "human_answers_used_for_eval": [
+        "0",
+        "1",
+        "0",
+        "1",
+        "0",
+        "0",
+        "1",
+        "0",
+        "0",
+        "1"
+      ],
+      "used_normalization": true,
+      "matches_m_total": 0,
+      "accuracy_official_vqa": 0.0
+    },
+    {
+      "preprocessor": "WebP_Lossy_Q85",
+      "sample_id": "338002",
+      "question": "What is the man doing?",
+      "prediction_raw": "The man is writing on a clipboard and holding a bag, while standing in the kitchen.",
+      "prediction_used_for_eval": "man is writing on clipboard and holding bag while standing in kitchen",
+      "human_answers_used_for_eval": [
+        "writing",
+        "writing",
+        "writing",
+        "writing",
+        "standing",
+        "writing list",
+        "writing",
+        "writing",
+        "eating",
+        "holding bag"
+      ],
+      "used_normalization": true,
+      "matches_m_total": 0,
+      "accuracy_official_vqa": 0.0
+    },
+    {
+      "preprocessor": "WebP_Lossy_Q85",
+      "sample_id": "387002",
+      "question": "Does the asus laptop have a white USB cable attached?",
+      "prediction_raw": "Yes, the ASUS laptop has a white USB cable attached.",
+      "prediction_used_for_eval": "Yes, the ASUS laptop has a white USB cable attached.",
+      "human_answers_used_for_eval": [
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes"
+      ],
+      "used_normalization": false,
+      "matches_m_total": 0,
+      "accuracy_official_vqa": 0.0
+    },
+    {
+      "preprocessor": "WebP_Lossy_Q85",
+      "sample_id": "486003",
+      "question": "What material is the counter made of?",
+      "prediction_raw": "The counter appears to be made of wood.",
+      "prediction_used_for_eval": "The counter appears to be made of wood.",
+      "human_answers_used_for_eval": [
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood"
+      ],
+      "used_normalization": false,
+      "matches_m_total": 0,
+      "accuracy_official_vqa": 0.0
+    },
+    {
+      "preprocessor": "WebP_Lossy_Q85",
+      "sample_id": "699002",
+      "question": "What color is the streak?",
+      "prediction_raw": "The streak appears to be red.",
+      "prediction_used_for_eval": "streak appears to be red",
+      "human_answers_used_for_eval": [
+        "red",
+        "red",
+        "gray",
+        "orange",
+        "red",
+        "red",
+        "red",
+        "red",
+        "red",
+        "gray"
+      ],
+      "used_normalization": true,
+      "matches_m_total": 0,
+      "accuracy_official_vqa": 0.0
+    },
+    {
+      "preprocessor": "WebP_Lossy_Q85",
+      "sample_id": "1000004",
+      "question": "How many people have a camera?",
+      "prediction_raw": "It's not possible to determine how many people have a camera from the image alone.",
+      "prediction_used_for_eval": "it's not possible to determine how many people have camera from image alone",
+      "human_answers_used_for_eval": [
+        "0",
+        "1",
+        "0",
+        "1",
+        "0",
+        "0",
+        "1",
+        "0",
+        "0",
+        "1"
+      ],
+      "used_normalization": true,
+      "matches_m_total": 0,
+      "accuracy_official_vqa": 0.0
+    },
+    {
+      "preprocessor": "GazeRoi+GlobalThumb",
+      "sample_id": "338002",
+      "question": "What is the man doing?",
+      "prediction_raw": "The man is writing on a notepad while holding a bag in the kitchen.",
+      "prediction_used_for_eval": "man is writing on notepad while holding bag in kitchen",
+      "human_answers_used_for_eval": [
+        "writing",
+        "writing",
+        "writing",
+        "writing",
+        "standing",
+        "writing list",
+        "writing",
+        "writing",
+        "eating",
+        "holding bag"
+      ],
+      "used_normalization": true,
+      "matches_m_total": 0,
+      "accuracy_official_vqa": 0.0
+    },
+    {
+      "preprocessor": "GazeRoi+GlobalThumb",
+      "sample_id": "387002",
+      "question": "Does the asus laptop have a white USB cable attached?",
+      "prediction_raw": "Yes, the ASUS laptop has a white USB cable attached to it.",
+      "prediction_used_for_eval": "Yes, the ASUS laptop has a white USB cable attached to it.",
+      "human_answers_used_for_eval": [
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes"
+      ],
+      "used_normalization": false,
+      "matches_m_total": 0,
+      "accuracy_official_vqa": 0.0
+    },
+    {
+      "preprocessor": "GazeRoi+GlobalThumb",
+      "sample_id": "486003",
+      "question": "What material is the counter made of?",
+      "prediction_raw": "The counter appears to be made of wood.",
+      "prediction_used_for_eval": "The counter appears to be made of wood.",
+      "human_answers_used_for_eval": [
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood"
+      ],
+      "used_normalization": false,
+      "matches_m_total": 0,
+      "accuracy_official_vqa": 0.0
+    },
+    {
+      "preprocessor": "GazeRoi+GlobalThumb",
+      "sample_id": "699002",
+      "question": "What color is the streak?",
+      "prediction_raw": "The streak is red.",
+      "prediction_used_for_eval": "streak is red",
+      "human_answers_used_for_eval": [
+        "red",
+        "red",
+        "gray",
+        "orange",
+        "red",
+        "red",
+        "red",
+        "red",
+        "red",
+        "gray"
+      ],
+      "used_normalization": true,
+      "matches_m_total": 0,
+      "accuracy_official_vqa": 0.0
+    },
+    {
+      "preprocessor": "GazeRoi+GlobalThumb",
+      "sample_id": "1000004",
+      "question": "How many people have a camera?",
+      "prediction_raw": "It's difficult to determine exactly how many people have a camera from the image.",
+      "prediction_used_for_eval": "it's difficult to determine exactly how many people have camera from image",
+      "human_answers_used_for_eval": [
+        "0",
+        "1",
+        "0",
+        "1",
+        "0",
+        "0",
+        "1",
+        "0",
+        "0",
+        "1"
+      ],
+      "used_normalization": true,
+      "matches_m_total": 0,
+      "accuracy_official_vqa": 0.0
+    },
+    {
+      "preprocessor": "SalientRoi+GlobalThumb",
+      "sample_id": "338002",
+      "question": "What is the man doing?",
+      "prediction_raw": "The man is writing on a clipboard while holding a bag in the kitchen.",
+      "prediction_used_for_eval": "man is writing on clipboard while holding bag in kitchen",
+      "human_answers_used_for_eval": [
+        "writing",
+        "writing",
+        "writing",
+        "writing",
+        "standing",
+        "writing list",
+        "writing",
+        "writing",
+        "eating",
+        "holding bag"
+      ],
+      "used_normalization": true,
+      "matches_m_total": 0,
+      "accuracy_official_vqa": 0.0
+    },
+    {
+      "preprocessor": "SalientRoi+GlobalThumb",
+      "sample_id": "387002",
+      "question": "Does the asus laptop have a white USB cable attached?",
+      "prediction_raw": "Yes, the Asus laptop has a white USB cable attached.",
+      "prediction_used_for_eval": "Yes, the Asus laptop has a white USB cable attached.",
+      "human_answers_used_for_eval": [
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes"
+      ],
+      "used_normalization": false,
+      "matches_m_total": 0,
+      "accuracy_official_vqa": 0.0
+    },
+    {
+      "preprocessor": "SalientRoi+GlobalThumb",
+      "sample_id": "486003",
+      "question": "What material is the counter made of?",
+      "prediction_raw": "The counter appears to be made of wood.",
+      "prediction_used_for_eval": "The counter appears to be made of wood.",
+      "human_answers_used_for_eval": [
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood"
+      ],
+      "used_normalization": false,
+      "matches_m_total": 0,
+      "accuracy_official_vqa": 0.0
+    },
+    {
+      "preprocessor": "SalientRoi+GlobalThumb",
+      "sample_id": "699002",
+      "question": "What color is the streak?",
+      "prediction_raw": "The streak is red.",
+      "prediction_used_for_eval": "streak is red",
+      "human_answers_used_for_eval": [
+        "red",
+        "red",
+        "gray",
+        "orange",
+        "red",
+        "red",
+        "red",
+        "red",
+        "red",
+        "gray"
+      ],
+      "used_normalization": true,
+      "matches_m_total": 0,
+      "accuracy_official_vqa": 0.0
+    },
+    {
+      "preprocessor": "SalientRoi+GlobalThumb",
+      "sample_id": "1000004",
+      "question": "How many people have a camera?",
+      "prediction_raw": "There are no visible cameras in the hands of the people in this image.",
+      "prediction_used_for_eval": "there are no visible cameras in hands of people in this image",
+      "human_answers_used_for_eval": [
+        "0",
+        "1",
+        "0",
+        "1",
+        "0",
+        "0",
+        "1",
+        "0",
+        "0",
+        "1"
+      ],
+      "used_normalization": true,
+      "matches_m_total": 0,
+      "accuracy_official_vqa": 0.0
+    },
+    {
+      "preprocessor": "YoloV12SalientRoi+GlobalThumb",
+      "sample_id": "338002",
+      "question": "What is the man doing?",
+      "prediction_raw": "The man is writing on a clipboard while standing in the kitchen.",
+      "prediction_used_for_eval": "man is writing on clipboard while standing in kitchen",
+      "human_answers_used_for_eval": [
+        "writing",
+        "writing",
+        "writing",
+        "writing",
+        "standing",
+        "writing list",
+        "writing",
+        "writing",
+        "eating",
+        "holding bag"
+      ],
+      "used_normalization": true,
+      "matches_m_total": 0,
+      "accuracy_official_vqa": 0.0
+    },
+    {
+      "preprocessor": "YoloV12SalientRoi+GlobalThumb",
+      "sample_id": "387002",
+      "question": "Does the asus laptop have a white USB cable attached?",
+      "prediction_raw": "Yes, the Asus laptop has a white USB cable attached.",
+      "prediction_used_for_eval": "Yes, the Asus laptop has a white USB cable attached.",
+      "human_answers_used_for_eval": [
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes"
+      ],
+      "used_normalization": false,
+      "matches_m_total": 0,
+      "accuracy_official_vqa": 0.0
+    },
+    {
+      "preprocessor": "YoloV12SalientRoi+GlobalThumb",
+      "sample_id": "486003",
+      "question": "What material is the counter made of?",
+      "prediction_raw": "The counter appears to be made of wood.",
+      "prediction_used_for_eval": "The counter appears to be made of wood.",
+      "human_answers_used_for_eval": [
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood",
+        "wood"
+      ],
+      "used_normalization": false,
+      "matches_m_total": 0,
+      "accuracy_official_vqa": 0.0
+    },
+    {
+      "preprocessor": "YoloV12SalientRoi+GlobalThumb",
+      "sample_id": "699002",
+      "question": "What color is the streak?",
+      "prediction_raw": "The streak is red.",
+      "prediction_used_for_eval": "streak is red",
+      "human_answers_used_for_eval": [
+        "red",
+        "red",
+        "gray",
+        "orange",
+        "red",
+        "red",
+        "red",
+        "red",
+        "red",
+        "gray"
+      ],
+      "used_normalization": true,
+      "matches_m_total": 0,
+      "accuracy_official_vqa": 0.0
+    },
+    {
+      "preprocessor": "YoloV12SalientRoi+GlobalThumb",
+      "sample_id": "1000004",
+      "question": "How many people have a camera?",
+      "prediction_raw": "I'm sorry, I can't determine how many people have a camera from the image.",
+      "prediction_used_for_eval": "i'm sorry i can't determine how many people have camera from image",
+      "human_answers_used_for_eval": [
+        "0",
+        "1",
+        "0",
+        "1",
+        "0",
+        "0",
+        "1",
+        "0",
+        "0",
+        "1"
+      ],
+      "used_normalization": true,
+      "matches_m_total": 0,
+      "accuracy_official_vqa": 0.0
+    }
+  ]
+}
