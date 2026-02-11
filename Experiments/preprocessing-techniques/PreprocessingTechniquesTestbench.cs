@@ -12,7 +12,8 @@ class PreprocessingTechniquesTestbench
     public static void Run(
         int maxSamples = 1000,
         int warmupSamples = 10,
-        string datasetDir = "data/voila-data",
+        // string datasetDir = "data/voila-data",
+        string datasetDir = "data/VQA-HMUG-data",
         string outDir = "outputs/preprocessing-techniques")
     {
         var techniques = new List<(string Name, IPreprocessor Preprocessor)>
@@ -24,7 +25,7 @@ class PreprocessingTechniquesTestbench
             // Format conversion preprocessors
             ("Jpeg_Q85", new JpegPreprocessor(quality: 85, useOriginalBytes: false)),
             ("WebP_Lossy_Q85", new WebPPreprocessor(quality: 85, lossless: false)),
-            ("Bmp", new BmpPreprocessor()),
+            // ("Bmp", new BmpPreprocessor()),
 
             // NEW: Gaze ROI + global thumbnail
             ("GazeRoi+GlobalThumb",
@@ -61,9 +62,13 @@ class PreprocessingTechniquesTestbench
 
         Directory.CreateDirectory(outDir);
 
+        // var samples = VoilaDatasetLoader
+        //     .LoadSamplesFromVoila(datasetDir, maxSamples: maxSamples)
+        //     .ToList();
+
         var samples = VoilaDatasetLoader
-            .LoadSamplesFromVoila(datasetDir, maxSamples: maxSamples)
-            .ToList();
+                .LoadSamplesFromVQAMHUG(datasetDir, maxSamples: maxSamples)
+                .ToList();
 
         if (samples.Count == 0)
             throw new InvalidOperationException("No samples loaded. Check datasetDir and prepared.jsonl.");

@@ -16,8 +16,8 @@ namespace Thesis.Experiments
             // -------------------------
             // Global experiment config
             // -------------------------
-            int maxSamples = 50; // Set to -1 to use all samples
-            AIModel model = AIModel.GPT_Realtime_Mini;
+            int maxSamples = 100; // Set to -1 to use all samples
+            AIModel model = AIModel.GPT_Realtime_Mini; //GPT_Realtime_Mini
 
             // -------------------------
             // Dataset loading (ONCE)

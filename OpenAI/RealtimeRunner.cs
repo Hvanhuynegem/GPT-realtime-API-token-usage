@@ -36,16 +36,57 @@ public static class RealtimeRunner
                 });
             }
 
-            if (!string.IsNullOrWhiteSpace(pre.ImageDataUrl))
+            // Decide whether we are using ROI/thumbnail mode or full-image mode.
+            // If we have any Rois OR a GlobalThumbnailDataUrl, do NOT send ImageDataUrl.
+            bool hasRois = pre.Rois != null && pre.Rois.Count > 0;
+            bool hasGlobalThumb = !string.IsNullOrWhiteSpace(pre.GlobalThumbnailDataUrl);
+            bool useRoiOrThumbMode = hasRois || hasGlobalThumb;
+
+            if (useRoiOrThumbMode)
             {
-                contentParts.Add(new
+                // Send global thumbnail first (if present)
+                if (hasGlobalThumb)
                 {
-                    type = "input_image",
-                    image_url = pre.ImageDataUrl,
-                    // Optional detail: "low" or "high"
-                    detail = "low"
-                });
+                    contentParts.Add(new
+                    {
+                        type = "input_image",
+                        image_url = pre.GlobalThumbnailDataUrl,
+                        detail = "high"
+                    });
+                }
+
+                // Send each ROI image (if present)
+                if (hasRois)
+                {
+                    foreach (var roi in pre.Rois)
+                    {
+                        // Assuming RoiCrop has ImageDataUrl (as per your RoiCrop type in earlier snippets)
+                        if (!string.IsNullOrWhiteSpace(roi.ImageDataUrl))
+                        {
+                            contentParts.Add(new
+                            {
+                                type = "input_image",
+                                image_url = roi.ImageDataUrl,
+                                detail = "high"
+                            });
+                        }
+                    }
+                }
             }
+            else
+            {
+                // Fallback: send the original full image
+                if (!string.IsNullOrWhiteSpace(pre.ImageDataUrl))
+                {
+                    contentParts.Add(new
+                    {
+                        type = "input_image",
+                        image_url = pre.ImageDataUrl,
+                        detail = "high"
+                    });
+                }
+            }
+
 
             var createItemEvent = new
             {

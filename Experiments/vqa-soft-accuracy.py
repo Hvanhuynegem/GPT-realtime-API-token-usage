@@ -308,13 +308,13 @@ def main() -> int:
     ap.add_argument(
         "--responses",
         type=str,
-        default=r"logs\2026-02-10_09-38-00_GPT_Realtime_Mini\responses.jsonl",
+        default=r"logs\2026-02-10_16-20-05_GPT_Realtime\responses.jsonl",
         help="Path to responses.jsonl",
     )
     ap.add_argument(
         "--out",
         type=str,
-        default=r"logs\2026-02-10_09-38-00_GPT_Realtime_Mini\vqa_eval.json",
+        default=r"logs\2026-02-10_16-20-05_GPT_Realtime\vqa_eval.json",
         help="Optional path to write a JSON report (e.g., logs/.../vqa_eval.json).",
     )
     ap.add_argument(
