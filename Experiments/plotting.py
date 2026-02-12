@@ -8,13 +8,124 @@ import numpy as np
 # Models to process (latest run per model)
 TARGET_MODELS = [
     "gpt-realtime-mini",
-    "gpt-realtime",
-    "gpt-5.1-2025-11-13",
-    "gpt-5-mini-2025-08-07",
-    "gpt-5-nano-2025-08-07",
-    "gpt-4.1-2025-04-14",
-    "gpt-4.1-mini-2025-04-14",
+    # "gpt-realtime",
+    # "gpt-5.1-2025-11-13",
+    # "gpt-5-mini-2025-08-07",
+    # "gpt-5-nano-2025-08-07",
+    # "gpt-4.1-2025-04-14",
+    # "gpt-4.1-mini-2025-04-14",
 ]
+
+
+def load_vqa_eval_details_for_experiment(exp_dir: Path) -> pd.DataFrame:
+    """
+    Loads per-sample accuracy from logs/<experiment_id>/vqa_eval.json
+    Returns a dataframe with columns: [sample_id, preprocessor, accuracy_official_vqa]
+    """
+    path = exp_dir / "vqa_eval.json"
+    if not path.exists():
+        print(f"Warning: vqa_eval.json not found in {exp_dir}. Skipping accuracy merge.")
+        return pd.DataFrame(columns=["sample_id", "preprocessor", "accuracy_official_vqa"])
+
+    obj = json.loads(path.read_text(encoding="utf-8"))
+    details = obj.get("details", [])
+
+    rows = []
+    for r in details:
+        rows.append(
+            {
+                "sample_id": str(r.get("sample_id", "")),
+                "preprocessor": str(r.get("preprocessor", "UNKNOWN")),
+                "accuracy_official_vqa": float(r.get("accuracy_official_vqa", 0.0)),
+            }
+        )
+
+    return pd.DataFrame(rows)
+
+
+def _pick_first_existing(df: pd.DataFrame, candidates: list[str]) -> str | None:
+    for c in candidates:
+        if c in df.columns:
+            return c
+    return None
+
+
+def _compute_roi_coverage_pct(df: pd.DataFrame) -> pd.Series | None:
+
+    # 3) NEW: processed pixel fraction (proxy for "coverage")
+    if all(c in df.columns for c in ["processed_pixels_total", "original_pixels_w", "original_pixels_h"]):
+        proc = pd.to_numeric(df["processed_pixels_total"], errors="coerce")
+        ow = pd.to_numeric(df["original_pixels_w"], errors="coerce")
+        oh = pd.to_numeric(df["original_pixels_h"], errors="coerce")
+        orig = ow * oh
+        with np.errstate(divide="ignore", invalid="ignore"):
+            return (proc / orig) * 100.0
+
+
+
+def _plot_roi_coverage_vs_accuracy(
+    df: pd.DataFrame,
+    group_by: str,
+    save_dir: Path | None,
+    title_prefix: str,
+) -> None:
+    """
+    Scatter plot: ROI coverage (%) vs accuracy (official VQA), with a global linear trend line.
+    """
+    if "accuracy_official_vqa" not in df.columns:
+        print("Skipping ROI-coverage-vs-accuracy plot: accuracy_official_vqa not in dataframe.")
+        return
+
+    cov = _compute_roi_coverage_pct(df)
+    if cov is None:
+        print("Skipping ROI-coverage-vs-accuracy plot: could not compute ROI coverage from available columns.")
+        return
+
+    d = df.copy()
+    d["roi_coverage_pct"] = cov
+    d["roi_coverage_pct"] = pd.to_numeric(d["roi_coverage_pct"], errors="coerce")
+    d["accuracy_official_vqa"] = pd.to_numeric(d["accuracy_official_vqa"], errors="coerce")
+    d = d.dropna(subset=["roi_coverage_pct", "accuracy_official_vqa"])
+
+    if d.empty:
+        print("Skipping ROI-coverage-vs-accuracy plot: no valid numeric rows after cleaning.")
+        return
+
+    fig, ax = plt.subplots(figsize=(8, 5))
+
+    # Scatter by group
+    for label, sub in d.groupby(group_by, dropna=False):
+        ax.scatter(sub["roi_coverage_pct"], sub["accuracy_official_vqa"], s=10, alpha=0.6, label=str(label))
+
+    # Global trend line
+    x = d["roi_coverage_pct"].to_numpy()
+    y = d["accuracy_official_vqa"].to_numpy()
+    msk = np.isfinite(x) & np.isfinite(y)
+    x = x[msk]
+    y = y[msk]
+    if len(x) >= 2 and np.nanstd(x) > 0:
+        m, b = np.polyfit(x, y, 1)
+        x_line = np.linspace(x.min(), x.max(), 100)
+        y_line = m * x_line + b
+        ax.plot(x_line, y_line, linewidth=2)
+
+    ax.set_title("ROI coverage vs VQA accuracy")
+    ax.set_xlabel("ROI coverage (% of full image)")
+    ax.set_ylabel("Accuracy (official VQA)")
+    ax.set_ylim(0, 1.05)
+
+    if d[group_by].nunique() <= 12:
+        ax.legend(fontsize=8, loc="best")
+
+    sample_info = _compute_sample_info(d, group_by)
+    fig.suptitle(f"{title_prefix}ROI coverage vs accuracy\n{sample_info}".strip(), fontsize=11)
+
+    plt.tight_layout()
+
+    if save_dir:
+        fig.savefig(save_dir / "roi_coverage_vs_accuracy.png", dpi=200)
+
+    plt.close(fig)
 
 
 def _pick_payload_bytes_column(df: pd.DataFrame) -> str | None:
@@ -286,15 +397,21 @@ def plot_boxplots_separate_images(
     # -----------------
     # Tokens: one fig per metric
     # -----------------
+
+    # Exclude specific preprocessors from token plots
+    excluded_preprocessors_for_tokens = {"YoloV12SalientRoi+GlobalThumb"}
+
+    df_tokens = df[~df[group_by].isin(excluded_preprocessors_for_tokens)].copy()
+
     for col in token_cols:
         fig, ax = plt.subplots(figsize=(7, 5))
-        df.boxplot(column=col, by=group_by, ax=ax)
+        df_tokens.boxplot(column=col, by=group_by, ax=ax)
         ax.set_title(col)
         ax.set_xlabel(group_by)
         ax.set_ylabel("tokens")
         ax.tick_params(axis="x", rotation=60)
 
-        sample_info = _compute_sample_info(df, group_by)
+        sample_info = _compute_sample_info(df_tokens, group_by)
         fig.suptitle(f"{title_prefix}{col} boxplot\n{sample_info}".strip(), fontsize=11)
 
         plt.tight_layout()
@@ -361,6 +478,12 @@ def plot_boxplots_separate_images(
     # -----------------
     _plot_payload_vs_latency(df, group_by=group_by, save_dir=save_dir, title_prefix=title_prefix)
 
+    # -----------------
+    # NEW: ROI coverage vs accuracy scatter
+    # -----------------
+    _plot_roi_coverage_vs_accuracy(df, group_by=group_by, save_dir=save_dir, title_prefix=title_prefix)
+
+
 
 def plot_preprocessors_for_latest_run_per_model(logs_root: str = "logs") -> None:
     """
@@ -382,18 +505,28 @@ def plot_preprocessors_for_latest_run_per_model(logs_root: str = "logs") -> None
         # Align naming (your metrics uses "preprocessor")
         sizes_df = sizes_df.rename(columns={"technique": "preprocessor"})
 
+        print("\n--- sizes_df columns ---")
+        print(sorted(list(sizes_df.columns)))
+        print("--- sample rows ---")
+        print(sizes_df.head(3).to_string(index=False))
+
+
         # Merge on sample_id + preprocessor
         df_latest["sample_id"] = df_latest["sample_id"].astype(str)
 
+        # Merge preprocessing size + ROI metadata (keep bytes + any roi/image dimension columns if present)
+        keep_cols = ["sample_id", "preprocessor", "processed_binary_bytes", "data_url_bytes_utf8_total"]
+
+        extra_prefixes = ("roi_", "image_", "img_", "original_", "full_", "processed_")
+
+        for c in sizes_df.columns:
+            if c in keep_cols:
+                continue
+            if c.startswith(extra_prefixes):
+                keep_cols.append(c)
+
         df_latest = df_latest.merge(
-            sizes_df[
-                [
-                    "sample_id",
-                    "preprocessor",
-                    "processed_binary_bytes",
-                    "data_url_bytes_utf8_total",
-                ]
-            ],
+            sizes_df[keep_cols],
             on=["sample_id", "preprocessor"],
             how="left",
         )
@@ -401,6 +534,17 @@ def plot_preprocessors_for_latest_run_per_model(logs_root: str = "logs") -> None
 
         exp_id = df_latest["experiment_id"].iloc[0]
         base_dir = Path(logs_root) / exp_id
+
+        # Merge per-sample VQA accuracy from vqa_eval.json
+        acc_df = load_vqa_eval_details_for_experiment(base_dir)
+        if not acc_df.empty:
+            df_latest = df_latest.merge(
+                acc_df,
+                on=["sample_id", "preprocessor"],
+                how="left",
+            )
+
+
         out_dir = base_dir / "plots_by_preprocessor"
         out_dir.mkdir(parents=True, exist_ok=True)
 
