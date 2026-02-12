@@ -289,7 +289,7 @@ def main() -> int:
     ap.add_argument(
         "--input",
         type=str,
-        default=r"logs\2026-02-10_16-20-05_GPT_Realtime\vqa_eval.json",
+        default=r"logs\2026-02-12_10-39-28_GPT_Realtime_Mini\vqa_eval.json",
         help="Path to vqa_eval.json OR glob like logs/*/vqa_eval.json",
     )
     ap.add_argument(

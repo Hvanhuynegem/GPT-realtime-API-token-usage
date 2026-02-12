@@ -50,16 +50,17 @@ public static class VoilaDatasetLoader
         }
     }
 
-    public static IEnumerable<DatasetSample> LoadSamplesFromVQAMHUG(string datasetDir, int? maxSamples = null)
+    public static IEnumerable<DatasetSample> LoadSamplesFromVQAMHUG(
+    string datasetDir,
+    int? maxSamples = null,
+    int seed = 12345,
+    bool imagePlateOnly = true)
     {
         string jsonPath = Path.Combine(datasetDir, "prepared.json");
         if (!File.Exists(jsonPath))
             throw new FileNotFoundException($"Cannot find {jsonPath}");
 
-        var options = new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true
-        };
+        var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
         using var fs = File.OpenRead(jsonPath);
 
@@ -73,9 +74,31 @@ public static class VoilaDatasetLoader
             if (row == null)
                 continue;
 
-            string answerPacked = row.answers == null
-                ? ""
-                : string.Join("\n", row.answers);
+            var allPts = row.gaze_points_px ?? new List<GazePoint>();
+
+            IEnumerable<GazePoint> pts = allPts;
+            if (imagePlateOnly)
+                pts = pts.Where(p => string.Equals(p.plate, "imgplate", StringComparison.OrdinalIgnoreCase));
+
+            // Collect participants available for this sample
+            var participantIds = pts
+                .Select(p => p.participant_id)
+                .Where(id => !string.IsNullOrWhiteSpace(id))
+                .Distinct()
+                .OrderBy(id => id, StringComparer.Ordinal) // stable ordering
+                .ToList();
+
+            // Pick one participant deterministically-random using (seed + sampleId)
+            string? chosenPid = null;
+            if (participantIds.Count > 0)
+            {
+                int sampleId = row.id ?? 0;
+                var rng = new Random(HashCode.Combine(seed, sampleId));
+                chosenPid = participantIds[rng.Next(participantIds.Count)];
+                pts = pts.Where(p => p.participant_id == chosenPid);
+            }
+
+            string answerPacked = row.answers == null ? "" : string.Join("\n", row.answers);
 
             yield return new DatasetSample
             {
@@ -83,7 +106,7 @@ public static class VoilaDatasetLoader
                 Text = row.question ?? "",
                 Answer = answerPacked,
                 ImagePath = row.image_path ?? "",
-                Trace = ConvertGazeFixations(row.gaze_points_px)
+                Trace = ConvertGazeFixations(pts.ToList())
             };
 
             count++;
@@ -91,6 +114,7 @@ public static class VoilaDatasetLoader
                 yield break;
         }
     }
+
 
 
     private static IReadOnlyList<(int x, int y)> ConvertGazePoints(List<List<int>>? gazePointsPx)
@@ -112,7 +136,7 @@ public static class VoilaDatasetLoader
         return points;
     }
 
-    private static IReadOnlyList<(int x, int y)> ConvertGazeFixations(List<VqaMhugFixation>? fixations)
+    private static IReadOnlyList<(int x, int y)> ConvertGazeFixations(List<GazePoint>? fixations)
     {
         if (fixations == null || fixations.Count == 0)
             return Array.Empty<(int, int)>();
@@ -121,27 +145,44 @@ public static class VoilaDatasetLoader
 
         foreach (var f in fixations)
         {
-            if (!f.x.HasValue || !f.y.HasValue)
-                continue;
-
-            points.Add((f.x.Value, f.y.Value));
+            // Prefer COCO pixel coords if present, otherwise fall back to legacy x/y.
+            int x = f.x_px ?? f.x;
+            int y = f.y_px ?? f.y;
+            points.Add((x, y));
         }
 
         return points;
     }
 
-    private sealed class VqaMhugRow
+    public sealed class GazePoint
+    {
+        public string? participant_id { get; set; }
+        public int fix_idx { get; set; }
+
+        // Legacy/stimulus coords (may still exist in older prepared.json files)
+        public int x { get; set; }
+        public int y { get; set; }
+
+        // New COCO image pixel coords from your updated preprocessing script
+        public int? x_px { get; set; }
+        public int? y_px { get; set; }
+
+        public double duration { get; set; }
+        public string? plate { get; set; }   // "imgplate", "txtplate", "centerfix", ...
+        public string? eye { get; set; }
+        public double start { get; set; }
+        public double end { get; set; }
+    }
+
+
+
+    public sealed class VqaMhugRow
     {
         public int? id { get; set; }
         public string? question { get; set; }
         public List<string>? answers { get; set; }
         public string? image_path { get; set; }
-        public List<VqaMhugFixation>? gaze_points_px { get; set; }
+        public List<GazePoint>? gaze_points_px { get; set; }
     }
 
-    private sealed class VqaMhugFixation
-    {
-        public int? x { get; set; }
-        public int? y { get; set; }
-    }
 }

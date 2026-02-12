@@ -138,3 +138,5 @@ C:\Users\henri\Desktop\GPT-realtime-API-token-usage\bin\Debug\net8.0-windows\run
 C:\Users\henri\Desktop\GPT-realtime-API-token-usage\bin\Debug\net8.0-windows\runtimes\win-x86\native\onnxruntime.lib
 C:\Users\henri\Desktop\GPT-realtime-API-token-usage\bin\Debug\net8.0-windows\runtimes\win-x86\native\onnxruntime_providers_shared.dll
 C:\Users\henri\Desktop\GPT-realtime-API-token-usage\bin\Debug\net8.0-windows\runtimes\win-x86\native\onnxruntime_providers_shared.lib
+C:\Users\henri\Desktop\GPT-realtime-API-token-usage\bin\Debug\net8.0-windows\SixLabors.Fonts.dll
+C:\Users\henri\Desktop\GPT-realtime-API-token-usage\bin\Debug\net8.0-windows\SixLabors.ImageSharp.Drawing.dll
